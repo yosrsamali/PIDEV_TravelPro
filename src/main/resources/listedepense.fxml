@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<?import java.net.URL?>
+<AnchorPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.ListeDepenseController">
+
+    <stylesheets>
+        <URL value="@css/style.css"/>
+    </stylesheets>
+
+    <!-- Titre centré -->
+    <Label layoutX="400.0" layoutY="30.0" text="Liste des Dépenses" styleClass="title-label"/>
+
+    <!-- Table des dépenses -->
+    <TableView fx:id="deponseTableView" layoutX="50.0" layoutY="100.0" prefWidth="1000.0" prefHeight="500.0">
+        <columns>
+        <TableColumn fx:id="colId" text="ID" prefWidth="80.0" />
+        <TableColumn fx:id="colQuantiteTotal" text="Quantité Totale" prefWidth="150.0" />
+        <TableColumn fx:id="colPrixAchat" text="Prix d'Achat" prefWidth="200.0" />
+        <TableColumn fx:id="colTVA" text="TVA" prefWidth="200.0" />
+            <TableColumn fx:id="colTotal" text="Total" prefWidth="200.0" />
+        <TableColumn fx:id="colActions" text="Actions" prefWidth="200.0"/>
+        </columns>
+    </TableView>
+
+</AnchorPane>

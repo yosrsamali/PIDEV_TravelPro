@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<?import java.net.URL?>
+<AnchorPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.DeponseController">
+
+    <stylesheets>
+        <URL value="@css/style.css"/>
+    </stylesheets>
+
+    <children>
+        <!-- Titre centré en haut -->
+        <Label layoutX="400.0" layoutY="30.0" text="Ajouter Une Dépense" styleClass="title-label"/>
+
+        <!-- Formulaire bien aligné avec labels -->
+        <VBox layoutX="100.0" layoutY="150.0" spacing="15">
+            <Label text="Quantité totale :" styleClass="form-label"/>
+            <TextField fx:id="tfquantite_total" promptText="Entrez la quantité totale" />
+
+            <Label text="Prix d'achat :" styleClass="form-label"/>
+            <TextField fx:id="tfprix_achat" promptText="Entrez le prix d'achat" />
+
+            <Label text="TVA :" styleClass="form-label"/>
+            <TextField fx:id="tftva" promptText="Entrez la TVA" />
+
+            <Button mnemonicParsing="false" onAction="#ajouterDeponse" text="Ajouter" styleClass="form-button"/>
+        </VBox>
+
+        <!-- Image Card alignée à droite -->
+        <StackPane layoutX="700.0" layoutY="200.0" prefWidth="300" prefHeight="300" styleClass="image-card">
+            <ImageView fitWidth="280" fitHeight="280">
+                <Image url="@images/1.PNG"/>
+            </ImageView>
+        </StackPane>
+    </children>
+</AnchorPane>
