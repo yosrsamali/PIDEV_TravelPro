@@ -1,5 +1,5 @@
 
-package interfaces;
+package tn.esprit.interfaces;
 
 import java.util.List;
 
