@@ -9,27 +9,23 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <VBox fx:id="eventInterfaces" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="6000.0" prefWidth="1331.0" stylesheets="@css/product.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.evenementC">
    <children>
-      <VBox fx:id="EventsInterface" prefHeight="907.0" prefWidth="1331.0" stylesheets="@css/product.css">
+      <VBox fx:id="EventsInterface" prefHeight="500.0" prefWidth="1331.0" stylesheets="@css/product.css">
          <children>
-            <Pane fx:id="UpperSection" prefHeight="215.0" prefWidth="1331.0" styleClass="UpperSection" stylesheets="@css/product.css">
+            <Pane fx:id="UpperSection" prefHeight="900.0" prefWidth="1271.0" styleClass="UpperSection" stylesheets="@css/product.css">
                <children>
-                  <TextField layoutX="159.0" layoutY="41.0" prefHeight="37.0" prefWidth="265.0" styleClass="search-field" stylesheets="@../../../../../Desktop/projet/src/main/resources/main/projet/css/product.css" />
-                  <Label layoutX="55.0" layoutY="41.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="115.0" styleClass="label-style" stylesheets="@../../../../../Desktop/projet/src/main/resources/main/projet/css/product.css" text="Rechercher" />
-                  <Button layoutX="508.0" layoutY="35.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#GoToAddEventPage" prefHeight="46.0" prefWidth="31.0" styleClass="UpperSectionBtn" stylesheets="@css/product.css">
+                  <TextField layoutX="159.0" layoutY="1" prefHeight="37.0" prefWidth="265.0" styleClass="search-field" stylesheets="@css/product.css" />
+                  <Label layoutX="55.0" layoutY="1" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="115.0" styleClass="label-style" stylesheets="@css/product.css" text="Rechercher" />
+                  <Button layoutX="508.0" layoutY="1" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#GoToAddEventPage" prefHeight="46.0" prefWidth="31.0" styleClass="UpperSectionBtn" stylesheets="@css/product.css">
                      <graphic>
                         <ImageView fx:id="GoToAddPageBtn" fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -43,7 +39,7 @@
                         <Image url="@../../../../../Desktop/projet/src/main/resources/main/projet/icons/search.png" />
                      </image>
                   </ImageView>
-                  <Button layoutX="623.0" layoutY="34.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#goToAvisPage" prefHeight="46.0" prefWidth="187.0" styleClass="UpperSectionBtn" stylesheets="@css/product.css" text="Activités">
+                  <Button layoutX="623.0" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#goToAvisPage" prefHeight="46.0" prefWidth="187.0" styleClass="UpperSectionBtn" stylesheets="@css/product.css" text="Activités">
                      <graphic>
                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -52,7 +48,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button layoutX="855.0" layoutY="36.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#goToParticipantPage" prefHeight="46.0" prefWidth="187.0" styleClass="UpperSectionBtn" stylesheets="@css/product.css" text="Participants">
+                  <Button layoutX="855.0" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#goToParticipantPage" prefHeight="46.0" prefWidth="187.0" styleClass="UpperSectionBtn" stylesheets="@css/product.css" text="Participants">
                      <graphic>
                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -63,31 +59,25 @@
                   </Button>
                </children>
             </Pane>
-            <Pane fx:id="ListContainer" prefHeight="694.0" prefWidth="1331.0" style="-fx-background-color: #00000;">
-               <children>
-                  <Label layoutX="61.0" layoutY="39.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="326.0" stylesheets="@../../../../../Desktop/projet/src/main/resources/main/projet/css/product.css" text="Liste des évenements">
-                     <styleClass>
-                        <String fx:value="label-style" />
-                        <String fx:value="title" />
-                     </styleClass>
-                  </Label>
-                  <ScrollPane layoutX="37.0" layoutY="96.0" prefHeight="544.0" prefWidth="1217.0">
+             <Pane fx:id="ListContainer" prefHeight="200.0" prefWidth="1271.0" >
+                 <children>
+                     <Label layoutX="61.0" layoutY="39.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="326.0" stylesheets="@css/product.css" text="Liste des évenements">
+                         <styleClass>
+                             <String fx:value="label-style" />
+                             <String fx:value="title" />
+                         </styleClass>
+                     </Label>
+                     <ScrollPane layoutX="72.0" layoutY="126.0" prefHeight="423.0" prefWidth="880.0">
                      <content>
-                        <GridPane>
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                        </GridPane>
+                           <VBox fx:id="eventsVBox" prefHeight="399.0" prefWidth="859.0" spacing="10.0" />
                      </content>
-                  </ScrollPane>
-               </children>
-            </Pane>
+                     </ScrollPane>
+                 </children>
+             </Pane>
+
          </children>
       </VBox>
-      <Pane fx:id="AddEventPage" prefHeight="907.0" prefWidth="1331.0">
+      <Pane fx:id="AddEventPage" prefHeight="907.0" prefWidth="1301.0">
          <children>
             <VBox fx:id="AddEventCard" layoutX="445.0" layoutY="141.0" maxWidth="1361.0" prefHeight="466.0" prefWidth="390.0" styleClass="add-product-card">
                <children>
@@ -125,14 +115,14 @@
                   <HBox spacing="10" styleClass="input-field">
                      <children>
                         <Label prefHeight="22.0" prefWidth="105.0" text="Type : " />
-                        <ChoiceBox fx:id="TypeEventInput" prefHeight="25.0" prefWidth="220.0" />
+                        <TextField fx:id="TypeEventInput" prefHeight="25.0" prefWidth="220.0" />
                      </children>
                   </HBox>
                    <HBox spacing="10" styleClass="input-field">
                        <children>
                            <Label prefHeight="22.0" prefWidth="111.0" text="Image        " />
                            <TextField fx:id="ImageEventInput" promptText="Inserez votre image" />
-                           <Button fx:id="AddImageBtn" onAction="#map" prefHeight="21.0" prefWidth="31.0" text="+" />
+                           <Button fx:id="AddImageBtn" onAction="#choisirImage1" prefHeight="21.0" prefWidth="31.0" text="+" />
                        </children>
                    </HBox>
                   <HBox id="submitField" prefHeight="60.0" prefWidth="1290.0">
@@ -146,7 +136,7 @@
                   </HBox>
                </children>
             </VBox>
-            <Button layoutX="30.0" layoutY="26.0" mnemonicParsing="false" onAction="#GoToEventPagee" prefHeight="56.0" prefWidth="40.0" styleClass="UpperSectionBtn" stylesheets="@../../../../../Desktop/projet/src/main/resources/main/projet/css/product.css">
+            <Button layoutX="30.0" layoutY="26.0" mnemonicParsing="false" onAction="#GoToEventPagee" prefHeight="56.0" prefWidth="40.0" styleClass="UpperSectionBtn" stylesheets="@css/product.css">
                <graphic>
                   <ImageView fx:id="GoToEventsPageBtn" fitHeight="34.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -160,10 +150,10 @@
 
       <VBox fx:id="ParticipantsPage" prefHeight="907.0" prefWidth="1331.0">
          <children>
-            <Pane fx:id="UpperSection1" prefHeight="215.0" prefWidth="1331.0" styleClass="UpperSection" stylesheets="@../../../../../Desktop/projet/src/main/resources/main/projet/css/product.css">
+            <Pane fx:id="UpperSection1" prefHeight="215.0" prefWidth="1331.0" styleClass="UpperSection" stylesheets="@css/product.css">
                <children>
-                  <TextField layoutX="159.0" layoutY="41.0" prefHeight="37.0" prefWidth="265.0" styleClass="search-field" stylesheets="@../../../../../Desktop/projet/src/main/resources/main/projet/css/product.css" />
-                  <Label layoutX="90.0" layoutY="41.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="80.0" styleClass="label-style" stylesheets="@../../../../../Desktop/projet/src/main/resources/main/projet/css/product.css" text="Searsh" />
+                  <TextField layoutX="159.0" layoutY="41.0" prefHeight="37.0" prefWidth="265.0" styleClass="search-field" stylesheets="@css/product.css" />
+                  <Label layoutX="90.0" layoutY="41.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="80.0" styleClass="label-style" stylesheets="@css/product.css" text="Searsh" />
                   <ImageView fitHeight="22.0" fitWidth="22.0" layoutX="394.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../Desktop/projet/src/main/resources/main/projet/icons/search.png" />
@@ -171,15 +161,15 @@
                   </ImageView>
                </children>
             </Pane>
-            <Pane fx:id="ListContainer1" prefHeight="694.0" prefWidth="1331.0" style="-fx-background-color: #0000;">
+            <Pane fx:id="ListContainer1" prefHeight="694.0" prefWidth="1331.0">
                <children>
-                  <Label layoutX="61.0" layoutY="39.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="347.0" stylesheets="@../../../../../Desktop/projet/src/main/resources/main/projet/css/product.css" text="Participants List ">
+                  <Label layoutX="61.0" layoutY="39.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="347.0" stylesheets="@css/product.css" text="Participants List ">
                      <styleClass>
                         <String fx:value="label-style" />
                         <String fx:value="title" />
                      </styleClass>
                   </Label>
-                  <TableView fx:id="participantsTableView" layoutX="69.0" layoutY="102.0" prefHeight="544.0" prefWidth="493.0" stylesheets="@../../../../../Desktop/projet/src/main/resources/main/projet/css/product.css">
+                  <TableView fx:id="participantsTableView" layoutX="69.0" layoutY="102.0" prefHeight="544.0" prefWidth="493.0" stylesheets="@css/product.css">
                      <columns>
                         <TableColumn fx:id="idColumnParticipants" prefWidth="75.0" text="Id" />
                         <TableColumn fx:id="ideventcolumnn" prefWidth="120.0" text="Evennement" />
@@ -193,10 +183,10 @@
       </VBox>
       <VBox fx:id="AvisPage" prefHeight="907.0" prefWidth="1331.0">
          <children>
-            <Pane fx:id="UpperSection11" prefHeight="215.0" prefWidth="1331.0" styleClass="UpperSection" stylesheets="@../../../../../Desktop/projet/src/main/resources/main/projet/css/product.css">
+            <Pane fx:id="UpperSection11" prefHeight="215.0" prefWidth="1331.0" styleClass="UpperSection" stylesheets="@css/product.css">
                <children>
-                  <TextField layoutX="159.0" layoutY="41.0" prefHeight="37.0" prefWidth="265.0" styleClass="search-field" stylesheets="@../../../../../Desktop/projet/src/main/resources/main/projet/css/product.css" />
-                  <Label layoutX="90.0" layoutY="41.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="80.0" styleClass="label-style" stylesheets="@../../../../../Desktop/projet/src/main/resources/main/projet/css/product.css" text="Search" />
+                  <TextField layoutX="159.0" layoutY="41.0" prefHeight="37.0" prefWidth="265.0" styleClass="search-field" stylesheets="@css/product.css" />
+                  <Label layoutX="90.0" layoutY="41.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="80.0" styleClass="label-style" stylesheets="@css/product.css" text="Search" />
                   <ImageView fitHeight="22.0" fitWidth="22.0" layoutX="390.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../Desktop/projet/src/main/resources/main/projet/icons/search.png" />
@@ -206,13 +196,13 @@
             </Pane>
             <Pane fx:id="ListContainer11" prefHeight="694.0" prefWidth="1331.0" style="-fx-background-color: #00000;">
                <children>
-                  <Label layoutX="61.0" layoutY="39.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="347.0" stylesheets="@../../../../../Desktop/projet/src/main/resources/main/projet/css/product.css" text="Avis List ">
+                  <Label layoutX="61.0" layoutY="39.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="347.0" stylesheets="@css/product.css" text="Avis List ">
                      <styleClass>
                         <String fx:value="label-style" />
                         <String fx:value="title" />
                      </styleClass>
                   </Label>
-                  <TableView fx:id="AvisTableView" layoutX="69.0" layoutY="102.0" prefHeight="544.0" prefWidth="952.0" stylesheets="@../../../../../Desktop/projet/src/main/resources/main/projet/css/product.css">
+                  <TableView fx:id="AvisTableView" layoutX="69.0" layoutY="102.0" prefHeight="544.0" prefWidth="952.0" stylesheets="@css/product.css">
                      <columns>
                         <TableColumn fx:id="idAvisColumn" prefWidth="80.0" text="Id" />
                         <TableColumn fx:id="ideventcolumnnA" prefWidth="80.0" text="id_evennement" />
@@ -226,54 +216,51 @@
 
          </children>
       </VBox>
-        <Pane fx:id="UpdateEventPage" prefHeight="907.0" prefWidth="1331.0">
+        <Pane fx:id="UpdateEventPage" prefHeight="1500.0" prefWidth="1331.0">
           <children>
-              <VBox fx:id="UpdateProductCard" layoutX="445.0" layoutY="141.0" maxWidth="1361.0" prefHeight="466.0" prefWidth="390.0" styleClass="add-product-card">
+              <VBox fx:id="UpdateProductCard" layoutX="445.0" layoutY="10.0" maxWidth="1361.0" prefHeight="466.0" prefWidth="390.0" styleClass="add-product-card">
                   <children>
-                      <Label prefHeight="31.0" prefWidth="307.0" styleClass="title" text="Update the Event">
+                      <Label prefHeight="46.0" prefWidth="374.0" styleClass="title" text="Modifier un évenement">
                           <font>
                               <Font name="Arial Rounded MT Bold" size="31.0" />
                           </font>
                       </Label>
                       <HBox prefHeight="42.0" prefWidth="1231.0" spacing="10" styleClass="input-field">
                           <children>
-                              <Label prefHeight="22.0" prefWidth="113.0" text="nom:" />
-                              <TextField fx:id="nomEvent1" prefHeight="37.0" prefWidth="196.0" />
+                              <Label prefHeight="22.0" prefWidth="113.0" text="Nom:" />
+                              <TextField fx:id="nomEventIInput2" prefHeight="37.0" prefWidth="196.0" promptText="Modifiez le nom.." />
                           </children>
                       </HBox>
                       <HBox spacing="10" styleClass="input-field">
                           <children>
-                              <Label prefHeight="22.0" prefWidth="111.0" text="type:         " />
-                              <TextField fx:id="typeEvent1" />
+                              <Label prefHeight="22.0" prefWidth="111.0" text="Lieu:    " />
+                              <TextField fx:id="LieuIEventnput2" promptText="Modifiez le lieu.." />
                           </children>
                       </HBox>
                       <HBox spacing="10" styleClass="input-field">
                           <children>
-                              <Label prefHeight="22.0" prefWidth="111.0" text="image:         " />
-                              <HBox spacing="5">
-                                  <TextField fx:id="imageEvent1" />
-                                  <Button onAction="#choisirImage1" prefHeight="37.0" prefWidth="16.0" text="+" />
-
-                              </HBox>
+                              <Label prefHeight="22.0" prefWidth="102.0" text="Date début:" />
+                              <HBox spacing="5" />
+                        <DatePicker fx:id="dateEvent2" prefHeight="49.0" prefWidth="221.0" promptText="Modifiez date début.." />
                           </children>
                       </HBox>
                       <HBox spacing="10" styleClass="input-field">
                           <children>
-                              <Label prefHeight="22.0" prefWidth="111.0" text="date:" />
-                              <DatePicker fx:id="dateEvent1" prefHeight="49.0" prefWidth="237.0" />
+                              <Label prefHeight="22.0" prefWidth="111.0" text="Date Fin:" />
+                              <DatePicker fx:id="dateEventInput2" prefHeight="49.0" prefWidth="237.0" promptText="Modifiez date fin.." />
                           </children>
                       </HBox>
                       <HBox prefHeight="121.0" prefWidth="350.0" spacing="10" styleClass="input-field">
                           <children>
-                              <Label prefHeight="53.0" prefWidth="115.0" text="Description:" />
-                              <TextArea fx:id="desEvent1" prefHeight="58.0" prefWidth="258.0" />
+                              <Label prefHeight="53.0" prefWidth="115.0" text="Type:" />
+                        <TextField fx:id="TypeEventInput2" promptText="Modifiez le type" />
                           </children>
                       </HBox>
                       <HBox spacing="10" styleClass="input-field">
                           <children>
                               <Label prefHeight="22.0" prefWidth="111.0" text="image:         " />
                               <HBox spacing="5">
-                                  <TextField fx:id="localisation1" />
+                                  <TextField fx:id="ImageEventInput2" />
                                   <Button onAction="#choisirImage1" text="+" />
 
                               </HBox>
@@ -291,16 +278,17 @@
                       </HBox>
                       <HBox id="submitField" prefHeight="60.0" prefWidth="1290.0">
                           <children>
-                              <Button fx:id="UpdateEvent" mnemonicParsing="false" onAction="#OnUpdate" prefHeight="46.0" prefWidth="166.0" styleClass="orangebtn" text="Update">
+                              <Button fx:id="UpdateEvent" mnemonicParsing="false" onAction="#OnUpdate" prefHeight="37.0" prefWidth="252.0" styleClass="orangebtn" text="Update">
                                   <HBox.margin>
                                       <Insets left="50.0" />
                                   </HBox.margin>
                               </Button>
                           </children>
                       </HBox>
+                  <TextField fx:id="nomEvent12" prefHeight="37.0" prefWidth="196.0" />
                   </children>
               </VBox>
-              <Button layoutX="30.0" layoutY="26.0" mnemonicParsing="false" onAction="#GoToEventPagee" prefHeight="56.0" prefWidth="40.0" styleClass="UpperSectionBtn" stylesheets="@../../../../../Desktop/projet/src/main/resources/main/projet/css/product.css">
+              <Button layoutX="30.0" layoutY="26.0" mnemonicParsing="false" onAction="#GoToEventPagee" prefHeight="56.0" prefWidth="40.0" styleClass="UpperSectionBtn" stylesheets="@css/product.css">
                   <graphic>
                       <ImageView fitHeight="34.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                           <image>
@@ -311,5 +299,6 @@
               </Button>
           </children>
       </Pane>
+
    </children>
 </VBox>

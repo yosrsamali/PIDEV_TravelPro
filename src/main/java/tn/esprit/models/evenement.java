@@ -14,13 +14,33 @@ public class evenement {
 
     public evenement() {}
 
-    public evenement(String nomEvent, String lieu, Date dateDebutE, Date dateFinE, String type, int idReservation) {
+    public evenement(String nomEvent, String lieu, Date dateDebutE, Date dateFinE, String type, int idReservation,String image) {
         this.nomEvent = nomEvent;
         this.lieu = lieu;
         this.dateDebutE = dateDebutE;
         this.dateFinE = dateFinE;
         this.type = type;
         this.idReservation = idReservation;
+        this.image = image;
+    }
+    public evenement(String nomEvent, String lieu, Date dateDebutE, Date dateFinE, String type,String image) {
+        this.nomEvent = nomEvent;
+        this.lieu = lieu;
+        this.dateDebutE = dateDebutE;
+        this.dateFinE = dateFinE;
+        this.type = type;
+        this.image = image;
+    }
+
+    public evenement(int idEvent, String nomEvent, String lieu, Date dateDebutE, Date dateFinE, String type,String image,int idReservation) {
+        this.idEvent = idEvent;
+        this.nomEvent = nomEvent;
+        this.idReservation = idReservation;
+        this.image = image;
+        this.type = type;
+        this.dateFinE = dateFinE;
+        this.dateDebutE = dateDebutE;
+        this.lieu = lieu;
     }
 
     public int getIdEvent() { return idEvent; }

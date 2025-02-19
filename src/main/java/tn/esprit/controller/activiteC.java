@@ -1,0 +1,160 @@
+package tn.esprit.controller;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
+import tn.esprit.models.Activite;
+import tn.esprit.services.ServiceActivite;
+
+import java.net.URL;
+import java.sql.Date;
+import java.util.List;
+import java.util.ResourceBundle;
+
+public class activiteC implements Initializable {
+
+    @FXML
+    private TableView<Activite> activiteTableView;
+
+    @FXML
+    private TableColumn<Activite, Integer> idColumn;
+
+    @FXML
+    private TableColumn<Activite, String> nomColumn;
+
+    @FXML
+    private TableColumn<Activite, String> descriptionColumn;
+
+    @FXML
+    private TableColumn<Activite, Date> dateDebutColumn;
+
+    @FXML
+    private TableColumn<Activite, Date> dateFinColumn;
+
+    @FXML
+    private TableColumn<Activite, Integer> idEventColumn;
+
+    @FXML
+    private TextField nomActiviteInput;
+
+    @FXML
+    private TextArea descriptionInput;
+
+    @FXML
+    private DatePicker dateDebutInput;
+
+    @FXML
+    private DatePicker dateFinInput;
+
+    @FXML
+    private TextField idEventInput;
+
+    private ServiceActivite serviceActivite = new ServiceActivite();
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Initialisation des colonnes de la TableView
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("idActivite"));
+        nomColumn.setCellValueFactory(new PropertyValueFactory<>("nomActivite"));
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        dateDebutColumn.setCellValueFactory(new PropertyValueFactory<>("dateDebutA"));
+        dateFinColumn.setCellValueFactory(new PropertyValueFactory<>("dateFinA"));
+        idEventColumn.setCellValueFactory(new PropertyValueFactory<>("idEvent"));
+
+        // Chargement des données dans la TableView
+        loadActivites();
+    }
+
+    private void loadActivites() {
+        List<Activite> activites = serviceActivite.getAll();
+        ObservableList<Activite> observableList = FXCollections.observableArrayList(activites);
+        activiteTableView.setItems(observableList);
+    }
+
+    @FXML
+    void addActivite(ActionEvent event) {
+        if (nomActiviteInput.getText().isEmpty() || descriptionInput.getText().isEmpty() || dateDebutInput.getValue() == null || dateFinInput.getValue() == null || idEventInput.getText().isEmpty()) {
+            showAlert("Erreur", "Veuillez remplir tous les champs.");
+            return;
+        }
+
+        try {
+            Activite activite = new Activite();
+            activite.setNomActivite(nomActiviteInput.getText());
+            activite.setDescription(descriptionInput.getText());
+            activite.setDateDebutA(Date.valueOf(dateDebutInput.getValue()));
+            activite.setDateFinA(Date.valueOf(dateFinInput.getValue()));
+            activite.setIdEvent(Integer.parseInt(idEventInput.getText()));
+
+            serviceActivite.add(activite);
+            loadActivites(); // Recharger les données après l'ajout
+
+            // Réinitialiser les champs
+            nomActiviteInput.clear();
+            descriptionInput.clear();
+            dateDebutInput.setValue(null);
+            dateFinInput.setValue(null);
+            idEventInput.clear();
+
+            showAlert("Succès", "Activité ajoutée avec succès.");
+        } catch (NumberFormatException e) {
+            showAlert("Erreur", "L'ID de l'événement doit être un nombre.");
+        }
+    }
+
+    @FXML
+    void updateActivite(ActionEvent event) {
+        Activite selectedActivite = activiteTableView.getSelectionModel().getSelectedItem();
+        if (selectedActivite == null) {
+            showAlert("Erreur", "Veuillez sélectionner une activité à modifier.");
+            return;
+        }
+
+        if (nomActiviteInput.getText().isEmpty() || descriptionInput.getText().isEmpty() || dateDebutInput.getValue() == null || dateFinInput.getValue() == null || idEventInput.getText().isEmpty()) {
+            showAlert("Erreur", "Veuillez remplir tous les champs.");
+            return;
+        }
+
+        try {
+            selectedActivite.setNomActivite(nomActiviteInput.getText());
+            selectedActivite.setDescription(descriptionInput.getText());
+            selectedActivite.setDateDebutA(Date.valueOf(dateDebutInput.getValue()));
+            selectedActivite.setDateFinA(Date.valueOf(dateFinInput.getValue()));
+            selectedActivite.setIdEvent(Integer.parseInt(idEventInput.getText()));
+
+            serviceActivite.update(selectedActivite, selectedActivite.getIdActivite());
+            loadActivites(); // Recharger les données après la mise à jour
+
+            showAlert("Succès", "Activité mise à jour avec succès.");
+        } catch (NumberFormatException e) {
+            showAlert("Erreur", "L'ID de l'événement doit être un nombre.");
+        }
+    }
+
+    @FXML
+    void deleteActivite(ActionEvent event) {
+        Activite selectedActivite = activiteTableView.getSelectionModel().getSelectedItem();
+        if (selectedActivite == null) {
+            showAlert("Erreur", "Veuillez sélectionner une activité à supprimer.");
+            return;
+        }
+
+        serviceActivite.delete(selectedActivite.getIdActivite());
+        loadActivites(); // Recharger les données après la suppression
+
+        showAlert("Succès", "Activité supprimée avec succès.");
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+}
