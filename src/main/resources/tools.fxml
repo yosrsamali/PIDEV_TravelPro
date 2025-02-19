@@ -2,59 +2,41 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="eventInterfaces"
-      maxHeight="-Infinity"
-      maxWidth="-Infinity"
-      minHeight="-Infinity"
-      minWidth="-Infinity"
-      prefHeight="6000.0"
-      prefWidth="1331.0"
-      stylesheets="@css/product.css"
-      xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="tn.esprit.controller.evenementC">
+<VBox spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.activiteC" stylesheets="@style.css">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
 
-   <children>
-      <!-- Section Principale -->
-      <VBox fx:id="EventsInterface" prefHeight="907.0" prefWidth="1331.0">
-         <children>
-            <Pane fx:id="UpperSection" prefHeight="215.0" prefWidth="1331.0">
-               <children>
-                  <TextField layoutX="159.0" layoutY="41.0" prefHeight="37.0" prefWidth="265.0" fx:id="searchField"/>
-                  <Label layoutX="55.0" layoutY="41.0" text="Rechercher"/>
-                  <Button layoutX="508.0" layoutY="35.0" mnemonicParsing="false" onAction="#GoToAddEventPage"
-                          prefHeight="46.0" prefWidth="31.0">
-                     <graphic>
-                        <ImageView fx:id="GoToAddPageBtn" fitHeight="22.0" fitWidth="22.0">
-<!--                           <image>-->
-<!--                              <Image url="@icons/plus.png"/>-->
-<!--                           </image>-->
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <ImageView fitHeight="22.0" fitWidth="31.0" layoutX="391.0" layoutY="50.0">
-<!--                     <image>-->
-<!--                        <Image url="@icons/search.png"/>-->
-<!--                     </image>-->
-                  </ImageView>
-               </children>
-            </Pane>
-            <!-- Liste des Événements -->
-            <Pane fx:id="ListContainer" prefHeight="694.0" prefWidth="1331.0">
-               <children>
-                  <Label layoutX="61.0" layoutY="39.0" text="Liste des événements"/>
-                  <ScrollPane layoutX="37.0" layoutY="96.0" prefHeight="544.0" prefWidth="1217.0">
-                     <content>
-                        <GridPane/>
-                     </content>
-                  </ScrollPane>
-               </children>
-            </Pane>
-         </children>
-      </VBox>
-   </children>
+    <TableView fx:id="activiteTableView">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID"/>
+            <TableColumn fx:id="nomColumn" text="Nom"/>
+            <TableColumn fx:id="descriptionColumn" text="Description"/>
+            <TableColumn fx:id="dateDebutColumn" text="Date Début"/>
+            <TableColumn fx:id="dateFinColumn" text="Date Fin"/>
+            <TableColumn fx:id="idEventColumn" text="ID Événement"/>
+        </columns>
+    </TableView>
+
+    <HBox spacing="10">
+        <Label text="Nom:"/>
+        <TextField fx:id="nomActiviteInput"/>
+        <Label text="Description:"/>
+        <TextArea fx:id="descriptionInput"/>
+        <Label text="Date Début:"/>
+        <DatePicker fx:id="dateDebutInput"/>
+        <Label text="Date Fin:"/>
+        <DatePicker fx:id="dateFinInput"/>
+        <Label text="ID Événement:"/>
+        <TextField fx:id="idEventInput"/>
+    </HBox>
+
+    <HBox spacing="10">
+        <Button text="Ajouter" onAction="#addActivite"/>
+        <Button text="Modifier" onAction="#updateActivite"/>
+        <Button text="Supprimer" onAction="#deleteActivite"/>
+    </HBox>
 </VBox>
