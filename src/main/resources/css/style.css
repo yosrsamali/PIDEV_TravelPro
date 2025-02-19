@@ -1,0 +1,147 @@
+/* ----- Background en dégradé bleu-blanc avec un effet de transition pour un aspect fluide ----- */
+AnchorPane {
+    -fx-background-color: linear-gradient(to bottom, #1E3C72, #2A5298, #FFFFFF);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 20, 0, 0, 5);
+}
+
+/* ----- Style du titre avec ajustement de la taille de la police et ombre pour un effet professionnel ----- */
+.title-label {
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-alignment: center;
+    -fx-padding: 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0, 0, 3);
+}
+
+/* ----- Style des colonnes dans TableView avec espacements et bordure soignée ----- */
+.table-view {
+    -fx-background-color: #f8f8f8;
+    -fx-border-color: #dddddd;
+    -fx-border-width: 1px;
+    -fx-font-size: 14px;
+    -fx-selection-bar: #1E3C72; /* Couleur de sélection de ligne */
+    -fx-row-header-visible: false;
+    -fx-padding: 10px;
+}
+
+/* ----- Styliser l'en-tête des colonnes de la table pour qu'elles soient plus visibles ----- */
+.table-column-header {
+    -fx-background-color: #2A5298;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-alignment: center;
+    -fx-padding: 10px;
+}
+
+/* ----- Style des cellules de la TableView avec couleur de texte claire pour mieux les distinguer ----- */
+.table-cell {
+    -fx-text-fill: #555555;
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+}
+
+/* ----- Style de la ligne sélectionnée dans la table pour un meilleur contraste ----- */
+.table-row-cell:selected {
+    -fx-background-color: #1E3C72;
+    -fx-text-fill: white;
+}
+
+/* ----- Boutons d'actions dans la TableView (modifier/supprimer) avec transition et padding pour un look moderne ----- */
+.button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 8px;
+    -fx-padding: 10px 20px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 2);
+}
+
+/* ----- Effet de survol (hover) sur les boutons Modifier/Supprimer dans la TableView ----- */
+.button:hover {
+    -fx-background-color: #2980b9;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0, 0, 3);
+}
+
+/* ----- Style du label pour les champs de texte (alignement et taille de police) ----- */
+.form-label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+}
+
+/* ----- Style des champs de texte (TextField) avec arrondi, bordure stylée et focus personnalisé ----- */
+TextField {
+    -fx-pref-width: 300px;
+    -fx-pref-height: 40px;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #2A5298;
+    -fx-border-width: 2px;
+    -fx-font-size: 16px;
+    -fx-padding: 5px;
+}
+
+/* ----- Effet focus sur les champs de texte avec bordure plus épaisse ----- */
+TextField:focused {
+    -fx-border-color: #1E3C72;
+    -fx-border-width: 3px;
+}
+
+/* ----- Style général des boutons (formes arrondies et couleur principale) ----- */
+.form-button {
+    -fx-background-color: #1E3C72;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 8px;
+    -fx-border-width: 2px;
+    -fx-border-color: #2A5298;
+}
+
+/* ----- Effet hover sur les boutons généraux pour les rendre interactifs ----- */
+.form-button:hover {
+    -fx-background-color: #2A5298;
+    -fx-cursor: hand;
+}
+
+/* ----- Style de l'image dans une carte avec ombre pour un effet 3D moderne ----- */
+.image-card {
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-color: #ddd;
+    -fx-padding: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 5);
+}
+
+/* ----- Style global des en-têtes de colonnes dans la TableView ----- */
+.table-view .column-header {
+    -fx-background-color: #2A5298;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+}
+
+/* ----- Style des boutons dans la colonne Actions avec padding plus large ----- */
+.table-column .button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px 20px;
+    -fx-cursor: hand;
+}
+
+/* ----- Effet de survol sur les boutons dans la TableView ----- */
+.table-column .button:hover {
+    -fx-background-color: #2980b9;
+}
