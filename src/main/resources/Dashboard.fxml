@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="tn.esprit.controllers.DashboardController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <!-- Conteneur principal pour afficher les avis en attente -->
+    <VBox fx:id="avisContainer" layoutX="10" layoutY="10" spacing="10" prefWidth="580.0">
+        <!-- Les avis en attente seront ajoutés dynamiquement ici par le contrôleur -->
+    </VBox>
+
+</AnchorPane>
