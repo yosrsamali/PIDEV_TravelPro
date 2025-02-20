@@ -4,7 +4,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.AvisController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" stylesheets="@style.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.AvisController">
    <children>
       <TextField fx:id="commentaireField" layoutX="131.0" layoutY="207.0" promptText="Commenter" />
       <TextField fx:id="noteField" layoutX="132.0" layoutY="146.0" promptText="Note (0-10)" />
