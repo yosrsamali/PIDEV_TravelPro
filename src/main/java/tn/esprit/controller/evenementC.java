@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
@@ -30,6 +31,7 @@ import tn.esprit.models.evenement;
 import tn.esprit.services.ServiceEvenement;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -601,5 +603,16 @@ public class evenementC implements Initializable {
     }
 
 
+    public void gotoactivitie(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tools.fxml"));
+            Parent root = loader.load();
 
+            // Obtenir la scène actuelle et remplacer le contenu
+            dateEvent.getScene().setRoot(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

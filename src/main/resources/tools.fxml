@@ -10,20 +10,21 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox spacing="10" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.activiteC">
+<VBox prefHeight="483.0" prefWidth="1266.0" spacing="10" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.activiteC">
     <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
     </padding>
 
-    <TableView fx:id="activiteTableView">
+    <TableView fx:id="activiteTableView" prefHeight="327.0" prefWidth="1064.0">
         <columns>
             <TableColumn fx:id="idColumn" text="ID" />
-            <TableColumn fx:id="nomColumn" text="Nom" />
-            <TableColumn fx:id="descriptionColumn" prefWidth="266.0" text="Description" />
-            <TableColumn fx:id="dateDebutColumn" prefWidth="124.0" text="Date Début" />
-            <TableColumn fx:id="dateFinColumn" prefWidth="108.0" text="Date Fin" />
-            <TableColumn fx:id="idEventColumn" prefWidth="147.0" text="ID Événement" />
+            <TableColumn fx:id="nomColumn" prefWidth="203.0" text="Nom" />
+            <TableColumn fx:id="descriptionColumn" prefWidth="309.0" text="Description" />
+            <TableColumn fx:id="dateDebutColumn" prefWidth="142.0" text="Date Début" />
+            <TableColumn fx:id="dateFinColumn" prefWidth="176.0" text="Date Fin" />
+            <TableColumn fx:id="idEventColumn" minWidth="5.0" prefWidth="7.0" text="ID Événement" />
         </columns>
     </TableView>
 
@@ -40,9 +41,14 @@
         <TextField fx:id="idEventInput" />
     </HBox>
 
-    <HBox spacing="10">
+    <HBox prefHeight="40.0" prefWidth="1236.0" spacing="10">
         <Button onAction="#addActivite" text="Ajouter" />
         <Button onAction="#updateActivite" text="Modifier" />
         <Button onAction="#deleteActivite" text="Supprimer" />
+      <Button fx:id="retour" contentDisplay="CENTER" mnemonicParsing="false" onAction="#retourner" prefHeight="37.0" prefWidth="101.0" text="Retourner" textAlignment="CENTER" textFill="#a80e0e">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font>
+      </Button>
     </HBox>
 </VBox>

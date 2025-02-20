@@ -4,13 +4,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import tn.esprit.models.Activite;
 import tn.esprit.services.ServiceActivite;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.util.List;
@@ -156,5 +161,25 @@ public class activiteC implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public void retourner(ActionEvent actionEvent) {
+
+        // Charger l'interface AjouterUser
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/tools1.fxml"));
+            Parent root = fxmlLoader.load();
+
+            // Changer la scène de la même fenêtre (Stage)
+            Stage stage = (Stage) dateDebutInput.getScene().getWindow(); // Récupérer le Stage actuel
+            stage.setScene(new Scene(root)); // Remplacer la scène avec l'interface d'ajout
+            stage.setTitle("travelPro"); // Mettre à jour le titre de la fenêtre
+        } catch (IOException e) {
+            e.printStackTrace();
+            afficherAlerte("Erreur", "Impossible de charger l'interface d'ajout.");
+        }
+    }
+
+    private void afficherAlerte(String erreur, String s) {
     }
 }

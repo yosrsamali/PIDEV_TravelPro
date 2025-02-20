@@ -19,8 +19,9 @@
 
 <VBox fx:id="eventInterfaces" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="6000.0" prefWidth="1331.0" stylesheets="@css/product.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.evenementC">
    <children>
-      <VBox fx:id="EventsInterface" prefHeight="500.0" prefWidth="1331.0" stylesheets="@css/product.css">
+      <VBox fx:id="EventsInterface" prefHeight="50.0" prefWidth="1331.0" stylesheets="@css/product.css">
          <children>
+
             <Pane fx:id="UpperSection" prefHeight="900.0" prefWidth="1271.0" styleClass="UpperSection" stylesheets="@css/product.css">
                <children>
                   <TextField layoutX="159.0" layoutY="1" prefHeight="37.0" prefWidth="265.0" styleClass="search-field" stylesheets="@css/product.css" />
@@ -29,21 +30,22 @@
                      <graphic>
                         <ImageView fx:id="GoToAddPageBtn" fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../Desktop/projet/src/main/resources/main/projet/icons/plus.png" />
+                              <Image url="@icons/plus.png" />
+
                            </image>
                         </ImageView>
                      </graphic>
                   </Button>
-                  <ImageView fitHeight="22.0" fitWidth="31.0" layoutX="391.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="22.0" fitWidth="31.0" layoutX="391.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../Desktop/projet/src/main/resources/main/projet/icons/search.png" />
+                        <Image url="@icons/search.png" />
                      </image>
                   </ImageView>
-                  <Button layoutX="623.0" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#goToAvisPage" prefHeight="46.0" prefWidth="187.0" styleClass="UpperSectionBtn" stylesheets="@css/product.css" text="Activités">
+                  <Button layoutX="623.0" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#gotoactivitie" prefHeight="46.0" prefWidth="187.0" styleClass="UpperSectionBtn" stylesheets="@css/product.css" text="Activités">
                      <graphic>
                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../Desktop/projet/src/main/resources/main/projet/icons/message.png" />
+                              <Image url="@icons/message.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -52,7 +54,7 @@
                      <graphic>
                         <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../Desktop/projet/src/main/resources/main/projet/icons/participants.png" />
+                              <Image url="@icons/participants.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -140,7 +142,7 @@
                <graphic>
                   <ImageView fx:id="GoToEventsPageBtn" fitHeight="34.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../Desktop/projet/src/main/resources/main/projet/icons/back.png" />
+                        <Image url="@icons/back.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -148,15 +150,15 @@
          </children>
       </Pane>
 
-      <VBox fx:id="ParticipantsPage" prefHeight="907.0" prefWidth="1331.0">
+      <VBox fx:id="ParticipantsPage" prefHeight="50.0" prefWidth="1331.0">
          <children>
-            <Pane fx:id="UpperSection1" prefHeight="215.0" prefWidth="1331.0" styleClass="UpperSection" stylesheets="@css/product.css">
+            <Pane fx:id="UpperSection1" prefHeight="200.0" prefWidth="1331.0" styleClass="UpperSection" stylesheets="@css/product.css">
                <children>
                   <TextField layoutX="159.0" layoutY="41.0" prefHeight="37.0" prefWidth="265.0" styleClass="search-field" stylesheets="@css/product.css" />
                   <Label layoutX="90.0" layoutY="41.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="80.0" styleClass="label-style" stylesheets="@css/product.css" text="Searsh" />
                   <ImageView fitHeight="22.0" fitWidth="22.0" layoutX="394.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../Desktop/projet/src/main/resources/main/projet/icons/search.png" />
+                        <Image url="icons/search.png" />
                      </image>
                   </ImageView>
                </children>
@@ -181,15 +183,15 @@
             </Pane>
          </children>
       </VBox>
-      <VBox fx:id="AvisPage" prefHeight="907.0" prefWidth="1331.0">
+      <VBox fx:id="AvisPage" prefHeight="50.0" prefWidth="1331.0">
          <children>
-            <Pane fx:id="UpperSection11" prefHeight="215.0" prefWidth="1331.0" styleClass="UpperSection" stylesheets="@css/product.css">
+            <Pane fx:id="UpperSection11" prefHeight="50.0" prefWidth="1331.0" styleClass="UpperSection" stylesheets="@css/product.css">
                <children>
                   <TextField layoutX="159.0" layoutY="41.0" prefHeight="37.0" prefWidth="265.0" styleClass="search-field" stylesheets="@css/product.css" />
                   <Label layoutX="90.0" layoutY="41.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="80.0" styleClass="label-style" stylesheets="@css/product.css" text="Search" />
                   <ImageView fitHeight="22.0" fitWidth="22.0" layoutX="390.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../Desktop/projet/src/main/resources/main/projet/icons/search.png" />
+                        <Image url="@icons/search.png" />
                      </image>
                   </ImageView>
                </children>
@@ -292,7 +294,7 @@
                   <graphic>
                       <ImageView fitHeight="34.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                           <image>
-                              <Image url="@../../../../../Desktop/projet/src/main/resources/main/projet/icons/back.png" />
+                              <Image url="@icons/back.png" />
                           </image>
                       </ImageView>
                   </graphic>
