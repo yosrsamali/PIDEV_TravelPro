@@ -4,12 +4,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import tn.esprit.interfaces.IService;
 import tn.esprit.models.Produit;
 import tn.esprit.services.ServiceProduit;
 
 public class AjouterProduit {
+    @FXML
+    private ListView<String> productListView;
     @FXML
     private TextField tfPrixProduit; // Price input field
     @FXML
@@ -78,7 +81,7 @@ public class AjouterProduit {
     }
 
     @FXML
-    public void afficherPersonnes(ActionEvent actionEvent) {
+    public void AfficherProduit(ActionEvent actionEvent) {
         lbPersonnes.setText(sp.getAll().toString());
     }
 

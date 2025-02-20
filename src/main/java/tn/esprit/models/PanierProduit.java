@@ -4,6 +4,14 @@ public class PanierProduit {
     private int idPanier, idProduit, quantite;
     private double prixVente; // New attribute for displaying only prix_vente
 
+    private String nomProduit;
+    public String getNomProduit() {
+        return nomProduit;
+    }
+
+    public void setNomProduit(String nomProduit) {
+        this.nomProduit = nomProduit;
+    }
     public PanierProduit() {
         this.quantite = 1; // Default value
     }
@@ -18,6 +26,7 @@ public class PanierProduit {
     public int getIdPanier() {
         return idPanier;
     }
+
 
     public void setIdPanier(int idPanier) {
         this.idPanier = idPanier;

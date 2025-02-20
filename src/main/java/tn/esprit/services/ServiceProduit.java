@@ -46,7 +46,28 @@ public class ServiceProduit implements IService<Produit> {
                 p.setNomProduit(rs.getString("nom_produit"));
                 p.setPrixAchat(rs.getDouble("prix_achat"));
                 p.setQuantiteProduit(rs.getInt("quantite_produit"));
+                // As prix_vente is generated in the database, we can retrieve it directly
+                p.setPrixVente(rs.getDouble("prix_vente"));
 
+                produits.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return produits;
+    } public List<Produit> getAllClient() {
+        List<Produit> produits = new ArrayList<>();
+        String qry = "SELECT id_produit, nom_produit, prix_vente FROM produit";
+
+        try {
+            Statement stm = cnx.createStatement();
+            ResultSet rs = stm.executeQuery(qry);
+
+            while (rs.next()) {
+                Produit p = new Produit();
+                p.setIdProduit(rs.getInt("id_produit"));
+                p.setNomProduit(rs.getString("nom_produit"));
                 // As prix_vente is generated in the database, we can retrieve it directly
                 p.setPrixVente(rs.getDouble("prix_vente"));
 

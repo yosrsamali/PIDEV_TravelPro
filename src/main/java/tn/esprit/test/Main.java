@@ -20,7 +20,7 @@ public class Main {
         sp.add(new Produit("thermos", 20, 100));
         System.out.println(sp.getAll());
 */
-        // Testing delete method
+       /* // Testing delete method
         System.out.println("\nTesting delete method");
         Produit produitToDelete = new Produit("thermos", 20, 100);
         sp.delete(produitToDelete);
