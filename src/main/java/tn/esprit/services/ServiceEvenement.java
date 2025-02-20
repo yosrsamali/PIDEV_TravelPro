@@ -108,6 +108,7 @@ public class ServiceEvenement implements IService {
             System.out.println("❌ Erreur lors de la suppression de l'événement : " + e.getMessage());
         }
     }
+
     public void update(evenement event, int id) {
         if (event.getDateDebutE() == null || event.getDateFinE() == null) {
             System.out.println("❌ Erreur : Les dates ne doivent pas être null !");
@@ -138,6 +139,34 @@ public class ServiceEvenement implements IService {
             System.out.println("❌ Erreur lors de la mise à jour de l'événement : " + e.getMessage());
         }
     }
+
+    public evenement getEvenementById(int id) {
+        String qry = "SELECT * FROM `evenement` WHERE `idEvent` = ?";
+        try {
+            PreparedStatement pstm = cnx.prepareStatement(qry);
+            pstm.setInt(1, id);
+            ResultSet rs = pstm.executeQuery();
+
+            if (rs.next()) {  // Vérifier si un enregistrement est trouvé
+                return new evenement(
+                        rs.getInt("idEvent"),
+                        rs.getString("nomEvent"),
+                        rs.getString("lieu"),
+                        rs.getDate("dateDebutE"),
+                        rs.getDate("dateFinE"),
+                        rs.getString("type"),
+                        rs.getString("image"),
+                        rs.getInt("idReservation")
+                );
+            } else {
+                System.out.println("⚠ Aucun événement trouvé avec l'ID " + id);
+            }
+        } catch (SQLException e) {
+            System.out.println("❌ Erreur lors de la récupération de l'événement : " + e.getMessage());
+        }
+        return null;
+    }
+
 }
 
    /* @Override

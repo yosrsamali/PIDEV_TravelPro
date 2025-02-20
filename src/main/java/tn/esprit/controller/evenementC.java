@@ -556,43 +556,50 @@ public class evenementC implements Initializable {
         return test;
     }
     public void OnUpdate(ActionEvent actionEvent) {
-        java.sql.Date datee = java.sql.Date.valueOf(dateEvent.getValue());
-        java.sql.Date datee2 = java.sql.Date.valueOf(dateEventInput.getValue());
-        System.out.println("edittttt : "+i);
+        // Récupérer l'événement existant pour éviter d'écraser des données non modifiées
+        evenement existingEvent = e.getEvenementById(i);
+        if (existingEvent == null) {
+            System.out.println("❌ Événement non trouvé !");
+            return;
+        }
 
-        evenement e2=new evenement(i,nomEventIInput2.getText(),LieuIEventnput2.getText(),datee,datee2, TypeEventInput2.getText(),ImageEventInput2.getText(),1);
-        System.out.println(e2);
-        System.out.println(i);
-        e.update(e2,i);
-        nomEventIInput2.clear();
-        dateEvent2.setValue(null);
-        dateEventInput2.setValue(null);
-        TypeEventInput2.clear();
-        LieuIEventnput2.clear();
-        ImageEventInput2.clear();
+        // Récupérer uniquement les valeurs modifiées et garder les anciennes si elles ne sont pas changées
+        String updatedNomEvent = !nomEventIInput2.getText().isEmpty() ? nomEventIInput2.getText() : existingEvent.getNomEvent();
+        String updatedLieu = !LieuIEventnput2.getText().isEmpty() ? LieuIEventnput2.getText() : existingEvent.getLieu();
+        java.sql.Date updatedDateDebutE = (dateEvent.getValue() != null) ? java.sql.Date.valueOf(dateEvent.getValue()) : existingEvent.getDateDebutE();
+        java.sql.Date updatedDateFinE = (dateEventInput.getValue() != null) ? java.sql.Date.valueOf(dateEventInput.getValue()) : existingEvent.getDateFinE();
+        String updatedType = !TypeEventInput2.getText().isEmpty() ? TypeEventInput2.getText() : existingEvent.getType();
+        String updatedImage = !ImageEventInput2.getText().isEmpty() ? ImageEventInput2.getText() : existingEvent.getImage();
+        int updatedIdReservation = existingEvent.getIdReservation();
 
+        // Créer un objet avec les valeurs mises à jour
+        evenement updatedEvent = new evenement(
+                i, updatedNomEvent, updatedLieu, updatedDateDebutE, updatedDateFinE, updatedType, updatedImage, updatedIdReservation
+        );
 
+        // Mise à jour en base de données
+        e.update(updatedEvent, i);
+
+        // Afficher une notification de succès
         Notifications notificationBuilder = Notifications.create()
-                .title("Evenement modifié ")
-                .text("votre Evenement a été modifié avec succes")
+                .title("Événement modifié")
+                .text("Votre événement a été modifié avec succès")
                 .graphic(null)
-
                 .position(Pos.BOTTOM_RIGHT)
-                .onAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        System.out.println("modifié avec succes");
-                    }
-                });
+                .onAction(event -> System.out.println("Modification réussie"));
+
         notificationBuilder.showConfirm();
-        EventsInterface.setVisible(true);
-        EventsInterface.setManaged(true);
+
+        // Rafraîchir les données affichées
         data();
 
-
+        // Afficher la page principale et masquer la page de mise à jour
+        EventsInterface.setVisible(true);
+        EventsInterface.setManaged(true);
         UpdateEventPage.setVisible(false);
         UpdateEventPage.setManaged(false);
-
-
     }
+
+
+
 }
