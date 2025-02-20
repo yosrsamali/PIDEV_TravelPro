@@ -2,23 +2,29 @@ package tn.esprit.models;
 
 public class Produit {
 
+
     private int idProduit, quantiteProduit;
     private String nomProduit;
-    private double prixProduit;
+    private double prixAchat;
+    private double prixVente;
 
     public Produit() {
     }
-
-    public Produit(int idProduit, String nomProduit, double prixProduit, int quantiteProduit) {
+    public Produit(int idProduit) {
         this.idProduit = idProduit;
-        this.nomProduit = nomProduit;
-        this.prixProduit = prixProduit;
-        this.quantiteProduit = quantiteProduit;
     }
 
-    public Produit(String nomProduit, double prixProduit, int quantiteProduit) {
+    public Produit(int idProduit, String nomProduit, double prixAchat, int quantiteProduit, double prixVente) {
+        this.idProduit = idProduit;
         this.nomProduit = nomProduit;
-        this.prixProduit = prixProduit;
+        this.prixAchat = prixAchat;
+        this.quantiteProduit = quantiteProduit;
+        this.prixVente = prixVente;
+    }
+
+    public Produit(String nomProduit, double prixAchat, int quantiteProduit) {
+        this.nomProduit = nomProduit;
+        this.prixAchat = prixAchat;
         this.quantiteProduit = quantiteProduit;
     }
 
@@ -38,12 +44,12 @@ public class Produit {
         this.nomProduit = nomProduit;
     }
 
-    public double getPrixProduit() {
-        return prixProduit;
+    public double getPrixAchat() {
+        return prixAchat;
     }
 
-    public void setPrixProduit(double prixProduit) {
-        this.prixProduit = prixProduit;
+    public void setPrixAchat(double prixAchat) {
+        this.prixAchat = prixAchat;
     }
 
     public int getQuantiteProduit() {
@@ -54,13 +60,23 @@ public class Produit {
         this.quantiteProduit = quantiteProduit;
     }
 
+    public double getPrixVente() {
+        return prixVente;
+    }
+
+    // Assuming prixVente is calculated or retrieved directly from the database as a generated field.
+    public void setPrixVente(double prixVente) {
+        this.prixVente = prixVente;
+    }
+
     @Override
     public String toString() {
         return "Produit{" +
                 "idProduit=" + idProduit +
                 ", nomProduit='" + nomProduit + '\'' +
-                ", prixProduit=" + prixProduit +
+                ", prixAchat=" + prixAchat +
                 ", quantiteProduit=" + quantiteProduit +
+                ", prixVente=" + prixVente +
                 '}';
     }
 }

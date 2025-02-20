@@ -22,7 +22,7 @@ public class Main {
 */
         // Testing delete method
         System.out.println("\nTesting delete method");
-        Produit produitToDelete = new Produit(4, "thermos", 20, 100);
+        Produit produitToDelete = new Produit("thermos", 20, 100);
         sp.delete(produitToDelete);
         System.out.println("Product deleted successfully!");
         System.out.println(sp.getAll());
