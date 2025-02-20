@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="tn.esprit.controllers.ReponseController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.ReponseController">
+    <children>
+        <!-- Titre Avis -->
+        <Label layoutX="257.0" layoutY="28.0" text="Avis">
+            <font>
+                <Font size="37.0" />
+            </font>
+        </Label>
 
+        <!-- ScrollPane contenant une VBox pour les cartes -->
+        <ScrollPane layoutX="50.0" layoutY="80.0" prefHeight="400.0" prefWidth="700.0">
+            <content>
+                <VBox fx:id="cardList" spacing="10.0">
+                    <!-- Les cartes des avis acceptés seront ajoutées ici -->
+                </VBox>
+            </content>
+        </ScrollPane>
+    </children>
 </AnchorPane>

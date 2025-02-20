@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.Listreponse">
+   <children>
+      <!-- Title label for the Reponses list -->
+      <Label layoutX="229.0" layoutY="15.0" text="Liste de Réponse" />
+
+      <!-- Label to display Avis details -->
+      <Label fx:id="avisLabel" layoutX="20.0" layoutY="50.0" prefWidth="560.0" />
+
+      <!-- VBox to display list of Reponses -->
+      <VBox fx:id="reponsesVBox" layoutX="20.0" layoutY="150.0" spacing="10.0" prefWidth="560.0">
+      </VBox>
+   </children>
+</AnchorPane>

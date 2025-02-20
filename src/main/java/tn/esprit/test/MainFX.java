@@ -1,4 +1,4 @@
-
+package tn.esprit.test;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,12 +17,12 @@ public class MainFX extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        FXMLLoader loader =new FXMLLoader(getClass().getResource("/Avis.fxml"));
+        FXMLLoader loader =new FXMLLoader(getClass().getResource("/Adminmanager.fxml"));
         try {
             Parent root = loader.load();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
-            primaryStage.setTitle("---- Gestion Avis -----");
+            primaryStage.setTitle("---- Gestion Personne -----");
             primaryStage.show();
 
         } catch (IOException e) {

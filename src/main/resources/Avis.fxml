@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="tn.esprit.controllers.AvisController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.AvisController">
+   <children>
+      <TextField fx:id="commentaireField" layoutX="131.0" layoutY="207.0" promptText="Commenter" />
+      <TextField fx:id="noteField" layoutX="132.0" layoutY="146.0" promptText="Note (0-10)" />
+      <Button fx:id="submitButton" layoutX="448.0" layoutY="303.0" mnemonicParsing="false" text="Ajouter" />
+   </children>
 </AnchorPane>
