@@ -1,10 +1,7 @@
 package tn.esprit.utils;
 
-import tn.esprit.models.deponse;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class MyDatabase {
@@ -30,22 +27,15 @@ public class MyDatabase {
     }
 
     public Connection getCnx() {
-        return cnx;
-    }
-
-    // Ajouter la méthode delete() ici
-    public void delete(deponse dep) {
-        String query = "DELETE FROM deponse WHERE id_deponse = ?";
-        try (PreparedStatement pstm = cnx.prepareStatement(query)) {
-            pstm.setInt(1, dep.getId_deponse());
-            int rowsAffected = pstm.executeUpdate();
-            if (rowsAffected > 0) {
-                System.out.println("Dépense supprimée: " + dep.getId_deponse());
-            } else {
-                System.out.println("Aucune dépense trouvée avec cet ID.");
+        // Vérifier si la connexion est fermée, et la rouvrir si nécessaire
+        try {
+            if (cnx == null || cnx.isClosed()) {
+                cnx = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+                System.out.println("Connexion réouverte...");
             }
         } catch (SQLException e) {
-            System.out.println("Erreur lors de la suppression de la dépense : " + e.getMessage());
+            e.printStackTrace();
         }
+        return cnx;
     }
 }

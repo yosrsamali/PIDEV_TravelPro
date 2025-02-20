@@ -1,0 +1,109 @@
+/* ----- Style général de l'arrière-plan ----- */
+.background-pane {
+    -fx-background-color: linear-gradient(to bottom, #1E3C72, #2A5298, #FFFFFF); /* Fond dégradé bleu à blanc */
+}
+
+/* ----- Conteneur des cartes (VBox) ----- */
+.card-container {
+    -fx-padding: 20px;
+    -fx-spacing: 15px;
+}
+
+/* ----- Style du ScrollPane pour un fond transparent ----- */
+.scroll-pane {
+    -fx-background: transparent; /* Fond transparent pour le ScrollPane */
+    -fx-border-color: transparent; /* Aucune bordure visible */
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent; /* Fond transparent pour la zone de défilement */
+}
+
+/* ----- Style des cartes individuelles ----- */
+.card {
+    -fx-background-color: white; /* Fond blanc pour les cartes */
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+    -fx-padding: 15px;
+    -fx-spacing: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 10, 0, 0, 5); /* Ombre légère pour chaque carte */
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+/* ----- Effet de survol sur les cartes ----- */
+.card:hover {
+    -fx-background-color: #f0f0f0;
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 15, 0, 0, 5); /* Ombre plus intense au survol */
+}
+
+/* ----- Texte des cartes ----- */
+.card-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1E3C72;
+}
+
+.card-text {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+}
+
+/* ----- Boutons d'action sur chaque carte ----- */
+.card-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-padding: 8px 15px;
+    -fx-cursor: hand;
+    -fx-border-width: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 3);
+}
+
+/* ----- Effet hover sur les boutons ----- */
+.card-button:hover {
+    -fx-background-color: transparent;
+}
+
+/* ----- Style du texte du total ----- */
+.card-total {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #d35400; /* Orange vif pour le total */
+}
+.page-title {
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-alignment: center;
+    -fx-padding: 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0, 0, 3);
+}
+.button-modifier, .button-supprimer {
+    -fx-background-color: #3498db; /* Bleu pour "Modifier" */
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-padding: 8px 15px;
+    -fx-cursor: hand;
+    -fx-border-width: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 3);
+}
+
+.button-modifier:hover, .button-supprimer:hover {
+    -fx-background-color: #2980b9;
+}
+
+.button-supprimer {
+    -fx-background-color: #e74c3c; /* Rouge pour "Supprimer" */
+}
+
+.button-supprimer:hover {
+    -fx-background-color: #c0392b;
+}
