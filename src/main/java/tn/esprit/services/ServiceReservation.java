@@ -16,7 +16,7 @@ public class ServiceReservation implements IService<Reservation> {
 
     @Override
     public void add(Reservation reservation) {
-        String qry = "INSERT INTO `reservation`(`id_voiture`, `id_billetAvion`, `id_hotel`, `id_client`, `nom`, `prenom`, `statut`) VALUES (?,?,?,?,?,?,?)";
+        String qry = "INSERT INTO `reservation`(`id_voiture`, `id_billetAvion`, `id_hotel`, `id_client`, `statut`) VALUES (?,?,?,?,?)";
         try {
             PreparedStatement pstm = cnx.prepareStatement(qry);
             pstm.setInt(1, reservation.getId_voiture());
@@ -61,7 +61,7 @@ public class ServiceReservation implements IService<Reservation> {
 
     @Override
     public void update(Reservation reservation) {
-        String qry = "UPDATE `reservation` SET `id_voiture`=?, `id_billetAvion`=?, `id_hotel`=?, `id_client`=?, `nom`=?, `prenom`=?, `statut`=? WHERE `id_reservation`=?";
+        String qry = "UPDATE `reservation` SET `id_voiture`=?, `id_billetAvion`=?, `id_hotel`=?, `id_client`=?, `statut`=? WHERE `id_reservation`=?";
         try {
             PreparedStatement pstm = cnx.prepareStatement(qry);
             pstm.setInt(1, reservation.getId_voiture());

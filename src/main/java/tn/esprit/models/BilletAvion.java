@@ -3,31 +3,25 @@ package tn.esprit.models;
 import java.util.Date;
 
 public class BilletAvion {
-
     private int id;
     private String compagnie;
-    private String class_Billet; // Première classe, Économique, etc.
+    private String class_Billet;
     private String villeDepart;
     private String villeArrivee;
     private Date dateDepart;
     private Date dateArrivee;
     private double prix;
 
-    // Constructeur
-    public BilletAvion( String compagnie, String class_Billet, String villeDepart, String villeArrivee, Date dateDepart, Date dateArrivee, double prix) {
-
+    // Constructeur avec ID
+    public BilletAvion(int id, String compagnie, String class_Billet, String villeDepart, String villeArrivee, Date dateDepart, Date dateArrivee, double prix) {
+        this.id = id;
         this.compagnie = compagnie;
         this.class_Billet = class_Billet;
         this.villeDepart = villeDepart;
         this.villeArrivee = villeArrivee;
-
         this.dateDepart = dateDepart;
         this.dateArrivee = dateArrivee;
         this.prix = prix;
-    }
-
-    public BilletAvion() {
-
     }
 
     // Getters et Setters

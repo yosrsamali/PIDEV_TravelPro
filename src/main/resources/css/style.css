@@ -145,3 +145,18 @@ TextField:focused {
 .table-column .button:hover {
     -fx-background-color: #2980b9;
 }
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical {
+    -fx-background-color: #f0f0f0;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #c0c0c0;
+}

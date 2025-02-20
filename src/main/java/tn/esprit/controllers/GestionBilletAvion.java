@@ -60,7 +60,7 @@ public class GestionBilletAvion {
         }
 
         BilletAvion billetAvion = new BilletAvion(
-                tfCompagnie.getText(), tfClassBillet.getText(), tfVilleDepart.getText(),
+                0,tfCompagnie.getText(), tfClassBillet.getText(), tfVilleDepart.getText(),
                 tfVilleArrivee.getText(), dateDepart, dateArrivee, prix
         );
 

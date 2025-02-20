@@ -17,7 +17,7 @@ public class ServiceHotel implements IService<Hotel> {
 
     @Override
     public void add(Hotel hotel) {
-        String qry = "INSERT INTO `hotel`(`nomHotel`, `ville`, `prix_par_nuit`, `disponibilite`, `nombre_etoile`, `type_de_chambre`) VALUES (?,?,?,?,?,?)";
+        String qry = "INSERT INTO `hotel`(`nom`, `ville`, `prixParNuit`, `disponible`, `nombreEtoile`, `typeDeChambre`) VALUES (?,?,?,?,?,?)";
         try {
             PreparedStatement pstm = cnx.prepareStatement(qry);
             pstm.setString(1, hotel.getNom());
@@ -45,12 +45,12 @@ public class ServiceHotel implements IService<Hotel> {
 
             while (rs.next()) {
                 Hotel h = new Hotel(
-                        rs.getString("nomHotel"),
+                        rs.getString("nom"),
                         rs.getString("ville"),
-                        rs.getDouble("prix_par_nuit"),
-                        rs.getBoolean("disponibilite"),
-                        rs.getInt("nombre_etoile"),       // Nouvel attribut
-                        rs.getString("type_de_chambre")  // Nouvel attribut
+                        rs.getDouble("prixParNuit"),
+                        rs.getBoolean("disponible"),
+                        rs.getInt("nombreEtoile"),       // Nouvel attribut
+                        rs.getString("typeDeChambre")  // Nouvel attribut
                 );
                 h.setId(rs.getInt("id")); // Assurez-vous de définir l'ID
                 hotels.add(h);
@@ -61,10 +61,31 @@ public class ServiceHotel implements IService<Hotel> {
 
         return hotels;
     }
+    public Hotel getById(int id) {
+        String qry = "SELECT * FROM `hotel` WHERE `id`=?";
+        try {
+            PreparedStatement pstm = cnx.prepareStatement(qry);
+            pstm.setInt(1, id);
+            ResultSet rs = pstm.executeQuery();
 
+            if (rs.next()) {
+                return new Hotel(
+                        rs.getString("nom"),
+                        rs.getString("ville"),
+                        rs.getDouble("prixParNuit"),
+                        rs.getBoolean("disponible"),
+                        rs.getInt("nombreEtoile"),
+                        rs.getString("typeDeChambre")
+                );
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la récupération de l'hôtel: " + e.getMessage());
+        }
+        return null;
+    }
     @Override
     public void update(Hotel hotel) {
-        String qry = "UPDATE `hotel` SET `nomHotel`=?, `ville`=?, `prix_par_nuit`=?, `disponibilite`=?, `nombre_etoile`=?, `type_de_chambre`=? WHERE `id`=?";
+        String qry = "UPDATE `hotel` SET `nom`=?, `ville`=?, `prixParNuit`=?, `disponible`=?, `nombreEtoile`=?, `typeDeChambre`=? WHERE `id`=?";
         try {
             PreparedStatement pstm = cnx.prepareStatement(qry);
             pstm.setString(1, hotel.getNom());

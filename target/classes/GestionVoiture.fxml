@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -9,94 +10,92 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.GestionVoiture">
+<AnchorPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.GestionVoiture">
+   <stylesheets>
+      <URL value="@css/style.css" />
+   </stylesheets>
    <children>
-      <Label layoutX="109.0" layoutY="72.0" prefHeight="30.0" prefWidth="81.0" text="Marque:">
+      <!-- Label Marque -->
+      <Label layoutX="338.0" layoutY="225.0" prefHeight="30.0" prefWidth="81.0" text="Marque:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <TextField alignment="TOP_CENTER" layoutX="214.0" layoutY="70.0" nodeOrientation="LEFT_TO_RIGHT" promptText="ex: Mercedes">
+
+      <!-- TextField Marque -->
+      <TextField fx:id="tfMarque" alignment="TOP_CENTER" layoutX="443.0" layoutY="223.0" nodeOrientation="LEFT_TO_RIGHT" promptText="ex: Mercedes">
          <font>
             <Font name="System Italic" size="14.0" />
          </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
       </TextField>
-      <TextField alignment="TOP_CENTER" layoutX="214.0" layoutY="126.0" nodeOrientation="LEFT_TO_RIGHT" promptText="ex: E">
-         <font>
-            <Font name="System Italic" size="14.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </TextField>
-      <TextField alignment="TOP_CENTER" layoutX="214.0" layoutY="180.0" nodeOrientation="LEFT_TO_RIGHT" promptText="ex: 2021">
-         <font>
-            <Font name="System Italic" size="14.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </TextField>
-      <TextField alignment="TOP_CENTER" layoutX="214.0" layoutY="238.0" nodeOrientation="LEFT_TO_RIGHT" promptText="ex:250.0">
-         <font>
-            <Font name="System Italic" size="14.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </TextField>
-      <TextField alignment="TOP_CENTER" layoutX="214.0" layoutY="294.0" nodeOrientation="LEFT_TO_RIGHT" promptText="Oui/Non">
-         <font>
-            <Font name="System Italic" size="14.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </TextField>
-      <Label layoutX="109.0" layoutY="128.0" prefHeight="30.0" prefWidth="91.0" text="modele:">
+
+      <!-- Label Modele -->
+      <Label layoutX="338.0" layoutY="281.0" prefHeight="30.0" prefWidth="91.0" text="Modele:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="109.0" layoutY="182.0" prefHeight="30.0" prefWidth="72.0" text="annee:">
+
+      <!-- TextField Modele -->
+      <TextField fx:id="tfModele" alignment="TOP_CENTER" layoutX="443.0" layoutY="279.0" nodeOrientation="LEFT_TO_RIGHT" promptText="ex: E">
+         <font>
+            <Font name="System Italic" size="14.0" />
+         </font>
+      </TextField>
+
+      <!-- Label Annee -->
+      <Label layoutX="338.0" layoutY="335.0" prefHeight="30.0" prefWidth="72.0" text="Annee:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="109.0" layoutY="240.0" prefHeight="30.0" prefWidth="91.0" text="prix par jour:" textAlignment="CENTER">
+
+      <!-- TextField Annee -->
+      <TextField fx:id="tfAnnee" alignment="TOP_CENTER" layoutX="443.0" layoutY="333.0" nodeOrientation="LEFT_TO_RIGHT" promptText="ex: 2021">
+         <font>
+            <Font name="System Italic" size="14.0" />
+         </font>
+      </TextField>
+
+      <!-- Label Prix par jour -->
+      <Label layoutX="338.0" layoutY="393.0" prefHeight="30.0" prefWidth="91.0" text="Prix par jour:" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="109.0" layoutY="296.0" prefHeight="30.0" prefWidth="91.0" text="disponibilité:">
+
+      <!-- TextField Prix par jour -->
+      <TextField fx:id="tfPrixParJour" alignment="TOP_CENTER" layoutX="443.0" layoutY="391.0" nodeOrientation="LEFT_TO_RIGHT" promptText="ex: 250.0">
+         <font>
+            <Font name="System Italic" size="14.0" />
+         </font>
+      </TextField>
+
+      <!-- Label Disponibilité -->
+      <Label layoutX="338.0" layoutY="449.0" prefHeight="30.0" prefWidth="91.0" text="Disponibilité:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Text layoutX="193.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ajout du Voiture" textAlignment="CENTER" wrappingWidth="213.33673095703125">
+
+      <!-- TextField Disponibilité -->
+      <TextField fx:id="tfDisponible" alignment="TOP_CENTER" layoutX="443.0" layoutY="447.0" nodeOrientation="LEFT_TO_RIGHT" promptText="Oui/Non">
+         <font>
+            <Font name="System Italic" size="14.0" />
+         </font>
+      </TextField>
+
+      <!-- Titre Ajout du Voiture -->
+      <Text layoutX="467.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ajout du Voiture" textAlignment="CENTER" wrappingWidth="213.33673095703125">
          <font>
             <Font name="Arial Bold" size="25.0" />
          </font>
       </Text>
-      <Button layoutX="244.0" layoutY="349.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="111.0" text="Ajouter" />
+
+      <!-- Button Ajouter -->
+      <Button layoutX="463.0" layoutY="501.0" mnemonicParsing="false" onAction="#ajouterVoiture" prefHeight="30.0" prefWidth="111.0" text="Ajouter" />
+
+      <!-- Button Afficher -->
+      <Button layoutX="603.0" layoutY="501.0" fx:id="btnVoirVoitures" mnemonicParsing="false" onAction="#naviguerVersAffichageVoiture" prefHeight="41.0" prefWidth="111.0" text="Afficher" />
    </children>
 </AnchorPane>

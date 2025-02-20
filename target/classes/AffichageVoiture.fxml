@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.GestionVoiture">
+    <stylesheets>
+        <URL value="@css/style.css" />
+    </stylesheets>
+    <children>
+        <!-- Titre -->
+        <Label layoutX="400.0" layoutY="20.0" text="Liste des Voitures" style="-fx-font-size: 20px; -fx-font-weight: bold;">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
+
+        <!-- ScrollPane pour permettre le défilement -->
+        <ScrollPane layoutX="50.0" layoutY="70.0" prefHeight="600.0" prefWidth="980.0">
+            <content>
+                <!-- FlowPane pour afficher les cartes -->
+                <FlowPane fx:id="flowPaneVoitures" hgap="10" vgap="10" prefWidth="960.0" />
+            </content>
+        </ScrollPane>
+
+        <!-- Boutons de navigation -->
+        <Button fx:id="btnAjouter" layoutX="421.0" layoutY="660.0" mnemonicParsing="false" onAction="#naviguerVersGestionVoiture" prefHeight="41.0" prefWidth="106.0" text="Ajouter" />
+        <Button fx:id="btnActualiser" layoutX="553.0" layoutY="660.0" mnemonicParsing="false" onAction="#afficherVoitures" prefHeight="41.0" prefWidth="106.0" text="Actualiser" />
+    </children>
+</AnchorPane>

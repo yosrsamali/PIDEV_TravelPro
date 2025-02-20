@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.GestionVoiture">
+    <children>
+        <Label layoutX="250.0" layoutY="20.0" text="Gestion des Voitures" textAlignment="CENTER">
+            <font>
+                <Font name="Arial Bold" size="20.0" />
+            </font>
+        </Label>
+
+        <TableView fx:id="tableVoitures" layoutX="50.0" layoutY="60.0" prefWidth="600.0" prefHeight="250.0">
+            <columns>
+                <TableColumn fx:id="colId" text="ID" prefWidth="50.0" />
+                <TableColumn fx:id="colMarque" text="Marque" prefWidth="100.0" />
+                <TableColumn fx:id="colModele" text="Modèle" prefWidth="100.0" />
+                <TableColumn fx:id="colAnnee" text="Année" prefWidth="80.0" />
+                <TableColumn fx:id="colPrix" text="Prix/Jour" prefWidth="80.0" />
+                <TableColumn fx:id="colDisponible" text="Disponible" prefWidth="80.0" />
+            </columns>
+        </TableView>
+
+        <Button fx:id="btnModifier" layoutX="150.0" layoutY="330.0" mnemonicParsing="false" text="Modifier" onAction="#mettreAJourVoiture" />
+        <Button fx:id="btnSupprimer" layoutX="300.0" layoutY="330.0" mnemonicParsing="false" text="Supprimer" onAction="#supprimerVoiture" />
+        <Button fx:id="btnActualiser" layoutX="450.0" layoutY="330.0" mnemonicParsing="false" text="Actualiser" onAction="#afficherVoitures" />
+    </children>
+</AnchorPane>

@@ -8,8 +8,9 @@ public class Voiture {
     private int annee;
     private double prixParJour;
     private boolean disponible;
-    public Voiture( String marque, String modele, int annee, double prixParJour, boolean disponible) {
 
+    public Voiture(int id, String marque, String modele, int annee, double prixParJour, boolean disponible) {
+        this.id = id;
         this.marque = marque;
         this.modele = modele;
         this.annee = annee;
@@ -18,9 +19,7 @@ public class Voiture {
     }
 
     public Voiture() {
-
     }
-
 
     @Override
     public String toString() {
@@ -33,6 +32,8 @@ public class Voiture {
                 ", disponible=" + disponible +
                 '}';
     }
+
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -40,7 +41,6 @@ public class Voiture {
     public void setId(int id) {
         this.id = id;
     }
-
 
     public String getModele() {
         return modele;
@@ -81,6 +81,4 @@ public class Voiture {
     public void setDisponible(boolean disponible) {
         this.disponible = disponible;
     }
-
-
 }
