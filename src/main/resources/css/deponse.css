@@ -1,7 +1,6 @@
 /* ----- Style général de l'arrière-plan ----- */
 .background-pane {
-    -fx-background-color: linear-gradient(to bottom, #1E3C72, #2A5298, #FFFFFF); /* Fond dégradé bleu à blanc */
-}
+    -fx-background-color: linear-gradient(to bottom, #37B7C3, #071952);}
 
 /* ----- Conteneur des cartes (VBox) ----- */
 .card-container {
@@ -85,7 +84,6 @@
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0, 0, 3);
 }
 .button-modifier, .button-supprimer {
-    -fx-background-color: #3498db; /* Bleu pour "Modifier" */
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
@@ -97,7 +95,6 @@
 }
 
 .button-modifier:hover, .button-supprimer:hover {
-    -fx-background-color: #2980b9;
 }
 
 .button-supprimer {
@@ -106,4 +103,12 @@
 
 .button-supprimer:hover {
     -fx-background-color: #c0392b;
+}
+.card-benefice {
+    font-size: 16px; /* Ajustez la taille du texte si nécessaire */
+    font-weight: bold;
+    color: #FF5733; /* Choisissez une couleur visible, par exemple un rouge-orangé */
+    background-color: #F7F7F7; /* Une couleur de fond claire pour contraster */
+    padding: 5px; /* Ajoutez un peu d'espace autour du texte */
+    border-radius: 5px; /* Ajoutez un arrondi aux coins pour un meilleur visuel */
 }

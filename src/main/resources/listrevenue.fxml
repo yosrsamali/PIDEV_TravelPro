@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1080.0" styleClass="background-pane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.ListRevenueController">
+
+    <stylesheets>
+        <URL value="@css/revenue.css" />
+    </stylesheets>
+
+    <children>
+        <!-- Titre de la page "Liste des Revenus" -->
+        <Label fx:id="titleLabel" alignment="CENTER" layoutX="326.0" layoutY="-19.0" styleClass="page-title" text="Liste des Revenus" />
+
+        <!-- ScrollPane pour afficher la liste des revenus sous forme de CardView -->
+        <ScrollPane fitToWidth="true" layoutX="7.0" layoutY="119.0" prefHeight="564.0" prefWidth="977.0">
+            <content>
+                <VBox fx:id="vboxContainer" spacing="15.0" styleClass="card-container" />
+            </content>
+        </ScrollPane>
+
+    </children>
+</AnchorPane>

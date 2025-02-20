@@ -1,5 +1,6 @@
 package tn.esprit.controllers;
 
+import javafx.scene.Parent;
 import tn.esprit.utils.MyDatabase;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,8 +14,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.fxml.FXMLLoader;
 import java.net.URL;
 import java.sql.*;
+import java.io.IOException;
 import java.util.ResourceBundle;
 
 public class ListDeponseController implements Initializable {
@@ -92,6 +95,28 @@ public class ListDeponseController implements Initializable {
         card.setBottom(buttonBox);
 
         return card;
+    }
+
+    // Cette méthode sera appelée lors du clic sur le bouton "Gérer Revenues"
+    @FXML
+    public void handleRevenue() {
+        try {
+            // Charger revenue.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/revenue.fxml"));
+            Parent root = loader.load();
+
+            // Créer une nouvelle scène
+            Scene scene = new Scene(root);
+
+            // Créer une nouvelle fenêtre pour afficher la gestion des revenues
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("---- Gestion Revenue -----");
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Méthode pour modifier une dépense

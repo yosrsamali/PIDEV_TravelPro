@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import java.net.URL?>
+
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<AnchorPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.RevenueController">
+
+    <stylesheets>
+        <URL value="@css/style.css"/>
+    </stylesheets>
+
+    <children>
+        <!-- Titre centré en haut -->
+        <Label layoutX="400.0" layoutY="30.0" text="Ajouter Une Revenue" styleClass="title-label"/>
+
+        <!-- Formulaire bien aligné avec labels -->
+        <VBox layoutX="100.0" layoutY="150.0" spacing="15">
+
+            <!-- Sélection du type de revenue -->
+            <Label text="Type de Revenue :" styleClass="form-label"/>
+            <ComboBox fx:id="cbTypeRevenue" promptText="Sélectionnez un type" editable="false">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="vente_produit"/>
+                        <String fx:value="reservation_hotel"/>
+                        <String fx:value="reservation_voiture"/>
+                        <String fx:value="billet_avion"/>
+                    </FXCollections>
+                </items>
+            </ComboBox>
+
+            <Label text="ID Référence :" styleClass="form-label"/>
+            <TextField fx:id="tfReferenceId" promptText="Entrez l'ID de référence" />
+
+            <Label text="Montant Total :" styleClass="form-label"/>
+            <TextField fx:id="tfMontantTotal" promptText="Entrez le montant total" />
+
+            <Label text="Commission :" styleClass="form-label"/>
+            <TextField fx:id="tfCommission" promptText="Entrez la commission" />
+
+            <Label text="Date de Revenue :" styleClass="form-label"/>
+            <DatePicker fx:id="dpDateRevenue"/>
+
+            <Button fx:id="btnAjouter" mnemonicParsing="false" onAction="#ajouterRevenue" text="Ajouter" styleClass="form-button"/>
+        </VBox>
+
+        <!-- Image alignée à droite -->
+        <StackPane layoutX="700.0" layoutY="200.0" prefWidth="300" prefHeight="300" styleClass="image-card">
+            <ImageView fitWidth="280" fitHeight="280">
+                <Image url="@images/1.PNG"/>
+            </ImageView>
+        </StackPane>
+    </children>
+</AnchorPane>

@@ -1,6 +1,6 @@
 /* ----- Background en dégradé bleu-blanc avec un effet de transition pour un aspect fluide ----- */
 AnchorPane {
-    -fx-background-color: linear-gradient(to bottom, #1E3C72, #2A5298, #FFFFFF);
+    -fx-background-color: linear-gradient(to bottom, #37B7C3, #071952);
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 20, 0, 0, 5);
 }
 
