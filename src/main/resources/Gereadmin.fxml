@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.Controllers.GereAdmin">
+    <children>
+        <Label layoutX="259.0" layoutY="48.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Espace Admin" />
+        <Label fx:id="lblNom" layoutX="85.0" layoutY="108.0" text="Nom : " />
+        <Label fx:id="lblPrenom" layoutX="84.0" layoutY="154.0" text="Prénom : " />
+        <Label fx:id="lblMail" layoutX="84.0" layoutY="191.0" text="Email : " />
+        <Label fx:id="lblRole" layoutX="84.0" layoutY="223.0" text="Rôle : " />
+        <Button layoutX="176.0" layoutY="300.0" mnemonicParsing="false" text="Modifier" onAction="#handleModifier" />
+        <Button layoutX="331.0" layoutY="300.0" mnemonicParsing="false" text="Supprimer" onAction="#handleSupprimer" />
+    </children>
+</AnchorPane>
