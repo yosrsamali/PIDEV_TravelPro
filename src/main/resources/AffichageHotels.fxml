@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.text.Font?>
+        <?import java.net.URL?>
+        <?import javafx.scene.control.Button?>
+        <?import javafx.scene.control.Label?>
+        <?import javafx.scene.control.ScrollPane?>
+        <?import javafx.scene.layout.AnchorPane?>
+        <?import javafx.scene.layout.FlowPane?>
+        <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.AffichageHotelsController">
-    <stylesheets>
-        <URL value="@css/style.css" />
-    </stylesheets>
-
-    <Label layoutX="449.0" layoutY="35.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Liste des Hotels">
+<stylesheets>
+    <URL value="@css/style.css" />
+</stylesheets>
+<children>
+    <!-- Titre -->
+    <Label layoutX="400.0" layoutY="20.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Liste des Hotels">
         <font>
             <Font name="System Bold" size="18.0" />
-        </font>
-    </Label>
-    <ScrollPane layoutX="128.0" layoutY="105.0" prefHeight="510.0" prefWidth="349.0">
+        </font></Label>
+
+    <!-- ScrollPane pour permettre le défilement -->
+    <ScrollPane layoutX="128.0" layoutY="105.0" prefHeight="510.0" prefWidth="824.0">
         <content>
-            <FlowPane fx:id="flowPane" hgap="10" layoutX="10" layoutY="10" vgap="10" />
+            <!-- FlowPane pour afficher les cartes -->
+            <FlowPane fx:id="flowPane" hgap="10" prefWidth="960.0" vgap="10" />
         </content>
     </ScrollPane>
-    <Button layoutX="492.0" layoutY="637.0" onAction="#handleRetour" text="Ajouter" />
 
-
+    <!-- Bouton Retour -->
+    <Button layoutX="469.0" layoutY="641.0" onAction="#handleRetour" text="Ajouter" />
+</children>
 </AnchorPane>

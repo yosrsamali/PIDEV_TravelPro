@@ -10,6 +10,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <AnchorPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.GestionBilletAvion">
    <stylesheets>
       <URL value="@css/style.css" />
@@ -136,5 +138,9 @@
       <Button layoutX="643.0" layoutY="566.0" mnemonicParsing="false" onAction="#handleNaviguerAffichage" prefHeight="30.0" prefWidth="111.0" text="afficher" />
 
    </children>
-
+   <ImageView fitHeight="95.0" fitWidth="102.0" layoutX="14.0" layoutY="15.0">
+      <image>
+         <Image url="images/logo.png" />
+      </image>
+   </ImageView>
 </AnchorPane>

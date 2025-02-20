@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import tn.esprit.models.Hotel;
 import tn.esprit.services.ServiceHotel;
@@ -49,19 +50,24 @@ public class AffichageHotelsController {
 
     private VBox createHotelCard(Hotel hotel) {
         // Créer une carte (VBox) pour afficher les informations de l'hôtel
-        VBox card = new VBox();
-        card.setSpacing(10);
-        card.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-background-color: #f0f0f0;");
+
+        VBox card = new VBox(10);
+        card.setStyle("-fx-border-color: black; -fx-border-radius: 10; -fx-padding: 10; -fx-background-color: #f4f4f4;");
         card.setPadding(new javafx.geometry.Insets(10));
 
         // Ajouter les labels pour afficher les informations de l'hôtel
         Label lblNom = new Label("Nom: " + hotel.getNom());
+        lblNom.setFont(new Font(14));
         Label lblVille = new Label("Ville: " + hotel.getVille());
+        lblVille.setFont(new Font(14));
         Label lblPrixParNuit = new Label("Prix par nuit: " + hotel.getPrixParNuit() + " €");
+        lblPrixParNuit.setFont(new Font(14));
         Label lblDisponible = new Label("Disponible: " + (hotel.isDisponible() ? "Oui" : "Non"));
+        lblDisponible.setFont(new Font(14));
         Label lblNombreEtoile = new Label("Nombre d'étoiles: " + hotel.getNombreEtoile());
+        lblNombreEtoile.setFont(new Font(14));
         Label lblTypeDeChambre = new Label("Type de chambre: " + hotel.getTypeDeChambre());
-
+        lblTypeDeChambre.setFont(new Font(14));
         // Bouton "Modifier"
         Button btnModifier = new Button(" Modifier  ");
         btnModifier.setOnAction(event -> handleModifier(hotel)); // Passer l'hôtel
