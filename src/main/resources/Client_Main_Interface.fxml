@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="720" prefWidth="1280" styleClass="root" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.ClientMainInterface">
+<children>
+    <!-- Go Back Button -->
+    <Button fx:id="btngoback2" layoutX="14.0" layoutY="31.0" prefHeight="30.0" prefWidth="126.0" styleClass="button" text="← Back " />
+    <!-- Main Card Container -->
+    <VBox alignment="CENTER" layoutX="470.0" layoutY="148.0" spacing="30" styleClass="card">
+        <padding>
+            <Insets bottom="50" left="50" right="50" top="50" />
+        </padding>
+         <VBox alignment="CENTER" prefHeight="4.0" prefWidth="295.0" spacing="30" styleClass="card">
+            <padding>
+               <Insets bottom="50" left="50" right="50" top="50" />
+            </padding>
+            <children>
+              <!-- Welcome Title -->
+              <Label styleClass="title-label" text="Welcome, Client!" />
+            </children>
+         </VBox>
+        <!-- Buttons -->
+        <Button fx:id="btnManageCart" prefWidth="250" styleClass="button" text="Manage Cart" />
+        <Button fx:id="btnViewStore" prefWidth="250" styleClass="button" text="View Store" />
+
+    </VBox>
+</children>
+</AnchorPane>

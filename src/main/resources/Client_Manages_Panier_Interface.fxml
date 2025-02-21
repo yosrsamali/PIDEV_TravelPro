@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="720" prefWidth="1280" styleClass="root" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.ModifierPanier">
+
+    <!-- Main Card Container -->
+    <VBox alignment="CENTER" layoutX="246.0" layoutY="77.0" prefHeight="583.0" prefWidth="946.0" spacing="30" styleClass="card">
+        <padding>
+            <Insets bottom="50" left="50" right="50" top="40" />
+        </padding>
+
+        <!-- Header & Back Button -->
+        <HBox alignment="CENTER" spacing="20">
+            <Label styleClass="title-label" text="Shopping Cart" />
+        </HBox>
+
+        <!-- TableView -->
+        <TableView fx:id="tablePanier" prefHeight="400.0" prefWidth="800.0">
+            <columns>
+                <TableColumn fx:id="colNomProduit" prefWidth="250.0" text="Product Name" />
+                <TableColumn fx:id="colPrixProduit" prefWidth="150.0" text="Price (TND)" />
+                <TableColumn fx:id="colQuantite" prefWidth="150.0" text="Quantity" />
+                <TableColumn fx:id="colTotal" prefWidth="150.0" text="Total (TND)" />
+                <TableColumn fx:id="colModify" prefWidth="100.0" text="Modify" />
+                <TableColumn fx:id="colDelete" prefWidth="100.0" text="Delete" />
+            </columns>
+        </TableView>
+
+        <!-- Total Price & Checkout Button -->
+        <HBox alignment="CENTER" spacing="30">
+            <Label styleClass="label" text="Total Price:" />
+            <Label fx:id="labelTotalPrice" styleClass="label" text="0 TND" />
+            <Button fx:id="btnCheckout" styleClass="button" text="Checkout" />
+        </HBox>
+
+    </VBox>
+      <Button fx:id="btnBackToMain" layoutX="52.0" layoutY="47.0" styleClass="button" text="← Back" />
+
+</AnchorPane>
