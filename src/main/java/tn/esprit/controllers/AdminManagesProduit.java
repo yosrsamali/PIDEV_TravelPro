@@ -8,9 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import tn.esprit.models.Produit;
 import tn.esprit.services.ServiceProduit;
@@ -30,14 +28,14 @@ public class AdminManagesProduit {
     @FXML
     private TextField tfQuantiteProduit;
     @FXML
-    private ListView<HBox> productListView;
+    private FlowPane productCardContainer;
 
     private ServiceProduit serviceProduit = new ServiceProduit();
 
     @FXML
     public void initialize() {
         btnGoToAdminMainInterface.setOnAction(event -> switchScene("Admin_Main_Interface.fxml"));
-        loadProductList();
+        loadProductCards();
     }
 
     private void switchScene(String fxmlFile) {
@@ -53,16 +51,24 @@ public class AdminManagesProduit {
 
     @FXML
     public void goBack(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Admin_Main_Interface.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) btnGoToAdminMainInterface.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
+        switchScene("Admin_Main_Interface.fxml");
+    }
+    @FXML
+    private void validatePrixAchat() {
+        tfPrixAchat.setText(tfPrixAchat.getText().replaceAll("[^\\d.]", ""));
+        if (!tfPrixAchat.getText().matches("\\d*\\.?\\d*")) {
+            tfPrixAchat.setText("");
         }
     }
+
+    @FXML
+    private void validateQuantiteProduit() {
+        tfQuantiteProduit.setText(tfQuantiteProduit.getText().replaceAll("[^\\d]", ""));
+        if (!tfQuantiteProduit.getText().matches("\\d*")) {
+            tfQuantiteProduit.setText("");
+        }
+    }
+
 
     @FXML
     public void ajouterProduit(ActionEvent event) {
@@ -82,7 +88,7 @@ public class AdminManagesProduit {
             produit.setQuantiteProduit(quantiteProduit);
 
             serviceProduit.add(produit);
-            loadProductList();  // Refresh list
+            loadProductCards();
             showAlert("Success", "Product added successfully!");
 
             clearFields();
@@ -92,39 +98,38 @@ public class AdminManagesProduit {
     }
 
     @FXML
-    public void supprimerProduit(ActionEvent event) {
-        if (productListView.getSelectionModel().getSelectedItem() == null) {
-            showAlert("Selection Error", "Please select a product to delete.");
-            return;
-        }
-
-        HBox selectedBox = productListView.getSelectionModel().getSelectedItem();
-        Label productLabel = (Label) selectedBox.getChildren().get(0); // First child should be the product label
-        String[] productDetails = productLabel.getText().split(" - ");
-
-        int productId = Integer.parseInt(productDetails[0].split(":")[1].trim());
-
-        Produit produit = new Produit(productId);
+    public void supprimerProduit(Produit produit) {
         serviceProduit.delete(produit);
-        loadProductList();  // Refresh list
+        loadProductCards();
         showAlert("Success", "Product deleted successfully!");
     }
 
-    private void loadProductList() {
-        ObservableList<HBox> productList = FXCollections.observableArrayList();
+    private void loadProductCards() {
+        productCardContainer.getChildren().clear();
+
         serviceProduit.getAll().forEach(p -> {
-            Label productLabel = new Label("ID: " + p.getIdProduit() + " - " + p.getNomProduit() + " - Prix: " + p.getPrixAchat() + " - Quantité: " + p.getQuantiteProduit());
-
-            Button editButton = new Button("Edit");
-            editButton.setOnAction(e -> showEditDialog(p)); // Show the edit dialog on button click
-
-            HBox hbox = new HBox(10, productLabel, editButton);
-            hbox.setPrefWidth(Region.USE_COMPUTED_SIZE);
-
-            productList.add(hbox);
+            VBox card = createProductCard(p);
+            productCardContainer.getChildren().add(card);
         });
+    }
 
-        productListView.setItems(productList);
+    private VBox createProductCard(Produit produit) {
+        Label nameLabel = new Label(produit.getNomProduit());
+        Label priceLabel = new Label("Prix: " + produit.getPrixAchat());
+        Label quantityLabel = new Label("Quantité: " + produit.getQuantiteProduit());
+
+        Button editButton = new Button("Edit");
+        editButton.setOnAction(e -> showEditDialog(produit));
+
+        Button deleteButton = new Button("Delete");
+        deleteButton.setOnAction(e -> supprimerProduit(produit));
+
+        HBox buttonBox = new HBox(10, editButton, deleteButton);
+
+        VBox card = new VBox(10, nameLabel, priceLabel, quantityLabel, buttonBox);
+        card.setStyle("-fx-border-color: #ccc; -fx-border-radius: 10; -fx-padding: 10; -fx-background-radius: 10; -fx-background-color: #fff;");
+
+        return card;
     }
 
     private void showEditDialog(Produit produit) {
@@ -145,20 +150,15 @@ public class AdminManagesProduit {
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == saveButton) {
                 try {
-                    String updatedNom = tfNom.getText();
-                    double updatedPrix = Double.parseDouble(tfPrix.getText());
-                    int updatedQuantite = Integer.parseInt(tfQuantite.getText());
-
-                    produit.setNomProduit(updatedNom);
-                    produit.setPrixAchat(updatedPrix);
-                    produit.setQuantiteProduit(updatedQuantite);
+                    produit.setNomProduit(tfNom.getText());
+                    produit.setPrixAchat(Double.parseDouble(tfPrix.getText()));
+                    produit.setQuantiteProduit(Integer.parseInt(tfQuantite.getText()));
 
                     serviceProduit.update(produit);
-                    loadProductList(); // Refresh the list view with updated product info
+                    loadProductCards();
                     return ButtonType.OK;
                 } catch (NumberFormatException e) {
                     showAlert("Input Error", "Invalid number format.");
-                    return null;
                 }
             }
             return null;
