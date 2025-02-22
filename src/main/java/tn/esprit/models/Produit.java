@@ -8,34 +8,28 @@ public class Produit {
     private StringProperty nomProduit; // StringProperty instead of String
     private DoubleProperty prixAchat; // DoubleProperty instead of double
     private IntegerProperty quantiteProduit; // IntegerProperty instead of int
+    // Default constructor
     private DoubleProperty prixVente; // DoubleProperty instead of double
 
-    // Default constructor
+    private StringProperty imagePath; // DoubleProperty instead of double
+
     public Produit() {
         this.idProduit = new SimpleIntegerProperty();
         this.nomProduit = new SimpleStringProperty();
         this.prixAchat = new SimpleDoubleProperty();
         this.quantiteProduit = new SimpleIntegerProperty();
         this.prixVente = new SimpleDoubleProperty();
+        this.imagePath = new SimpleStringProperty();
     }
 
-    // Constructor with all fields
-    public Produit(int idProduit, String nomProduit, double prixAchat, int quantiteProduit, double prixVente) {
-        this.idProduit = new SimpleIntegerProperty(idProduit);
-        this.nomProduit = new SimpleStringProperty(nomProduit);
-        this.prixAchat = new SimpleDoubleProperty(prixAchat);
-        this.quantiteProduit = new SimpleIntegerProperty(quantiteProduit);
-        this.prixVente = new SimpleDoubleProperty(prixVente);
+    public Produit(int productId) {
+        this.idProduit = new SimpleIntegerProperty(productId);
+        this.nomProduit = new SimpleStringProperty();
+        this.prixAchat = new SimpleDoubleProperty();
+        this.quantiteProduit = new SimpleIntegerProperty();
+        this.prixVente = new SimpleDoubleProperty();
+        this.imagePath = new SimpleStringProperty();
     }
-    // Constructor with only idProduit
-    public Produit(int idProduit) {
-        this.idProduit = new SimpleIntegerProperty(idProduit);
-        this.nomProduit = new SimpleStringProperty("");
-        this.prixAchat = new SimpleDoubleProperty(0.0);
-        this.quantiteProduit = new SimpleIntegerProperty(0);
-        this.prixVente = new SimpleDoubleProperty(0.0);
-    }
-
 
     // Getter and Setter for idProduit
     public int getIdProduit() {
@@ -97,6 +91,14 @@ public class Produit {
     public void setPrixVente(double prixVente) {
         this.prixVente.set(prixVente);
     }
+    // Getter and Setter for imagePath
+
+    public double getImagePath() {
+        return prixVente.get();
+    }
+    public void setImagePath(String imagePath) {
+        this.imagePath.set(imagePath);
+    }
 
     public DoubleProperty prixVenteProperty() {
         return prixVente;
@@ -110,6 +112,7 @@ public class Produit {
                 ", prixAchat=" + prixAchat.get() +
                 ", quantiteProduit=" + quantiteProduit.get() +
                 ", prixVente=" + prixVente.get() +
+                ", imagePath=" + imagePath.get() +
                 '}';
     }
 }

@@ -3,16 +3,15 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="720" prefWidth="1280"
-            styleClass="root" stylesheets="@css/style.css"
-            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="tn.esprit.controllers.MainInterface">
+<AnchorPane prefHeight="720" prefWidth="1280" styleClass="root" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.MainInterface">
 
     <!-- Main Card Container -->
-    <VBox alignment="CENTER" layoutX="493.0" layoutY="309.0" spacing="30" styleClass="card">
+    <VBox alignment="CENTER" layoutX="493.0" layoutY="434.0" spacing="30" styleClass="card">
         <padding>
             <Insets bottom="50" left="50" right="50" top="50" />
         </padding>
@@ -23,13 +22,19 @@
 
 
     </VBox>
-   <VBox alignment="CENTER" layoutX="494.0" layoutY="213.0" prefHeight="77.0" prefWidth="294.0" spacing="30" styleClass="card">
+   <VBox alignment="CENTER" layoutX="494.0" layoutY="326.0" prefHeight="77.0" prefWidth="294.0" spacing="30" styleClass="card">
       <padding>
          <Insets bottom="50" left="50" right="50" top="50" />
       </padding>
       <children>
-         <Label prefHeight="106.0" prefWidth="247.0" styleClass="title-label" text="Welcome to the System" />
+         <Label prefHeight="106.0" prefWidth="247.0" styleClass="title-label" text="Welcome to TravelPro" />
       </children>
    </VBox>
+   <VBox layoutX="493.0" layoutY="45.0" />
+   <ImageView fitHeight="259.0" fitWidth="295.0" layoutX="493.0" layoutY="45.0">
+      <image>
+         <Image url="@images/logo_with_text.png" />
+      </image>
+   </ImageView>
 
 </AnchorPane>

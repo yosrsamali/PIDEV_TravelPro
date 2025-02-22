@@ -32,8 +32,9 @@ public class AdminMainInterface {
             Parent root = loader.load();
             Stage stage = (Stage) btnManageProducts.getScene().getWindow();
             stage.setScene(new Scene(root));
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Error occurred: " + e.getMessage());
+            e.printStackTrace(System.err); // Explicitly log to the error output stream
         }
     }
 
