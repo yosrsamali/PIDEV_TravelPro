@@ -35,6 +35,11 @@
             <Label text="Quantité Produit:" />
             <TextField fx:id="tfQuantiteProduit" styleClass="text-field" />
 
+            <!-- Image Selection -->
+            <Label text="Image Path:" />
+            <Button fx:id="btnSelectImage" onAction="#selectImage" styleClass="button" text="Select Image" />
+            <Label fx:id="lblImagePath" text="No image selected" />
+
             <!-- Buttons -->
             <VBox prefWidth="255.0" spacing="10" />
             <Button fx:id="btnAjouter" onAction="#ajouterProduit" styleClass="button" text="Ajouter Produit" />

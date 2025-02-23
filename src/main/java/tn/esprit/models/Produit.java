@@ -31,6 +31,13 @@ public class Produit {
         this.imagePath = new SimpleStringProperty();
     }
 
+    public Produit(String nomProduit, double prixAchat, int quantiteProduit, String selectedImagePath) {
+        this.nomProduit = new SimpleStringProperty(nomProduit);
+        this.prixAchat = new SimpleDoubleProperty(prixAchat);
+        this.quantiteProduit = new SimpleIntegerProperty(quantiteProduit);
+        this.imagePath = new SimpleStringProperty(selectedImagePath);
+    }
+
     // Getter and Setter for idProduit
     public int getIdProduit() {
         return idProduit.get();
@@ -93,8 +100,8 @@ public class Produit {
     }
     // Getter and Setter for imagePath
 
-    public double getImagePath() {
-        return prixVente.get();
+    public String getImagePath() {
+        return imagePath.get();
     }
     public void setImagePath(String imagePath) {
         this.imagePath.set(imagePath);
