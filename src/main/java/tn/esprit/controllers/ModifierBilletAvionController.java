@@ -10,6 +10,7 @@ import tn.esprit.services.ServiceBilletAvion;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.function.Consumer;
 
 public class ModifierBilletAvionController {
 
@@ -18,6 +19,7 @@ public class ModifierBilletAvionController {
 
     private BilletAvion billet;
     private final ServiceBilletAvion serviceBilletAvion = new ServiceBilletAvion();
+    private Consumer<BilletAvion> onBilletUpdated; // Callback pour la mise à jour
 
     public void setBillet(BilletAvion billet) {
         this.billet = billet;
@@ -28,6 +30,11 @@ public class ModifierBilletAvionController {
         tfDateDepart.setText(new SimpleDateFormat("dd-MM-yyyy").format(billet.getDateDepart()));
         tfDateArrivee.setText(new SimpleDateFormat("dd-MM-yyyy").format(billet.getDateArrivee()));
         tfPrix.setText(String.valueOf(billet.getPrix()));
+    }
+
+    // Méthode pour définir le callback
+    public void setOnBilletUpdated(Consumer<BilletAvion> onBilletUpdated) {
+        this.onBilletUpdated = onBilletUpdated;
     }
 
     @FXML
@@ -46,6 +53,11 @@ public class ModifierBilletAvionController {
             billet.setPrix(Double.parseDouble(tfPrix.getText()));
 
             serviceBilletAvion.update(billet);
+
+            // Appeler le callback pour notifier la mise à jour
+            if (onBilletUpdated != null) {
+                onBilletUpdated.accept(billet);
+            }
 
             showAlert("Succès", "Billet modifié avec succès.");
 

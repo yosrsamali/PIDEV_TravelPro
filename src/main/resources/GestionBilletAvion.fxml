@@ -136,11 +136,11 @@
          </cursor>
       </TextField>
       <Button layoutX="643.0" layoutY="566.0" mnemonicParsing="false" onAction="#handleNaviguerAffichage" prefHeight="30.0" prefWidth="111.0" text="afficher" />
-
+      <ImageView fitHeight="111.0" fitWidth="122.0" layoutX="14.0" layoutY="16.0">
+         <image>
+            <Image url="@images/logo.png" />
+         </image>
+      </ImageView>
    </children>
-   <ImageView fitHeight="95.0" fitWidth="102.0" layoutX="14.0" layoutY="15.0">
-      <image>
-         <Image url="images/logo.png" />
-      </image>
-   </ImageView>
+
 </AnchorPane>

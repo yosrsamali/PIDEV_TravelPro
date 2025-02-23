@@ -6,7 +6,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
+<?import java.net.URL?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.ModifierBilletAvionController">
+    <stylesheets>
+        <URL value="@css/style.css" />
+    </stylesheets>
     <children>
         <Label layoutX="50.0" layoutY="50.0" text="Compagnie:" />
         <TextField fx:id="tfCompagnie" layoutX="150.0" layoutY="50.0" />
@@ -27,6 +31,7 @@
         <TextField fx:id="tfDateArrivee" layoutX="150.0" layoutY="300.0" />
 
         <Label layoutX="50.0" layoutY="350.0" text="Prix:" />
+
         <TextField fx:id="tfPrix" layoutX="150.0" layoutY="350.0" />
 
         <Button layoutX="250.0" layoutY="400.0" text="Modifier" onAction="#modifierBillet" />

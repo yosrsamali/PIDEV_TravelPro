@@ -44,36 +44,29 @@ public class GestionReservation {
         card.setStyle("-fx-border-color: black; -fx-border-radius: 10; -fx-padding: 10; -fx-background-color: #f4f4f4;");
 
         // Affichage des informations de la réservation
-        Label idLabel = new Label("ID Réservation: " + reservation.getId_reservation());
-        idLabel.setFont(new Font(14));
-
-        Label voitureLabel = new Label("ID Voiture: " + (reservation.getId_voiture() == 0 ? "Non spécifié" : reservation.getId_voiture()));
+        Label voitureLabel = new Label("Voiture: " + (reservation.getId_voiture() == 0 ? "Non spécifié" : "ID " + reservation.getId_voiture()));
         voitureLabel.setFont(new Font(14));
 
-        Label billetLabel = new Label("ID Billet Avion: " + (reservation.getId_billetAvion() == 0 ? "Non spécifié" : reservation.getId_billetAvion()));
+        Label billetLabel = new Label("Billet Avion: " + (reservation.getId_billetAvion() == 0 ? "Non spécifié" : "ID " + reservation.getId_billetAvion()));
         billetLabel.setFont(new Font(14));
 
-        Label hotelLabel = new Label("ID Hotel: " + (reservation.getId_hotel() == 0 ? "Non spécifié" : reservation.getId_hotel()));
+        Label hotelLabel = new Label("Hotel: " + (reservation.getId_hotel() == 0 ? "Non spécifié" : "ID " + reservation.getId_hotel()));
         hotelLabel.setFont(new Font(14));
 
-        Label clientLabel = new Label("ID Client: " + reservation.getId_client());
+        Label clientLabel = new Label("Client: ID " + reservation.getId_client());
         clientLabel.setFont(new Font(14));
 
         Label statutLabel = new Label("Statut: " + reservation.getStatut());
         statutLabel.setFont(new Font(14));
 
-        // Bouton Show pour afficher les détails
-        Button btnShow = new Button("Show");
-        btnShow.setOnAction(event -> afficherDetails(reservation));
-
         // Boutons de modification et de suppression
-        Button btnModifier = new Button("Modifier");
+        Button btnModifier = new Button("  Modifier ");
         btnModifier.setOnAction(event -> modifierReservation(reservation));
 
         Button btnSupprimer = new Button("Supprimer");
         btnSupprimer.setOnAction(event -> supprimerReservation(reservation));
 
-        card.getChildren().addAll(idLabel, voitureLabel, billetLabel, hotelLabel, clientLabel, statutLabel, btnShow, btnModifier, btnSupprimer);
+        card.getChildren().addAll(voitureLabel, billetLabel, hotelLabel, clientLabel, statutLabel, btnModifier, btnSupprimer);
         return card;
     }
 

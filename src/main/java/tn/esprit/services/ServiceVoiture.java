@@ -14,10 +14,9 @@ public class ServiceVoiture implements IService<Voiture> {
     public ServiceVoiture() {
         cnx = MyDatabase.getInstance().getCnx();
     }
-
     @Override
     public void add(Voiture voiture) {
-        String qry = "INSERT INTO `voiture`(`marque`, `modele`, `annee`, `prixParJour`, `disponible`) VALUES (?,?,?,?,?)";
+        String qry = "INSERT INTO `voiture`(`marque`, `modele`, `annee`, `prixParJour`, `disponible`, `dateDeLocation`, `dateDeRemise`) VALUES (?,?,?,?,?,?,?)";
         try {
             PreparedStatement pstm = cnx.prepareStatement(qry, Statement.RETURN_GENERATED_KEYS);
             pstm.setString(1, voiture.getMarque());
@@ -25,6 +24,8 @@ public class ServiceVoiture implements IService<Voiture> {
             pstm.setInt(3, voiture.getAnnee());
             pstm.setDouble(4, voiture.getPrixParJour());
             pstm.setBoolean(5, voiture.isDisponible());
+            pstm.setDate(6, new java.sql.Date(voiture.getDateDeLocation().getTime())); // Conversion de Date en java.sql.Date
+            pstm.setDate(7, new java.sql.Date(voiture.getDateDeRemise().getTime()));   // Conversion de Date en java.sql.Date
 
             pstm.executeUpdate();
 
@@ -56,7 +57,9 @@ public class ServiceVoiture implements IService<Voiture> {
                         rs.getString("modele"),
                         rs.getInt("annee"),
                         rs.getDouble("prixParJour"),
-                        rs.getBoolean("disponible")
+                        rs.getBoolean("disponible"),
+                        rs.getDate("dateDeLocation"), // Nouvelle colonne
+                        rs.getDate("dateDeRemise")    // Nouvelle colonne
                 );
 
                 voitures.add(v);
@@ -70,7 +73,7 @@ public class ServiceVoiture implements IService<Voiture> {
 
     @Override
     public void update(Voiture voiture) {
-        String qry = "UPDATE `voiture` SET `marque`=?, `modele`=?, `annee`=?, `prixParJour`=?, `disponible`=? WHERE `id`=?";
+        String qry = "UPDATE `voiture` SET `marque`=?, `modele`=?, `annee`=?, `prixParJour`=?, `disponible`=?, `dateDeLocation`=?, `dateDeRemise`=? WHERE `id`=?";
         try {
             PreparedStatement pstm = cnx.prepareStatement(qry);
             pstm.setString(1, voiture.getMarque());
@@ -78,7 +81,9 @@ public class ServiceVoiture implements IService<Voiture> {
             pstm.setInt(3, voiture.getAnnee());
             pstm.setDouble(4, voiture.getPrixParJour());
             pstm.setBoolean(5, voiture.isDisponible());
-            pstm.setInt(6, voiture.getId());
+            pstm.setDate(6, new java.sql.Date(voiture.getDateDeLocation().getTime())); // Conversion de Date en java.sql.Date
+            pstm.setDate(7, new java.sql.Date(voiture.getDateDeRemise().getTime()));   // Conversion de Date en java.sql.Date
+            pstm.setInt(8, voiture.getId());
 
             pstm.executeUpdate();
             System.out.println("Voiture mise à jour avec succès.");
@@ -100,7 +105,9 @@ public class ServiceVoiture implements IService<Voiture> {
                         rs.getString("modele"),
                         rs.getInt("annee"),
                         rs.getDouble("prixParJour"),
-                        rs.getBoolean("disponible")
+                        rs.getBoolean("disponible"),
+                        rs.getDate("dateDeLocation"), // Nouvelle colonne
+                        rs.getDate("dateDeRemise")    // Nouvelle colonne
                 );
             }
         } catch (SQLException e) {

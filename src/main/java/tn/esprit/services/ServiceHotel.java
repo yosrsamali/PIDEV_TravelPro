@@ -1,5 +1,6 @@
 package tn.esprit.services;
 
+import javafx.scene.control.Alert;
 import tn.esprit.interfaces.IService;
 import tn.esprit.models.Hotel;
 import tn.esprit.utils.MyDatabase;
@@ -17,7 +18,7 @@ public class ServiceHotel implements IService<Hotel> {
 
     @Override
     public void add(Hotel hotel) {
-        String qry = "INSERT INTO `hotel`(`nom`, `ville`, `prixParNuit`, `disponible`, `nombreEtoile`, `typeDeChambre`) VALUES (?,?,?,?,?,?)";
+        String qry = "INSERT INTO `hotel`(`nom`, `ville`, `prixParNuit`, `disponible`, `nombreEtoile`, `typeDeChambre`, `dateCheckIn`, `dateCheckOut`) VALUES (?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement pstm = cnx.prepareStatement(qry);
             pstm.setString(1, hotel.getNom());
@@ -26,6 +27,8 @@ public class ServiceHotel implements IService<Hotel> {
             pstm.setBoolean(4, hotel.isDisponible());
             pstm.setInt(5, hotel.getNombreEtoile());
             pstm.setString(6, hotel.getTypeDeChambre());
+            pstm.setDate(7, hotel.getDateCheckIn());
+            pstm.setDate(8, hotel.getDateCheckOut());
 
             pstm.executeUpdate();
             System.out.println("Hotel ajouté avec succès.");
@@ -49,10 +52,12 @@ public class ServiceHotel implements IService<Hotel> {
                         rs.getString("ville"),
                         rs.getDouble("prixParNuit"),
                         rs.getBoolean("disponible"),
-                        rs.getInt("nombreEtoile"),       // Nouvel attribut
-                        rs.getString("typeDeChambre")  // Nouvel attribut
+                        rs.getInt("nombreEtoile"),
+                        rs.getString("typeDeChambre"),
+                        rs.getDate("dateCheckIn"),
+                        rs.getDate("dateCheckOut")
                 );
-                h.setId(rs.getInt("id")); // Assurez-vous de définir l'ID
+                h.setId(rs.getInt("id"));
                 hotels.add(h);
             }
         } catch (SQLException e) {
@@ -61,6 +66,7 @@ public class ServiceHotel implements IService<Hotel> {
 
         return hotels;
     }
+
     public Hotel getById(int id) {
         String qry = "SELECT * FROM `hotel` WHERE `id`=?";
         try {
@@ -75,7 +81,9 @@ public class ServiceHotel implements IService<Hotel> {
                         rs.getDouble("prixParNuit"),
                         rs.getBoolean("disponible"),
                         rs.getInt("nombreEtoile"),
-                        rs.getString("typeDeChambre")
+                        rs.getString("typeDeChambre"),
+                        rs.getDate("dateCheckIn"),
+                        rs.getDate("dateCheckOut")
                 );
             }
         } catch (SQLException e) {
@@ -83,9 +91,10 @@ public class ServiceHotel implements IService<Hotel> {
         }
         return null;
     }
+
     @Override
     public void update(Hotel hotel) {
-        String qry = "UPDATE `hotel` SET `nom`=?, `ville`=?, `prixParNuit`=?, `disponible`=?, `nombreEtoile`=?, `typeDeChambre`=? WHERE `id`=?";
+        String qry = "UPDATE `hotel` SET `nom`=?, `ville`=?, `prixParNuit`=?, `disponible`=?, `nombreEtoile`=?, `typeDeChambre`=?, `dateCheckIn`=?, `dateCheckOut`=? WHERE `id`=?";
         try {
             PreparedStatement pstm = cnx.prepareStatement(qry);
             pstm.setString(1, hotel.getNom());
@@ -94,7 +103,9 @@ public class ServiceHotel implements IService<Hotel> {
             pstm.setBoolean(4, hotel.isDisponible());
             pstm.setInt(5, hotel.getNombreEtoile());
             pstm.setString(6, hotel.getTypeDeChambre());
-            pstm.setInt(7, hotel.getId());
+            pstm.setDate(7, hotel.getDateCheckIn());
+            pstm.setDate(8, hotel.getDateCheckOut());
+            pstm.setInt(9, hotel.getId());
 
             pstm.executeUpdate();
             System.out.println("Hotel mis à jour avec succès.");
@@ -115,5 +126,36 @@ public class ServiceHotel implements IService<Hotel> {
         } catch (SQLException e) {
             System.out.println("Erreur lors de la suppression de l'hôtel: " + e.getMessage());
         }
+    }
+    public boolean isHotelInUse(int hotelId) {
+        String query = "SELECT COUNT(*) FROM reservation WHERE id_hotel = ?";
+        try (PreparedStatement statement = cnx.prepareStatement(query)) {
+            statement.setInt(1, hotelId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0; // Retourne true si l'hôtel est en cours d'utilisation
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public void deleteByHotelId(int hotelId) {
+        String query = "DELETE FROM reservation WHERE id_hotel = ?";
+        try (PreparedStatement statement = cnx.prepareStatement(query)) {
+            statement.setInt(1, hotelId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Erreur lors de la suppression des réservations associées à l'hôtel.", e);
+        }
+    }
+    public void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

@@ -4,9 +4,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -36,7 +38,7 @@ public class AffichageBilletController {
             Parent root = loader.load();
             billetContainer.getScene().setRoot(root);
         } catch (IOException e) {
-            e.printStackTrace();
+            showAlert("Erreur", "Impossible de charger la vue GestionBilletAvion.");
         }
     }
 
@@ -52,11 +54,10 @@ public class AffichageBilletController {
 
     private VBox creerCarteBillet(BilletAvion billet) {
         VBox card = new VBox(10);
-        card.setStyle("-fx-border-color: black; -fx-border-radius: 10; -fx-padding: 10; -fx-background-color: #f4f4f4;");
+        card.setStyle("-fx-border-color: #cccccc; -fx-border-radius: 10; -fx-padding: 15; -fx-background-color: #ffffff; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 10, 0, 0);");
 
         // Affichage des informations du billet
-        Label idLabel = new Label("ID: " + billet.getId());
-        idLabel.setFont(new Font(14));
+
 
         Label compagnieLabel = new Label("Compagnie: " + billet.getCompagnie());
         compagnieLabel.setFont(new Font(14));
@@ -79,12 +80,15 @@ public class AffichageBilletController {
 
         // Boutons de modification et de suppression
         Button btnModifier = new Button("Modifier");
+        btnModifier.setStyle(" -fx-text-fill: white;");
         btnModifier.setOnAction(event -> modifierBillet(billet));
 
         Button btnSupprimer = new Button("Supprimer");
+        btnSupprimer.setStyle(" -fx-text-fill: white;");
         btnSupprimer.setOnAction(event -> supprimerBillet(billet));
 
-        card.getChildren().addAll(idLabel, compagnieLabel, classeLabel, trajetLabel, dateDepartLabel, dateArriveeLabel, prixLabel, btnModifier, btnSupprimer);
+        HBox buttonBox = new HBox(10, btnModifier, btnSupprimer);
+        card.getChildren().addAll( compagnieLabel, classeLabel, trajetLabel, dateDepartLabel, dateArriveeLabel, prixLabel, buttonBox);
         return card;
     }
 
@@ -95,17 +99,33 @@ public class AffichageBilletController {
 
             ModifierBilletAvionController controller = loader.getController();
             controller.setBillet(billet);
+            controller.setOnBilletUpdated(updatedBillet -> {
+                afficherBillets(); // Rafraîchir la liste après modification
+            });
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            showAlert("Erreur", "Impossible de charger la vue de modification.");
         }
     }
 
     private void supprimerBillet(BilletAvion billet) {
-        serviceBilletAvion.delete(billet);
-        afficherBillets(); // Rafraîchir la liste après suppression
+        try {
+            serviceBilletAvion.delete(billet);
+            afficherBillets(); // Rafraîchir la liste après suppression
+            showAlert("Succès", "Billet supprimé avec succès.");
+        } catch (Exception e) {
+            showAlert("Erreur", "Une erreur s'est produite lors de la suppression du billet.");
+        }
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

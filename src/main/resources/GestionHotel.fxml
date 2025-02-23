@@ -1,129 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.URL?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 <AnchorPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.GestionHotel">
    <stylesheets>
       <URL value="@css/style.css" />
    </stylesheets>
    <children>
-      <Label layoutX="363.0" layoutY="233.0" prefHeight="30.0" prefWidth="81.0" text="Nom:">
+      <!-- Labels et champs pour les informations de l'hôtel -->
+      <Label layoutX="299.0" layoutY="119.0" prefHeight="30.0" prefWidth="81.0" text="Nom:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="tfNom" alignment="TOP_CENTER" layoutX="468.0" layoutY="231.0" nodeOrientation="LEFT_TO_RIGHT" promptText="ex: LAYCO">
-         <font>
-            <Font name="System Italic" size="14.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </TextField>
-      <TextField fx:id="tfVille" alignment="TOP_CENTER" layoutX="467.0" layoutY="272.0" nodeOrientation="LEFT_TO_RIGHT" promptText="ex: TUNIS">
-         <font>
-            <Font name="System Italic" size="14.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </TextField>
-      <TextField fx:id="tfNombreEtoile" alignment="TOP_CENTER" layoutX="468.0" layoutY="313.0" nodeOrientation="LEFT_TO_RIGHT" promptText="ex: 5">
-         <font>
-            <Font name="System Italic" size="14.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </TextField>
-      <TextField fx:id="tfPrixParNuit" alignment="TOP_CENTER" layoutX="468.0" layoutY="399.0" nodeOrientation="LEFT_TO_RIGHT" promptText="ex:150.0">
-         <font>
-            <Font name="System Italic" size="14.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </TextField>
-      <TextField fx:id="tfDisponible" alignment="TOP_CENTER" layoutX="468.0" layoutY="442.0" nodeOrientation="LEFT_TO_RIGHT" promptText="Oui/Non">
-         <font>
-            <Font name="System Italic" size="14.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </TextField>
-      <Label layoutX="363.0" layoutY="272.0" prefHeight="30.0" prefWidth="91.0" text="ville:">
+      <TextField fx:id="tfNom" layoutX="404.0" layoutY="110.0" promptText="ex: LAYCO" />
+
+      <Label layoutX="299.0" layoutY="158.0" prefHeight="30.0" prefWidth="91.0" text="Ville:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="312.0" layoutY="312.0" prefHeight="30.0" prefWidth="122.0" text="nombre d'etoiles:">
+      <TextField fx:id="tfVille" layoutX="403.0" layoutY="155.0" promptText="ex: TUNIS" />
+
+      <Label layoutX="248.0" layoutY="198.0" prefHeight="30.0" prefWidth="122.0" text="Nombre d'étoiles:">
          <font>
             <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="327.0" layoutY="398.0" prefHeight="30.0" prefWidth="91.0" text="prix par jour:" textAlignment="CENTER">
+         </font></Label>
+      <TextField fx:id="tfNombreEtoile" layoutX="404.0" layoutY="199.0" promptText="ex: 5" />
+
+      <Label layoutX="248.0" layoutY="242.0" prefHeight="30.0" prefWidth="122.0" text="Type de chambre:">
          <font>
             <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="327.0" layoutY="441.0" prefHeight="30.0" prefWidth="91.0" text="disponibilité:">
+         </font></Label>
+      <TextField fx:id="tfTypeDeChambre" layoutX="403.0" layoutY="243.0" promptText="ex: single" />
+
+      <Label layoutX="263.0" layoutY="284.0" prefHeight="30.0" prefWidth="91.0" text="Prix par nuit:">
          <font>
             <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Text layoutX="511.0" layoutY="208.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ajout du Hotel" textAlignment="CENTER" wrappingWidth="213.33673095703125">
+         </font></Label>
+      <TextField fx:id="tfPrixParNuit" layoutX="404.0" layoutY="285.0" promptText="ex: 150.0" />
+
+      <Label layoutX="270.0" layoutY="333.0" prefHeight="30.0" prefWidth="91.0" text="Disponibilité:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <TextField fx:id="tfDisponible" layoutX="404.0" layoutY="328.0" promptText="Oui/Non" />
+
+      <!-- Nouveaux champs pour Date Check-In et Check-Out -->
+      <Label layoutX="254.0" layoutY="378.0" prefHeight="30.0" prefWidth="150.0" text="Date Check-In:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <DatePicker fx:id="dpDateCheckIn" layoutX="404.0" layoutY="374.0" prefHeight="34.0" prefWidth="300.0" promptText="Date Check-In" />
+
+      <Label layoutX="253.0" layoutY="419.0" prefHeight="30.0" prefWidth="150.0" text="Date Check-Out:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <DatePicker fx:id="dpDateCheckOut" layoutX="404.0" layoutY="418.0" prefHeight="34.0" prefWidth="300.0" promptText="Date Check-Out" />
+
+      <!-- Titre -->
+      <Text layoutX="447.0" layoutY="94.0" text="Ajout d'un Hôtel" textAlignment="CENTER">
          <font>
             <Font name="Arial Bold" size="25.0" />
          </font>
       </Text>
-      <Button layoutX="493.0" layoutY="494.0" mnemonicParsing="false" onAction="#ajouterHotel" prefHeight="30.0" prefWidth="111.0" text="Ajouter" />
-      <TextField fx:id="tfTypeDeChambre" alignment="TOP_CENTER" layoutX="467.0" layoutY="357.0" nodeOrientation="LEFT_TO_RIGHT" promptText="single">
-         <font>
-            <Font name="System Italic" size="14.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </TextField>
-      <Label layoutX="312.0" layoutY="356.0" prefHeight="30.0" prefWidth="122.0" text="type de chambre:" textAlignment="CENTER">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Button layoutX="631.0" layoutY="494.0" mnemonicParsing="false" onAction="#handleNaviguerAffichage" prefHeight="30.0" prefWidth="111.0" text="afficher" />
+
+      <!-- Boutons -->
+      <Button layoutX="415.0" layoutY="470.0" onAction="#ajouterHotel" prefHeight="30.0" prefWidth="111.0" text="Ajouter" />
+      <Button layoutX="581.0" layoutY="469.0" onAction="#handleNaviguerAffichage" prefHeight="30.0" prefWidth="111.0" text="Afficher" />
+      <ImageView fitHeight="91.0" fitWidth="122.0" layoutX="305.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/logo.png" />
+         </image>
+      </ImageView>
+
+      <!-- Logo -->
+
    </children>
-   <ImageView fitHeight="95.0" fitWidth="102.0" layoutX="14.0" layoutY="15.0">
-      <image>
-         <Image url="images/logo.png" />
-      </image>
-   </ImageView>
+   
 </AnchorPane>

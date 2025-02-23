@@ -1,6 +1,6 @@
 /* ----- Background en dégradé bleu-blanc avec un effet de transition pour un aspect fluide ----- */
 AnchorPane {
-    -fx-background-color: linear-gradient(to bottom, #1E3C72, #2A5298, #FFFFFF);
+    -fx-background-color: linear-gradient(to bottom, #37B7C3, #071952);
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 20, 0, 0, 5);
 }
 
@@ -112,14 +112,7 @@ TextField:focused {
 }
 
 /* ----- Style de l'image dans une carte avec ombre pour un effet 3D moderne ----- */
-.image-card {
-    -fx-background-color: white;
-    -fx-background-radius: 10px;
-    -fx-border-radius: 10px;
-    -fx-border-color: #ddd;
-    -fx-padding: 10px;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 5);
-}
+
 
 /* ----- Style global des en-têtes de colonnes dans la TableView ----- */
 .table-view .column-header {

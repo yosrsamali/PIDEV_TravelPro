@@ -4,8 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -15,6 +14,7 @@ import tn.esprit.services.ServiceHotel;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public class AffichageHotelsController {
 
@@ -68,6 +68,13 @@ public class AffichageHotelsController {
         lblNombreEtoile.setFont(new Font(14));
         Label lblTypeDeChambre = new Label("Type de chambre: " + hotel.getTypeDeChambre());
         lblTypeDeChambre.setFont(new Font(14));
+
+        // Nouveaux labels pour dateCheckIn et dateCheckOut
+        Label lblDateCheckIn = new Label("Date Check-In: " + hotel.getDateCheckIn());
+        lblDateCheckIn.setFont(new Font(14));
+        Label lblDateCheckOut = new Label("Date Check-Out: " + hotel.getDateCheckOut());
+        lblDateCheckOut.setFont(new Font(14));
+
         // Bouton "Modifier"
         Button btnModifier = new Button(" Modifier  ");
         btnModifier.setOnAction(event -> handleModifier(hotel)); // Passer l'hôtel
@@ -76,13 +83,11 @@ public class AffichageHotelsController {
         Button btnSupprimer = new Button("Supprimer");
         btnSupprimer.setOnAction(event -> handleSupprimer(hotel)); // Passer l'hôtel
 
-        // Bouton "Détails"
-
-
         // Ajouter les éléments à la carte
         card.getChildren().addAll(
                 lblNom, lblVille, lblPrixParNuit, lblDisponible,
-                lblNombreEtoile, lblTypeDeChambre, btnModifier, btnSupprimer
+                lblNombreEtoile, lblTypeDeChambre, lblDateCheckIn, lblDateCheckOut,
+                btnModifier, btnSupprimer
         );
 
         return card;
@@ -109,14 +114,45 @@ public class AffichageHotelsController {
     }
 
     @FXML
-    private void handleSupprimer(Hotel hotel) {
-        // Supprimer l'hôtel
-        serviceHotel.delete(hotel);
-        loadHotels(); // Recharger la liste des hôtels après suppression
-    }
 
-    @FXML
-    private void handleDetails(Hotel hotel) {
-        // Afficher les détails de l'hôtel
-        System.out.println("Détails de l'hôtel: " + hotel);
-    }}
+    private void handleSupprimer(Hotel hotel) {
+        try {
+            // Vérifier si l'hôtel est en cours d'utilisation (par exemple, s'il y a des réservations)
+            boolean isHotelInUse = serviceHotel.isHotelInUse(hotel.getId());
+
+            if (isHotelInUse) {
+                // Afficher une alerte de confirmation
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation de suppression");
+                alert.setHeaderText("Cet hôtel est en cours d'utilisation.");
+                alert.setContentText("Voulez-vous vraiment supprimer cet hôtel et toutes les réservations associées ?");
+
+                // Ajouter les boutons "Oui" et "Non"
+                ButtonType buttonTypeOui = new ButtonType("Oui", ButtonBar.ButtonData.YES);
+                ButtonType buttonTypeNon = new ButtonType("Non", ButtonBar.ButtonData.NO);
+                alert.getButtonTypes().setAll(buttonTypeOui, buttonTypeNon);
+
+                // Attendre la réponse de l'utilisateur
+                Optional<ButtonType> result = alert.showAndWait();
+
+                if (result.isPresent() && result.get() == buttonTypeOui) {
+                    // L'utilisateur a choisi "Oui", forcer la suppression
+                    serviceHotel.deleteByHotelId(hotel.getId()); // Supprimer les réservations associées
+                    serviceHotel.delete(hotel); // Supprimer l'hôtel
+                    loadHotels(); // Recharger la liste des hôtels
+                    serviceHotel.showAlert("Succès", "L'hôtel et les réservations associées ont été supprimés avec succès.");
+                } else {
+                    // L'utilisateur a choisi "Non", annuler la suppression
+                    serviceHotel.showAlert("Annulé", "La suppression de l'hôtel a été annulée.");
+                }
+            } else {
+                // L'hôtel n'est pas en cours d'utilisation, le supprimer directement
+                serviceHotel.delete(hotel);
+                loadHotels(); // Recharger la liste des hôtels
+                serviceHotel.showAlert("Succès", "L'hôtel a été supprimé avec succès.");
+            }
+        } catch (Exception e) {
+            serviceHotel.showAlert("Erreur", "Une erreur s'est produite lors de la suppression de l'hôtel : " + e.getMessage());
+        }
+    }
+}

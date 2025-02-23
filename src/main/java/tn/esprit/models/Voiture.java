@@ -1,5 +1,7 @@
 package tn.esprit.models;
 
+import java.util.Date;
+
 public class Voiture {
 
     private int id;
@@ -8,16 +10,22 @@ public class Voiture {
     private int annee;
     private double prixParJour;
     private boolean disponible;
+    private Date dateDeLocation; // Nouvel attribut
+    private Date dateDeRemise;   // Nouvel attribut
 
-    public Voiture(int id, String marque, String modele, int annee, double prixParJour, boolean disponible) {
+    // Constructeur complet
+    public Voiture(int id, String marque, String modele, int annee, double prixParJour, boolean disponible, Date dateDeLocation, Date dateDeRemise) {
         this.id = id;
         this.marque = marque;
         this.modele = modele;
         this.annee = annee;
         this.prixParJour = prixParJour;
         this.disponible = disponible;
+        this.dateDeLocation = dateDeLocation;
+        this.dateDeRemise = dateDeRemise;
     }
 
+    // Constructeur par défaut
     public Voiture() {
     }
 
@@ -30,10 +38,12 @@ public class Voiture {
                 ", annee=" + annee +
                 ", prixParJour=" + prixParJour +
                 ", disponible=" + disponible +
+                ", dateDeLocation=" + dateDeLocation +
+                ", dateDeRemise=" + dateDeRemise +
                 '}';
     }
 
-    // Getters and Setters
+    // Getters et Setters
     public int getId() {
         return id;
     }
@@ -80,5 +90,21 @@ public class Voiture {
 
     public void setDisponible(boolean disponible) {
         this.disponible = disponible;
+    }
+
+    public Date getDateDeLocation() {
+        return dateDeLocation;
+    }
+
+    public void setDateDeLocation(Date dateDeLocation) {
+        this.dateDeLocation = dateDeLocation;
+    }
+
+    public Date getDateDeRemise() {
+        return dateDeRemise;
+    }
+
+    public void setDateDeRemise(Date dateDeRemise) {
+        this.dateDeRemise = dateDeRemise;
     }
 }
