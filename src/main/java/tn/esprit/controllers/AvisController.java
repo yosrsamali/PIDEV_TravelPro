@@ -1,6 +1,7 @@
 package tn.esprit.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import tn.esprit.models.Avis;
@@ -24,40 +25,57 @@ public class AvisController {
 
     @FXML
     public void initialize() {
-
         submitButton.setOnAction(event -> ajouterAvis());
     }
 
     private void ajouterAvis() {
         try {
-
-            int note = Integer.parseInt(noteField.getText().trim());
+            String noteText = noteField.getText().trim();
             String commentaire = commentaireField.getText().trim();
 
-            // Validation simple
+            // Vérifier si la note est un entier
+            if (!noteText.matches("\\d+")) {
+                showAlert("Erreur", "❌ La note doit être un nombre entier.");
+                return;
+            }
+
+            int note = Integer.parseInt(noteText);
+
+            // Vérifier si la note est entre 0 et 10
             if (note < 0 || note > 10) {
-                System.out.println("❌ La note doit être entre 0 et 10.");
+                showAlert("Erreur", "❌ La note doit être comprise entre 0 et 10.");
                 return;
             }
+
+            // Vérifier si le commentaire n'est pas vide
             if (commentaire.isEmpty()) {
-                System.out.println("❌ Le commentaire ne peut pas être vide.");
+                showAlert("Erreur", "❌ Le commentaire ne peut pas être vide.");
                 return;
             }
 
-
+            // Créer un avis et l'ajouter à la base de données
             Avis avis = new Avis(0, note, commentaire, new Timestamp(new Date().getTime()), false);
-
-
             serviceAvis.add(avis);
-            System.out.println("✅ Avis ajouté avec succès !");
 
+            showAlert("Succès", "✅ Avis ajouté avec succès !");
 
+            // Réinitialiser les champs après ajout
             noteField.clear();
             commentaireField.clear();
-        } catch (NumberFormatException e) {
-            System.out.println("❌ Veuillez entrer un nombre valide pour la note.");
+
         } catch (Exception e) {
-            System.out.println("❌ Erreur lors de l'ajout de l'avis : " + e.getMessage());
+            showAlert("Erreur", "❌ Une erreur s'est produite : " + e.getMessage());
         }
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        if (title.equals("Succès")) {
+            alert.setAlertType(Alert.AlertType.INFORMATION);
+        }
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

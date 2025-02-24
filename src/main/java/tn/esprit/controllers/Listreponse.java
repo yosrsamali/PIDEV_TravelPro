@@ -23,11 +23,9 @@ public class Listreponse {
     @FXML
     private VBox reponsesVBox;
 
-
     public void setIdavis(int idavis) {
         Listreponse.idavis = idavis;
     }
-
 
     @FXML
     private void initialize() {
@@ -38,7 +36,6 @@ public class Listreponse {
         ServiceAvis serviceAvis = new ServiceAvis();
         ServiceReponse serviceReponse = new ServiceReponse();
 
-
         Avis avis = serviceAvis.getById(idavis).orElse(null);
 
         if (avis == null) {
@@ -46,45 +43,49 @@ public class Listreponse {
             return;
         }
 
-
-        avisLabel.setText("Avis ID: " + avis.getId_avis() + "\n"
-                + "Note: " + avis.getNote() + "\n"
+        // Mise à jour pour ne pas afficher l'ID de l'avis
+        avisLabel.setText("Note: " + avis.getNote() + "\n"
                 + "Commentaire: " + avis.getCommentaire() + "\n"
                 + "Date Publication: " + avis.getDate_publication());
 
-
         List<Reponse> reponses = serviceReponse.getReponsesByAvisId(idavis);
 
-
         reponsesVBox.getChildren().clear();
-
 
         for (Reponse reponse : reponses) {
             HBox reponseCard = new HBox();
             reponseCard.setSpacing(10);
 
             Label reponseLabel = new Label();
-            reponseLabel.setText("Réponse ID: " + reponse.getId_reponse() + "\n"
-                    + "Réponse: " + reponse.getReponse() + "\n"
+            reponseLabel.setText("Réponse: " + reponse.getReponse() + "\n"
                     + "Date Réponse: " + reponse.getDate_reponse());
 
             TextField modifyField = new TextField(reponse.getReponse());
             modifyField.setPromptText("Modifier la réponse...");
 
             Button modifyButton = new Button("Modifier");
-            modifyButton.setStyle("-fx-background-color: #FFA500; -fx-text-fill: white;");
+            modifyButton.setStyle("-fx-background-color: #FFA500; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 5px 10px; -fx-background-radius: 5px;");
 
             Button deleteButton = new Button("Supprimer");
-            deleteButton.setStyle("-fx-background-color: #FF0000; -fx-text-fill: white;");
+            deleteButton.setStyle("-fx-background-color: #FF0000; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 5px 10px; -fx-background-radius: 5px;");
 
             modifyButton.setOnAction(event -> {
-                String newResponse = modifyField.getText();
-                if (!newResponse.isEmpty()) {
-                    reponse.setReponse(newResponse);
-                    serviceReponse.update(reponse);
-                    reponseLabel.setText("Réponse ID: " + reponse.getId_reponse() + "\n"
-                            + "Réponse: " + reponse.getReponse() + "\n"
-                            + "Date Réponse: " + reponse.getDate_reponse());
+                String newResponse = modifyField.getText().trim(); // Enlève les espaces avant et après le texte
+                if (newResponse.isEmpty()) {
+                    // Afficher un message d'erreur si le champ est vide ou contient uniquement des espaces
+                    modifyField.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+                    modifyField.setPromptText("La réponse ne peut pas être vide !");
+                } else {
+                    // Réinitialisation du style d'erreur et mise à jour de la réponse si la saisie est valide
+                    modifyField.setStyle(""); // Retirer la bordure rouge
+                    modifyField.setPromptText("Modifier la réponse...");
+
+                    reponse.setReponse(newResponse); // Mise à jour de la réponse
+                    serviceReponse.update(reponse); // Enregistrement de la nouvelle réponse
+
+                    // Mise à jour de l'affichage de la réponse sans l'ID
+                    reponseLabel.setText("Réponse: " + reponse.getReponse() + "\n"
+                            + "Date Réponse: " + reponse.getDate_reponse()); // Affichage sans l'ID
                 }
             });
 
