@@ -13,66 +13,86 @@
 .button {
     -fx-background-color: #088395;
     -fx-text-fill: white;
-    -fx-font-size: 14px;
+    -fx-font-size: 15px;
     -fx-font-weight: bold;
-    -fx-border-radius: 5px;
-    -fx-padding: 7px 15px;
+    -fx-border-radius: 8px;
+    -fx-padding: 10px 20px;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 0, 3);
+    -fx-transition: all 0.3s ease-in-out;
 }
 
 .button:hover {
     -fx-background-color: #37B7C3;
     -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 5);
 }
 
 .button:pressed {
     -fx-background-color: #056674;
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
 }
 
 /* ---- Conteneur des Avis ---- */
 #avisContainer {
     -fx-alignment: center;
-    -fx-spacing: 10px;
-    -fx-padding: 15px;
+    -fx-spacing: 15px;
+    -fx-padding: 20px;
+}
+
+/* ---- Styles des Avis ---- */
+.avis-card {
+    -fx-background-color: white;
+    -fx-border-radius: 12px;
+    -fx-background-radius: 12px;
+    -fx-border-color: #088395;
+    -fx-border-width: 2px;
+    -fx-padding: 20px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.15), 10, 0, 0, 5);
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+.avis-card:hover {
+    -fx-background-color: #F8FBFC;
+    -fx-border-color: #056674;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 12, 0, 0, 6);
 }
 
 /* ---- Alignement des éléments dans VBox ---- */
 .vbox {
     -fx-alignment: center;
-    -fx-spacing: 10px;
+    -fx-spacing: 15px;
 }
 
 /* ---- Styles des Labels ---- */
 .label {
-    -fx-text-fill: gray;
-    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+    -fx-font-size: 16px;
     -fx-font-weight: bold;
 }
 
-/* ---- Styles des éléments d'avis (cartes, etc.) ---- */
-.card {
-    -fx-background-color: white;
-    -fx-border-radius: 10px;
-    -fx-background-radius: 10px;
-    -fx-border-color: #088395;
-    -fx-border-width: 2px;
-    -fx-padding: 20px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 5);
+/* ---- Sous-titres ---- */
+.label-subtitle {
+    -fx-text-fill: gray;
+    -fx-font-size: 14px;
+    -fx-font-weight: normal;
 }
 
 /* ---- Champs de texte ---- */
 .text-field {
     -fx-background-color: #EBF4F6;
     -fx-border-color: #37B7C3;
-    -fx-border-radius: 5px;
-    -fx-padding: 15px;
+    -fx-border-radius: 8px;
+    -fx-padding: 12px;
     -fx-text-fill: #071952;
     -fx-font-size: 14px;
+    -fx-transition: all 0.3s ease-in-out;
 }
 
 .text-field:focused {
     -fx-border-color: #088395;
     -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 0, 3);
 }
 
 /* ---- Checkboxes ---- */
@@ -83,7 +103,8 @@
 
 .check-box .box {
     -fx-border-color: #37B7C3;
-    -fx-border-radius: 3px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
 }
 
 .check-box:selected .box {
@@ -95,4 +116,14 @@
 .hbox {
     -fx-alignment: center;
     -fx-spacing: 15px;
+}
+
+/* ---- ScrollPane ---- */
+.scroll-pane {
+    -fx-background: transparent;
+    -fx-border-radius: 10px;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
 }

@@ -15,7 +15,7 @@ import java.util.List;
 public class DashboardController {
 
     @FXML
-    private VBox avisContainer; // Conteneur des avis
+    private VBox avisContainer;
 
     private final ServiceAvis serviceAvis = new ServiceAvis();
 
@@ -29,36 +29,36 @@ public class DashboardController {
 
         for (Avis avis : avisNonAcceptes) {
             try {
-                // Charger le modèle de carte depuis avis_card.fxml
+
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/tn/esprit/views/avis_card.fxml"));
                 AnchorPane card = loader.load();
 
-                // Récupérer les éléments FXML de la carte
+
                 Label dateLabel = (Label) card.lookup("#dateLabel");
                 Label noteLabel = (Label) card.lookup("#noteLabel");
                 Label commentLabel = (Label) card.lookup("#commentLabel");
                 Button acceptButton = (Button) card.lookup("#acceptButton");
                 Button deleteButton = (Button) card.lookup("#deleteButton");
 
-                // Mettre à jour les labels avec les données de l'avis
+
                 dateLabel.setText("Date: " + avis.getDate_publication());
                 noteLabel.setText("Note: " + avis.getNote());
                 commentLabel.setText("Commentaire: " + avis.getCommentaire());
 
-                // Action bouton Accepter
+
                 acceptButton.setOnAction(event -> {
                     avis.setEstAccepte(true);
                     serviceAvis.update(avis);
                     avisContainer.getChildren().remove(card);
                 });
 
-                // Action bouton Supprimer
+
                 deleteButton.setOnAction(event -> {
                     serviceAvis.delete(avis);
                     avisContainer.getChildren().remove(card);
                 });
 
-                // Ajouter la carte d'avis dans la VBox
+
                 avisContainer.getChildren().add(card);
 
             } catch (IOException e) {

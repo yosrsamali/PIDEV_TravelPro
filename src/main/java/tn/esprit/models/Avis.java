@@ -9,7 +9,7 @@ public class Avis {
     private Date date_publication;
     private boolean estAccepte; // Correction du nom
 
-    // Constructeur complet
+
     public Avis(int id_avis, int note, String commentaire, Date date_publication, boolean estAccepte) {
         this.id_avis = id_avis;
         this.note = note;
@@ -17,7 +17,7 @@ public class Avis {
         this.date_publication = date_publication;
         this.estAccepte = estAccepte;
     }
-    // Constructeur complet
+
     public Avis( int note, String commentaire, Date date_publication, boolean estAccepte) {
         this.note = note;
         this.commentaire = commentaire;
@@ -26,7 +26,7 @@ public class Avis {
     }
 
 
-    // Getters et Setters
+
     public int getId_avis() {
         return id_avis;
     }

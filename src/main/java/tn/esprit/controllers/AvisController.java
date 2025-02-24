@@ -24,13 +24,13 @@ public class AvisController {
 
     @FXML
     public void initialize() {
-        // Ajout d'un événement au bouton
+
         submitButton.setOnAction(event -> ajouterAvis());
     }
 
     private void ajouterAvis() {
         try {
-            // Récupération des données saisies
+
             int note = Integer.parseInt(noteField.getText().trim());
             String commentaire = commentaireField.getText().trim();
 
@@ -44,14 +44,14 @@ public class AvisController {
                 return;
             }
 
-            // Création de l'objet Avis
+
             Avis avis = new Avis(0, note, commentaire, new Timestamp(new Date().getTime()), false);
 
-            // Ajout à la base de données
+
             serviceAvis.add(avis);
             System.out.println("✅ Avis ajouté avec succès !");
 
-            // Réinitialisation des champs
+
             noteField.clear();
             commentaireField.clear();
         } catch (NumberFormatException e) {

@@ -23,12 +23,12 @@ public class Listreponse {
     @FXML
     private VBox reponsesVBox;
 
-    // Setter to set idavis after the controller is loaded
+
     public void setIdavis(int idavis) {
         Listreponse.idavis = idavis;
     }
 
-    // Method to initialize the display of Avis and its Reponses
+
     @FXML
     private void initialize() {
         displayAvisAndReponses();
@@ -38,7 +38,7 @@ public class Listreponse {
         ServiceAvis serviceAvis = new ServiceAvis();
         ServiceReponse serviceReponse = new ServiceReponse();
 
-        // Get the Avis details by ID
+
         Avis avis = serviceAvis.getById(idavis).orElse(null);
 
         if (avis == null) {
@@ -46,19 +46,19 @@ public class Listreponse {
             return;
         }
 
-        // Set the Avis information
+
         avisLabel.setText("Avis ID: " + avis.getId_avis() + "\n"
                 + "Note: " + avis.getNote() + "\n"
                 + "Commentaire: " + avis.getCommentaire() + "\n"
                 + "Date Publication: " + avis.getDate_publication());
 
-        // Get the list of reponses for this avis
+
         List<Reponse> reponses = serviceReponse.getReponsesByAvisId(idavis);
 
-        // Clear previous reponses
+
         reponsesVBox.getChildren().clear();
 
-        // Display Reponses in separate labels with buttons
+
         for (Reponse reponse : reponses) {
             HBox reponseCard = new HBox();
             reponseCard.setSpacing(10);

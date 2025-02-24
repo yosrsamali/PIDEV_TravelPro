@@ -48,11 +48,11 @@ public class Adminmanager {
     @FXML
     private void afficherAvisAcceptes(ActionEvent event) {
         try {
-            // Charger le fichier FXML de la nouvelle interface
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reponse.fxml"));
             Parent root = loader.load();
 
-            // Obtenir la scène actuelle et changer la vue
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
