@@ -26,11 +26,7 @@
             <TextField fx:id="tfPrenome" promptText="Prenome" />
             <TextField fx:id="tfMail" promptText="Mail" />
             <TextField fx:id="tfPassword" promptText="Mot de passe" />
-            <Label alignment="CENTER_LEFT" style="-fx-alignment: CENTER-LEFT;" text="Role" />
-            <HBox alignment="CENTER" spacing="12">
-               <CheckBox fx:id="chkAdmin" text="Admin" />
-               <CheckBox fx:id="chkClient" text="Client" />
-            </HBox>
+
             <HBox alignment="CENTER" spacing="12">
                <Button fx:id="Verconnecret" onAction="#Verconnecret" text="Connecter" />
                <Button fx:id="btnNext" onAction="#goToNextScene" text="Next" />

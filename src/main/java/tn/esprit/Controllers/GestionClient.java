@@ -6,20 +6,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import tn.esprit.interfaces.IService;
-import tn.esprit.models.Utilisateur;
-import tn.esprit.services.ServiceUtilisateur;
-import java.io.IOException;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import tn.esprit.models.Client;
+import tn.esprit.models.Utilisateur;
 import tn.esprit.services.ServiceClient;
+import tn.esprit.services.ServiceUtilisateur;
+import tn.esprit.utils.SessionManager;
 
-
-
-
+import java.io.IOException;
 
 public class GestionClient {
 
@@ -47,7 +45,7 @@ public class GestionClient {
     @FXML
     private void Add(ActionEvent event) {
         if (event.getSource() == btnAjouter) {
-            System.out.println(" Bouton Ajouter cliqué !");
+            System.out.println("✅ Bouton Ajouter cliqué !");
 
             // Vérification des champs
             String address = tfAddress.getText();
@@ -60,38 +58,65 @@ public class GestionClient {
 
             // Vérifier si l'utilisateur existe
             if (user == null) {
-                System.out.println(" Aucun utilisateur sélectionné !");
+                System.out.println("❌ Aucun utilisateur sélectionné !");
                 return;
             }
 
             // Ajouter l'utilisateur à la base de données
             su.add(user);
-            System.out.println("------------------------------cv0-----------------------------");
+            System.out.println("✅ Utilisateur ajouté avec succès !");
 
             // Vérifier si l'utilisateur a bien été ajouté
             if (user.getId() == 0) {
-                System.out.println(" Erreur : l'utilisateur n'a pas été ajouté.");
+                System.out.println("❌ Erreur : l'utilisateur n'a pas été ajouté.");
                 return;
             }
-            System.out.println("------------------------------cv1-----------------------------");
+
             // Création et ajout du client associé
             Client newClient = new Client();
-            newClient.setIdUtilisateur(user.getId());
+            newClient.setId(user.getId());
             newClient.setNumTel(tel);
             newClient.setAdresse(address);
-            System.out.println("------------------------------cv2-----------------------------");
+            newClient.setMail(user.getMail());
+            newClient.setNom(user.getNom());
+            newClient.setPrenom(user.getPrenom());
+            newClient.setRole(user.getRole());
+            newClient.setPassword(user.getPassword());
 
             serviceClient.add(newClient);
-            System.out.println("------------------------------cv3-----------------------------");
+            System.out.println("✅ Client ajouté avec succès !");
 
-            System.out.println(" Utilisateur et client ajoutés avec succès !");
+            // **Ajout du client à la session**
+            SessionManager.getInstance().setUtilisateurConnecte(newClient);
+            System.out.println("✅ Client ajouté à la session !");
+
+            // **Redirection vers `GereClient.fxml`**
+            redirectToGereClient(event);
         }
     }
 
+    private void redirectToGereClient(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GereClient.fxml"));
+            Parent root = loader.load();
+
+            // Récupérer le contrôleur et transmettre les données du client
+            Gereclient gereClientController = loader.getController();
+           // gereClientController.ajouterdonner((Client) SessionManager.getInstance().getUtilisateurConnecte());
+
+            // Changer la scène
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Gestion du Client");
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("❌ Erreur lors du chargement de GereClient.fxml : " + e.getMessage());
+        }
+    }
 
     @FXML
     private void handleRetour(ActionEvent event) throws IOException {
-        // Charger user.fxml (assurez-vous qu'il est dans resources/)
+        // Charger le fichier user.fxml
         Parent root = FXMLLoader.load(getClass().getResource("/user.fxml"));
 
         // Obtenir la scène actuelle et changer vers user.fxml

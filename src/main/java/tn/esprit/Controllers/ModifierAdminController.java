@@ -73,7 +73,7 @@ public class ModifierAdminController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/GereAdmin.fxml"));
             Parent root = loader.load();
             GereAdmin adminController = loader.getController();
-            adminController.ajouterdonner(admin, utilisateur);
+            //adminController.ajouterdonner(admin, utilisateur);
             showAlert("Succès", "Administrateur mis à jour avec succès !");
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

@@ -1,16 +1,18 @@
 package tn.esprit.models;
 
-public class Admin {
-
+public class Admin extends Utilisateur {
     private int idAdmin;
-    private int idUtilisateur;
 
     public Admin() {
     }
 
-    public Admin(int idUtilisateur) {
+    public Admin(int id, String nom, String prenom, String mail, String password) {
+        super(id, nom, prenom, mail, password, "Admin");
+    }
 
-        this.idUtilisateur = idUtilisateur;
+    public Admin(int idAdmin, int id, String nom, String prenom, String mail, String password) {
+        super(id, nom, prenom, mail, password, "Admin");
+        this.idAdmin = idAdmin;
     }
 
     public int getIdAdmin() {
@@ -21,19 +23,10 @@ public class Admin {
         this.idAdmin = idAdmin;
     }
 
-    public int getIdUtilisateur() {
-        return idUtilisateur;
-    }
-
-    public void setIdUtilisateur(int idUtilisateur) {
-        this.idUtilisateur = idUtilisateur;
-    }
-
     @Override
     public String toString() {
-        return "Admin{" +
+        return super.toString() + " Admin{" +
                 "idAdmin=" + idAdmin +
-                ", idUtilisateur=" + idUtilisateur +
                 '}';
     }
 }

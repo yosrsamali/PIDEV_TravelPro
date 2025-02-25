@@ -71,7 +71,7 @@ public class ModifierClientController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Gereclient.fxml"));
             Parent root = loader.load();
             Gereclient clientController = loader.getController();
-            clientController.ajouterdonner(client,utilisateur);
+           // clientController.ajouterdonner(client,utilisateur);
             showAlert("Succès", "Client mis à jour avec succès !");
 
 

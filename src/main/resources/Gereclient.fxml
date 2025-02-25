@@ -14,6 +14,8 @@
       <Label fx:id="lblAdresse" layoutX="84.0" layoutY="223.0" text="Adresse : " />
       <Button layoutX="176.0" layoutY="300.0" mnemonicParsing="false" text="Modifier"   onAction="#handleModifier" />
       <Button layoutX="331.0" layoutY="300.0" mnemonicParsing="false" text="Supprimer" onAction="#handleSupprimer" />
+      <Button fx:id="btnAjouter2" onAction="#Add" text="Envoyer demende de Admin" />
+
 
 
 

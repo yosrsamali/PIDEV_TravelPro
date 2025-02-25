@@ -20,7 +20,7 @@ public class ServiceAdmin implements IService<Admin> {
         String qry = "INSERT INTO `admin`(`id_utilisateur`) VALUES (?)";
         try {
             PreparedStatement pstm = cnx.prepareStatement(qry, Statement.RETURN_GENERATED_KEYS);
-            pstm.setInt(1, admin.getIdUtilisateur());
+            pstm.setInt(1, admin.getId());
 
             int rowsAffected = pstm.executeUpdate();
             if (rowsAffected > 0) {
@@ -50,7 +50,7 @@ public class ServiceAdmin implements IService<Admin> {
             while (rs.next()) {
                 Admin a = new Admin();
                 a.setIdAdmin(rs.getInt("id_admin"));  // Vérifie si c'est bien "id_admin" et pas "id_Admin"
-                a.setIdUtilisateur(rs.getInt("id_utilisateur"));
+                a.setId(rs.getInt("id_utilisateur"));
 
                 admins.add(a);
             }
@@ -67,7 +67,7 @@ public class ServiceAdmin implements IService<Admin> {
         String qry = "UPDATE `admin` SET `id_utilisateur`=? WHERE `id_admin`=?";
         try {
             PreparedStatement pstm = cnx.prepareStatement(qry);
-            pstm.setInt(1, admin.getIdUtilisateur());
+            pstm.setInt(1, admin.getId());
             pstm.setInt(2, admin.getIdAdmin());
 
             int rowsUpdated = pstm.executeUpdate();
@@ -112,7 +112,7 @@ public class ServiceAdmin implements IService<Admin> {
             if (rs.next()) {
                 admin = new Admin();
                 admin.setIdAdmin(rs.getInt("id_admin"));
-                admin.setIdUtilisateur(rs.getInt("id_utilisateur"));
+                admin.setId(rs.getInt("id_utilisateur"));
             }
         } catch (SQLException e) {
             System.out.println("❌ Erreur lors de la récupération de l'admin : " + e.getMessage());
@@ -173,7 +173,7 @@ public class ServiceAdmin implements IService<Admin> {
             if (rs.next()) {
                 admin = new Admin();
                 admin.setIdAdmin(rs.getInt("id_admin"));
-                admin.setIdUtilisateur(rs.getInt("id_utilisateur"));
+                admin.setId(rs.getInt("id_utilisateur"));
                }
         } catch (SQLException e) {
             System.out.println("Erreur lors de la récupération de l'admin : " + e.getMessage());

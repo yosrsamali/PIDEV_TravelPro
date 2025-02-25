@@ -14,6 +14,7 @@ import tn.esprit.models.Admin;
 import tn.esprit.models.Utilisateur;
 import tn.esprit.services.ServiceAdmin;
 import tn.esprit.services.ServiceUtilisateur;
+import tn.esprit.utils.SessionManager;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -29,25 +30,27 @@ public class GereAdmin {
     @FXML
     private Label lblRole;
 
-    private Admin admin;
-    private Utilisateur utilisateur;
     private final ServiceAdmin serviceAdmin = new ServiceAdmin();
     private final ServiceUtilisateur serviceUtilisateur = new ServiceUtilisateur();
 
-
-    public void ajouterdonner(Admin admin, Utilisateur utilisateur) {
-        this.admin = admin;
-        this.utilisateur = utilisateur;
+    @FXML
+    public void initialize() {
         afficherInformationsAdmin();
     }
 
-
     private void afficherInformationsAdmin() {
-        if (admin != null && utilisateur != null) {
-            lblNom.setText("Nom : " + utilisateur.getNom());
-            lblPrenom.setText("Prénom : " + utilisateur.getPrenom());
-            lblMail.setText("Email : " + utilisateur.getMail());
-            lblRole.setText("Rôle : " + utilisateur.getRole());
+        // Récupérer l'utilisateur connecté depuis la session
+        Utilisateur utilisateur = SessionManager.getInstance().getUtilisateurConnecte();
+        System.out.println("utilisateur");
+        System.out.println(utilisateur);
+
+        if (utilisateur instanceof Admin) {
+            Admin admin = (Admin) utilisateur;
+
+            lblNom.setText("Nom : " + admin.getNom());
+            lblPrenom.setText("Prénom : " + admin.getPrenom());
+            lblMail.setText("Email : " + admin.getMail());
+            lblRole.setText("Rôle : " + admin.getRole());
         } else {
             lblNom.setText("Nom : Inconnu");
             lblPrenom.setText("Prénom : Inconnu");
@@ -63,7 +66,12 @@ public class GereAdmin {
             Parent root = loader.load();
 
             ModifierAdminController modifierController = loader.getController();
-            modifierController.setAdminData(admin, utilisateur);
+
+            // Récupérer l'utilisateur depuis la session et l'envoyer au contrôleur de modification
+            Utilisateur utilisateur = SessionManager.getInstance().getUtilisateurConnecte();
+            if (utilisateur instanceof Admin) {
+                modifierController.setAdminData((Admin) utilisateur, utilisateur);
+            }
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -76,10 +84,15 @@ public class GereAdmin {
 
     @FXML
     private void handleSupprimer(ActionEvent event) {
-        if (admin == null || utilisateur == null) {
-            showAlert("Erreur", "Aucun administrateur sélectionné pour la suppression.");
+        // Récupérer l'utilisateur depuis la session
+        Utilisateur utilisateur = SessionManager.getInstance().getUtilisateurConnecte();
+
+        if (!(utilisateur instanceof Admin)) {
+            showAlert("Erreur", "Aucun administrateur connecté pour la suppression.");
             return;
         }
+
+        Admin admin = (Admin) utilisateur;
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation de suppression");
@@ -94,6 +107,8 @@ public class GereAdmin {
 
                 showAlert("Succès", "Administrateur supprimé avec succès.");
 
+                // Nettoyer la session et retourner à l'accueil
+                SessionManager.getInstance().logout();
                 retourAccueil(event);
             } catch (Exception e) {
                 showAlert("Erreur", "Une erreur est survenue lors de la suppression : " + e.getMessage());

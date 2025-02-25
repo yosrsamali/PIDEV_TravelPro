@@ -22,7 +22,7 @@ public class ServiceClient implements IService<Client> {
         String qry = "INSERT INTO `client`(`id_utilisateur`, `num_tel_client`, `addresse_client`) VALUES (?,?,?)";
         try {
             PreparedStatement pstm = cnx.prepareStatement(qry, Statement.RETURN_GENERATED_KEYS);
-            pstm.setInt(1, client.getIdUtilisateur());
+            pstm.setInt(1, client.getId());
             pstm.setString(2, client.getNumTel());
             pstm.setString(3, client.getAdresse());
 
@@ -52,7 +52,7 @@ public class ServiceClient implements IService<Client> {
             while (rs.next()) {
                 Client c = new Client();
                 c.setIdClient(rs.getInt("id_Client"));
-                c.setIdUtilisateur(rs.getInt("id_Utilisateur"));
+                c.setId(rs.getInt("id_Utilisateur"));
                 c.setNumTel(rs.getString("num_Tel"));
                 c.setAdresse(rs.getString("adresse"));
 
@@ -116,7 +116,7 @@ public class ServiceClient implements IService<Client> {
             if (rs.next()) {
                 client = new Client();
                 client.setIdClient(rs.getInt("id_client"));
-                client.setIdUtilisateur(rs.getInt("id_utilisateur"));
+                client.setId(rs.getInt("id_utilisateur"));
                 client.setNumTel(rs.getString("num_tel"));
                 client.setAdresse(rs.getString("adresse"));
             }
@@ -179,7 +179,7 @@ public Client getClientParIdUtilisateur(int id_utilisateur) {
         if (rs.next()) {
             client = new Client();
             client.setIdClient(rs.getInt("id_client"));
-            client.setIdUtilisateur(rs.getInt("id_utilisateur"));
+            client.setId(rs.getInt("id_utilisateur"));
             client.setNumTel(rs.getString("num_tel_client"));
             client.setAdresse(rs.getString("addresse_client"));
         }
