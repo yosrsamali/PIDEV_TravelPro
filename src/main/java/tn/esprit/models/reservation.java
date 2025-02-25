@@ -40,7 +40,6 @@ public class reservation {
     @Override
     public String toString() {
         return "Reservation{" +
-                "idReservation=" + idReservation +
                 ", dateDebut=" + dateDebut +
                 ", dateFin=" + dateFin +
                 ", statut='" + statut + '\'' +

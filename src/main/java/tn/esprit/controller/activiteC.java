@@ -10,7 +10,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import tn.esprit.models.Activite;
 import tn.esprit.services.ServiceActivite;
@@ -18,6 +17,7 @@ import tn.esprit.services.ServiceActivite;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -58,6 +58,12 @@ public class activiteC implements Initializable {
 
     @FXML
     private TextField idEventInput;
+
+    @FXML
+    private TextField searchInput;
+
+    @FXML
+    private TextField filterInput;
 
     private ServiceActivite serviceActivite = new ServiceActivite();
 
@@ -155,6 +161,65 @@ public class activiteC implements Initializable {
         showAlert("Succès", "Activité supprimée avec succès.");
     }
 
+    @FXML
+    void searchActivite(ActionEvent event) {
+        String searchText = searchInput.getText().trim();
+        if (searchText.isEmpty()) {
+            loadActivites(); // Recharger toutes les activités si le champ de recherche est vide
+            return;
+        }
+
+        List<Activite> activites = serviceActivite.getAll();
+        ObservableList<Activite> filteredList = FXCollections.observableArrayList();
+
+        for (Activite activite : activites) {
+            if (String.valueOf(activite.getIdActivite()).contains(searchText) ||
+                    activite.getNomActivite().toLowerCase().contains(searchText.toLowerCase())) {
+                filteredList.add(activite);
+            }
+        }
+
+        activiteTableView.setItems(filteredList);
+    }
+
+    @FXML
+    void filterActivite(ActionEvent event) {
+        String filterText = filterInput.getText().trim();
+        if (filterText.isEmpty()) {
+            loadActivites(); // Recharger toutes les activités si le champ de filtre est vide
+            return;
+        }
+
+        List<Activite> activites = serviceActivite.getAll();
+        ObservableList<Activite> filteredList = FXCollections.observableArrayList();
+
+        for (Activite activite : activites) {
+            if (String.valueOf(activite.getIdActivite()).contains(filterText) ||
+                    activite.getNomActivite().toLowerCase().contains(filterText.toLowerCase())) {
+                filteredList.add(activite);
+            }
+        }
+
+        activiteTableView.setItems(filteredList);
+    }
+
+    @FXML
+    void sortById(ActionEvent event) {
+        activiteTableView.getItems().sort(Comparator.comparingInt(Activite::getIdActivite));
+    }
+
+    @FXML
+    void sortByName(ActionEvent event) {
+        activiteTableView.getItems().sort(Comparator.comparing(Activite::getNomActivite));
+    }
+
+    @FXML
+    void refreshActivites(ActionEvent event) {
+        loadActivites(); // Recharge toutes les activités
+        searchInput.clear(); // Vide le champ de recherche
+        filterInput.clear(); // Vide le champ de filtre
+    }
+
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -164,7 +229,6 @@ public class activiteC implements Initializable {
     }
 
     public void retourner(ActionEvent actionEvent) {
-
         // Charger l'interface AjouterUser
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/tools1.fxml"));

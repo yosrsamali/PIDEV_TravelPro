@@ -21,6 +21,12 @@
    <children>
       <VBox fx:id="EventsInterface" prefHeight="50.0" prefWidth="1331.0" stylesheets="@css/product.css">
          <children>
+             <HBox spacing="10">
+                 <TextField fx:id="searchInput" promptText="Rechercher par nom ou ID" />
+                 <Button onAction="#searchEvenement" text="Rechercher" />
+
+                 <Button onAction="#refreshEvenements" text="Rafraîchir" />
+             </HBox>
 
             <Pane fx:id="UpperSection" prefHeight="900.0" prefWidth="1271.0" styleClass="UpperSection" stylesheets="@css/product.css">
                <children>
@@ -127,6 +133,7 @@
                            <Button fx:id="AddImageBtn" onAction="#choisirImage1" prefHeight="21.0" prefWidth="31.0" text="+" />
                        </children>
                    </HBox>
+
                   <HBox id="submitField" prefHeight="60.0" prefWidth="1290.0">
                      <children>
                         <Button fx:id="AddEventBtn" mnemonicParsing="false" onAction="#addEvent" prefHeight="37.0" prefWidth="267.0" styleClass="orangebtn" text="Add">
@@ -189,11 +196,7 @@
                <children>
                   <TextField layoutX="159.0" layoutY="41.0" prefHeight="37.0" prefWidth="265.0" styleClass="search-field" stylesheets="@css/product.css" />
                   <Label layoutX="90.0" layoutY="41.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="80.0" styleClass="label-style" stylesheets="@css/product.css" text="Search" />
-                  <ImageView fitHeight="22.0" fitWidth="22.0" layoutX="390.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@icons/search.png" />
-                     </image>
-                  </ImageView>
+
                </children>
             </Pane>
             <Pane fx:id="ListContainer11" prefHeight="694.0" prefWidth="1331.0" style="-fx-background-color: #00000;">
@@ -287,6 +290,7 @@
                               </Button>
                           </children>
                       </HBox>
+
                   <TextField fx:id="nomEvent12" prefHeight="37.0" prefWidth="196.0" />
                   </children>
               </VBox>

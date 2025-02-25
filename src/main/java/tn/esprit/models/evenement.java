@@ -70,7 +70,6 @@ public class evenement {
     @Override
     public String toString() {
         return "evenement{" +
-                "idEvent=" + idEvent +
                 ", nomEvent='" + nomEvent + '\'' +
                 ", lieu='" + lieu + '\'' +
                 ", dateDebutE=" + dateDebutE +

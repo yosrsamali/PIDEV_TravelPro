@@ -124,6 +124,7 @@ public class evenementC implements Initializable {
     TableColumn<evenement, String> imageColumn;
     @FXML
     TableColumn<evenement,Void> actionsColumn;
+
     @FXML
     private TableColumn<?, ?> idAvisColumn;
 
@@ -181,6 +182,14 @@ public class evenementC implements Initializable {
     private VBox eventsVBox;
     @FXML
     private VBox eventsVBox2;
+
+    @FXML
+    private TextField searchInput;
+
+
+
+    @FXML
+    private TextField filterInput;
 
 
     @FXML
@@ -615,4 +624,68 @@ public class evenementC implements Initializable {
         }
 
     }
+    @FXML
+    void searchEvenement(ActionEvent event) {
+        String searchText = searchInput.getText().trim().toLowerCase();
+
+        if (searchText.isEmpty()) {
+            data(); // Recharger toutes les données si le champ de recherche est vide
+            return;
+        }
+
+        // Filtrer les événements
+        FilteredList<evenement> filteredData = new FilteredList<>(FXCollections.observableArrayList(e.getAll()), b -> true);
+        filteredData.setPredicate(evt -> {
+            if (searchText == null || searchText.isEmpty()) {
+                return true; // Afficher tous les événements si le champ de recherche est vide
+            }
+
+            // Vérifier si le nom ou l'ID correspond
+            String lowerCaseFilter = searchText.toLowerCase();
+            return evt.getNomEvent().toLowerCase().contains(lowerCaseFilter)
+                    || String.valueOf(evt.getIdEvent()).contains(lowerCaseFilter);
+        });
+
+        // Mettre à jour eventsVBox avec les résultats filtrés
+        eventsVBox.getChildren().clear();
+        for (evenement evt : filteredData) {
+            VBox eventCard = createEventCard(evt);
+            eventsVBox.getChildren().add(eventCard);
+        }
+    }
+    /*
+    @FXML
+    void sortById(ActionEvent event) {
+        List<evenement> sortedList = e.getAll().stream()
+                .sorted(Comparator.comparingInt(evenement::getIdEvent))
+                .collect(Collectors.toList());
+
+        // Mettre à jour eventsVBox avec les événements triés
+        eventsVBox.getChildren().clear();
+        for (evenement evt : sortedList) {
+            VBox eventCard = createEventCard(evt);
+            eventsVBox.getChildren().add(eventCard);
+        }
+    }
+    @FXML
+    void sortByName(ActionEvent event) {
+        List<evenement> sortedList = e.getAll().stream()
+                .sorted(Comparator.comparing(evenement::getNomEvent))
+                .collect(Collectors.toList());
+
+        // Mettre à jour eventsVBox avec les événements triés
+        eventsVBox.getChildren().clear();
+        for (evenement evt : sortedList) {
+            VBox eventCard = createEventCard(evt);
+            eventsVBox.getChildren().add(eventCard);
+        }
+    }
+    */
+    @FXML
+    void refreshEvenements(ActionEvent event) {
+        searchInput.clear(); // Vider le champ de recherche
+        data(); // Recharger toutes les données
+    }
+
+
 }
