@@ -14,10 +14,12 @@ import tn.esprit.services.ServiceAvis;
 import tn.esprit.services.ServiceReponse;
 import tn.esprit.models.Avis;
 import tn.esprit.models.Reponse;
-
+import java.util.Collections;
+import java.util.Comparator;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ReponseController {
 
@@ -105,28 +107,9 @@ public class ReponseController {
         });
 
         viewResponsesButton.setOnAction(event -> {
-
             Listreponse l1= new Listreponse();
             l1.setIdavis(avis.getId_avis());
             changerScene(event, "/Listreponse.fxml");
-
-
-
-/*
-            List<Reponse> reponses = serviceReponse.getReponsesByAvisId(avis.getId_avis());
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Réponses");
-            alert.setHeaderText("Liste des réponses pour cet avis");
-
-            StringBuilder content = new StringBuilder();
-            for (Reponse rep : reponses) {
-                content.append(rep.getDate_reponse()).append(" : ").append(rep.getReponse()).append("\n");
-            }
-
-            alert.setContentText(content.toString());
-            alert.showAndWait();
-       */
-
         });
 
         HBox responseBox = new HBox(10);
@@ -138,9 +121,6 @@ public class ReponseController {
         card.getChildren().addAll(noteLabel, commentaireLabel, responseBox, feedbackLabel, actionBox);
         return card;
     }
-
-
-
 
     private void changerScene(ActionEvent event, String fxmlPath) {
         try {
@@ -154,6 +134,33 @@ public class ReponseController {
         }
     }
 
+    // Méthode de filtrage des avis en fonction de la note
+    @FXML
+    private void filterByNote(ActionEvent event) {
+        // Récupère la liste des avis acceptés
+        List<Avis> avisAcceptes = serviceAvis.getAvisAcceptes();
+
+        // Trie les avis par note (par exemple, de la plus haute à la plus basse)
+        List<Avis> avisFiltres = avisAcceptes.stream()
+                .sorted((a1, a2) -> Double.compare(a2.getNote(), a1.getNote())) // Tri décroissant par note
+                .collect(Collectors.toList());
+
+        // Vider la liste des cartes actuelles
+        cardList.getChildren().clear();
+
+        // Ajouter les cartes triées à la VBox
+        for (Avis avis : avisFiltres) {
+            VBox card = createAvisCard(avis);
+            cardList.getChildren().add(card);
+        }
+
+        // Optionnel: Message pour indiquer que le filtrage est effectué
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Filtrage");
+        alert.setHeaderText(null);
+        alert.setContentText("Les avis ont été triés par note.");
+        alert.showAndWait();
+    }
 
     @FXML
     private void afficherAvisAcceptes(ActionEvent event) {
@@ -171,19 +178,4 @@ public class ReponseController {
             System.err.println("Erreur lors du chargement de l'interface reponse.fxml : " + e.getMessage());
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
