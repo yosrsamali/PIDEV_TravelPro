@@ -1,6 +1,8 @@
 package tn.esprit.controllers;
 
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.input.KeyEvent;
 import tn.esprit.utils.MyDatabase;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,12 +20,19 @@ import javafx.fxml.FXMLLoader;
 import java.net.URL;
 import java.sql.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ListDeponseController implements Initializable {
 
     @FXML
     private VBox vboxContainer; // Conteneur pour les cartes
+
+    @FXML
+    private TextField searchField;
+
+    private List<BorderPane> cartesDepenses = new ArrayList<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -47,7 +56,9 @@ public class ListDeponseController implements Initializable {
                 // Calcul du total à l'affichage
                 double total = quantite * prixAchat;
 
-                vboxContainer.getChildren().add(creerCarteDepense(idDeponse, nomProduit, quantite, prixAchat, total));
+                BorderPane carte = creerCarteDepense(idDeponse, nomProduit, quantite, prixAchat, total);
+                cartesDepenses.add(carte);  // Ajoute la carte à la liste
+                vboxContainer.getChildren().add(carte);
             }
 
         } catch (SQLException e) {
@@ -87,9 +98,11 @@ public class ListDeponseController implements Initializable {
         HBox buttonBox = new HBox(10);
         Button btnModifier = new Button("Modifier");
         btnModifier.setOnAction(event -> modifierDepense(id, lblQuantite, lblPrix, lblTotal)); // Action de modification
+        btnModifier.getStyleClass().add("button");
 
         Button btnSupprimer = new Button("Supprimer");
         btnSupprimer.setOnAction(event -> supprimerDepense(id)); // Action de suppression
+        btnSupprimer.getStyleClass().add("button");
 
         buttonBox.getChildren().addAll(btnModifier, btnSupprimer);
         card.setBottom(buttonBox);
@@ -124,20 +137,27 @@ public class ListDeponseController implements Initializable {
         // Ouvrir une nouvelle fenêtre pour modifier la dépense
         Stage stage = new Stage();
         VBox vbox = new VBox(10);
+        vbox.setStyle("-fx-padding: 15; -fx-alignment: center; -fx-background-color: linear-gradient(to bottom, #37B7C3, #071952);");
 
         // Récupérer les données de la dépense à modifier
         int quantite = Integer.parseInt(lblQuantite.getText().split(":")[1].trim());
         double prixAchat = Double.parseDouble(lblPrix.getText().split(":")[1].trim().split(" ")[0]);
+        String labelStyle = "-fx-font-size: 16px; -fx-text-fill: #ffffff; -fx-font-weight: bold;";
 
         // Création des champs pour la modification
         Label lblQuantiteLabel = new Label("Quantité");
+        lblQuantiteLabel.setStyle(labelStyle);
+
         TextField tfQuantite = new TextField(String.valueOf(quantite));
 
         Label lblPrixAchat = new Label("Prix d'Achat");
+        lblPrixAchat.setStyle(labelStyle);
+
         TextField tfPrixAchat = new TextField(String.valueOf(prixAchat));
 
         Label lblTotalModifie = new Label("Total : ");
         lblTotalModifie.setFont(new Font("Arial", 14));
+        lblTotalModifie.setOpacity(0);
 
         // Calcul automatique du total quand le prix ou la quantité change
         tfQuantite.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -161,6 +181,7 @@ public class ListDeponseController implements Initializable {
         });
 
         Button btnSave = new Button("Enregistrer");
+        btnSave.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold;");
         btnSave.setOnAction(event -> {
             // Récupérer les nouvelles valeurs
             int newQuantite = Integer.parseInt(tfQuantite.getText());
@@ -232,5 +253,47 @@ public class ListDeponseController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void handleSearch() {
+        filtrerDepenses(searchField.getText());
+    }
+
+    @FXML
+    private void filtrerDepenses(String searchText) {
+        System.out.println("Recherche : " + searchText);  // Vérifie ce que tu cherches
+        vboxContainer.getChildren().clear(); // Effacer les cartes actuelles
+
+        if (searchText == null || searchText.isEmpty()) {
+            vboxContainer.getChildren().addAll(cartesDepenses);
+        } else {
+            List<BorderPane> cartesFiltrees = cartesDepenses.stream()
+                    .filter(carte -> {
+                        Node topNode = carte.getTop();
+                        if (topNode instanceof Label lblProduit) {
+                            System.out.println("Label text: " + lblProduit.getText());  // Vérifie le texte du Label
+                            return lblProduit.getText().toLowerCase().contains(searchText.toLowerCase());
+                        }
+                        return false;
+                    })
+                    .toList();
+
+            if (cartesFiltrees.isEmpty()) {
+                Label noResult = new Label("Aucun résultat trouvé.");
+                noResult.setFont(new Font("Arial", 16));
+                noResult.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
+                vboxContainer.getChildren().add(noResult);
+            } else {
+                vboxContainer.getChildren().addAll(cartesFiltrees);
+            }
+        }
+    }
+
+    @FXML
+    public void filtrageDepenses(KeyEvent keyEvent) {
+        String searchText = searchField.getText().trim();
+        System.out.println("Recherche par clavier : " + searchText);  // Vérifie ce que tu cherches
+        filtrerDepenses(searchText);
     }
 }
