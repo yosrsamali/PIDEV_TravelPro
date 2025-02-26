@@ -1,29 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.GridPane?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.GestionReservation">
-    <stylesheets>
-        <URL value="@css/style.css" />
-    </stylesheets>
-    <children>
-        <!-- Titre -->
-        <Label layoutX="411.0" layoutY="32.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Liste des Réservations" />
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.ReservationController">
+    <Label text="Formulaire de Réservation" layoutX="10" layoutY="10"/>
 
-        <!-- ScrollPane pour permettre le défilement -->
-        <ScrollPane layoutX="50.0" layoutY="70.0" prefHeight="543.0" prefWidth="980.0">
-            <content>
-                <!-- FlowPane pour afficher les cartes -->
-                <FlowPane fx:id="reservationContainer" hgap="10" prefWidth="960.0" vgap="10" />
-            </content>
-        </ScrollPane>
+    <GridPane hgap="10" vgap="10" layoutX="10" layoutY="40">
+        <Label text="Lieu de Départ:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="departureField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-        <!-- Bouton Actualiser -->
-        <Button layoutX="467.0" layoutY="637.0" onAction="#afficherReservations" text="Actualiser" />
-    </children>
+        <Label text="Lieu d'Arrivée:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="arrivalField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Date de Voyage:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="travelDatePicker" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Date de Retour:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="returnDatePicker" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <Button text="Ajouter Billet Avion" layoutX="10" layoutY="150" onAction="#handleAddFlightTicket"/>
+    <HBox fx:id="flightTicketBox" visible="false" spacing="10" layoutX="10" layoutY="180">
+        <Label text="Classe:"/>
+        <ComboBox fx:id="classComboBox"/>
+        <Label text="Compagnie Aérienne:"/>
+        <TextField fx:id="airlineField"/>
+    </HBox>
+
+    <Button text="Ajouter Hôtel" layoutX="10" layoutY="220" onAction="#handleAddHotel"/>
+    <HBox fx:id="hotelBox" visible="false" spacing="10" layoutX="10" layoutY="250">
+        <Label text="Nom de l'Hôtel:"/>
+        <TextField fx:id="hotelField"/>
+    </HBox>
+
+    <Button text="Ajouter Voiture" layoutX="10" layoutY="290" onAction="#handleAddCar"/>
+    <HBox fx:id="carBox" visible="false" spacing="10" layoutX="10" layoutY="320">
+        <Label text="Modèle de Voiture:"/>
+        <TextField fx:id="carModelField"/>
+    </HBox>
+
+    <Button text="Valider la Réservation" layoutX="10" layoutY="360" onAction="#handleSubmitReservation"/>
 </AnchorPane>

@@ -1,6 +1,7 @@
 tn\esprit\test\MainFX.class
 tn\esprit\controllers\ModifierBilletAvionController.class
 tn\esprit\controllers\GestionVoiture.class
+tn\esprit\controllers\ReservationController.class
 tn\esprit\controllers\WelcomeController.class
 tn\esprit\controllers\DetailsReservationController.class
 tn\esprit\controllers\GestionBilletAvion.class
