@@ -1,4 +1,4 @@
-/*package tn.esprit.services;
+package tn.esprit.services;
 
 import javax.mail.*;
 import javax.mail.internet.*;
@@ -9,9 +9,14 @@ public class SendGridMailer {
     private static final String SMTP_SERVER = "smtp.sendgrid.net";
     private static final String SMTP_PORT = "465";  // Port SSL
     private static final String USERNAME = "apikey";  // Nom d'utilisateur fixe pour SendGrid
-    private static final String PASSWORD = "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"; // Clé API SendGrid
+    private static final String PASSWORD = System.getenv("SENDGRID_API_KEY"); // Récupération de la clé API SendGrid
 
     public static void sendEmail(String toEmail, String subject, String body) {
+        if (PASSWORD == null || PASSWORD.isEmpty()) {
+            System.err.println("Erreur : La clé API SendGrid n'est pas définie !");
+            return;
+        }
+
         // Configuration des propriétés SMTP
         Properties properties = new Properties();
         properties.put("mail.smtp.host", SMTP_SERVER);
@@ -44,4 +49,4 @@ public class SendGridMailer {
             e.printStackTrace();
         }
     }
-}*/
+}
