@@ -112,3 +112,28 @@
     padding: 5px; /* Ajoutez un peu d'espace autour du texte */
     border-radius: 5px; /* Ajoutez un arrondi aux coins pour un meilleur visuel */
 }
+.button {
+    -fx-background-color: linear-gradient(to bottom, #37B7C3, #071952);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-width: 2px;
+    -fx-border-color: #071952;
+    -fx-cursor: hand;
+    -fx-transition: 0.3s;
+}
+
+/* Effet au survol */
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom, #071952, #37B7C3);
+    -fx-border-color: #37B7C3;
+}
+
+/* Effet au clic */
+.button:pressed {
+    -fx-background-color: #071952;
+    -fx-border-color: #37B7C3;
+}
