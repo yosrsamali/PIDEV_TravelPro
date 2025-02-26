@@ -53,16 +53,16 @@ public class ReponseController {
         responseField.setStyle("-fx-font-size: 12px; -fx-padding: 5;");
 
         Button replyButton = new Button("Envoyer");
-        replyButton.setStyle("-fx-background-color: #46D0EC; -fx-text-fill: white;");
+        replyButton.setStyle("-fx-background-color: #088395; -fx-text-fill: white;");
 
         Button modifyButton = new Button("Modifier");
-        modifyButton.setStyle("-fx-background-color: #FFA500; -fx-text-fill: white;");
+        modifyButton.setStyle("-fx-background-color: #088395; -fx-text-fill: white;");
 
         Button deleteButton = new Button("Supprimer");
-        deleteButton.setStyle("-fx-background-color: #FF0000; -fx-text-fill: white;");
+        deleteButton.setStyle("-fx-background-color: #088395; -fx-text-fill: white;");
 
         Button viewResponsesButton = new Button("Consulter Réponse");
-        viewResponsesButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+        viewResponsesButton.setStyle("-fx-background-color: #088395; -fx-text-fill: white;");
 
         ServiceReponse serviceReponse = new ServiceReponse();
         Label feedbackLabel = new Label();
@@ -89,7 +89,7 @@ public class ReponseController {
         modifyButton.setOnAction(event -> {
             TextField modifyField = new TextField(avis.getCommentaire());
             Button saveButton = new Button("Enregistrer");
-            saveButton.setStyle("-fx-background-color: #32CD32; -fx-text-fill: white;");
+            saveButton.setStyle("-fx-background-color: #088395; -fx-text-fill: white;");
 
             saveButton.setOnAction(saveEvent -> {
                 avis.setCommentaire(modifyField.getText());
