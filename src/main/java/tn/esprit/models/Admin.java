@@ -5,6 +5,9 @@ public class Admin extends Utilisateur {
 
     public Admin() {
     }
+    public Admin(int id_Utilisateur) {
+        this.id= id_Utilisateur;
+    }
 
     public Admin(int id, String nom, String prenom, String mail, String password) {
         super(id, nom, prenom, mail, password, "Admin");

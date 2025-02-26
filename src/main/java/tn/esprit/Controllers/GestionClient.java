@@ -95,6 +95,10 @@ public class GestionClient {
         }
     }
 
+
+
+
+
     private void redirectToGereClient(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/GereClient.fxml"));
@@ -124,4 +128,6 @@ public class GestionClient {
         stage.setScene(new Scene(root));
         stage.show();
     }
+
+
 }

@@ -11,7 +11,8 @@
         <Label fx:id="lblPrenom" layoutX="84.0" layoutY="154.0" text="Prénom : " />
         <Label fx:id="lblMail" layoutX="84.0" layoutY="191.0" text="Email : " />
         <Label fx:id="lblRole" layoutX="84.0" layoutY="223.0" text="Rôle : " />
-        <Button layoutX="176.0" layoutY="300.0" mnemonicParsing="false" text="Modifier" onAction="#handleModifier" />
-        <Button layoutX="331.0" layoutY="300.0" mnemonicParsing="false" text="Supprimer" onAction="#handleSupprimer" />
+        <Button layoutX="60.0" layoutY="313.0" mnemonicParsing="false" onAction="#handleModifier" text="Modifier" />
+        <Button layoutX="239.0" layoutY="313.0" mnemonicParsing="false" onAction="#handleSupprimer" text="Supprimer" />
+      <Button layoutX="410.0" layoutY="313.0" mnemonicParsing="false" onAction="#Afficherlistdededemende" text="Consulter la liste de demende " />
     </children>
 </AnchorPane>

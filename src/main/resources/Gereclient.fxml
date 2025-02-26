@@ -12,9 +12,9 @@
       <Label fx:id="lblMail" layoutX="84.0" layoutY="191.0" text="Email : " />
       <Label fx:id="lblNumTel" layoutX="84.0" layoutY="256.0" text="Téléphone : " />
       <Label fx:id="lblAdresse" layoutX="84.0" layoutY="223.0" text="Adresse : " />
-      <Button layoutX="176.0" layoutY="300.0" mnemonicParsing="false" text="Modifier"   onAction="#handleModifier" />
-      <Button layoutX="331.0" layoutY="300.0" mnemonicParsing="false" text="Supprimer" onAction="#handleSupprimer" />
-      <Button fx:id="btnAjouter2" onAction="#Add" text="Envoyer demende de Admin" />
+      <Button layoutX="91.0" layoutY="313.0" mnemonicParsing="false" onAction="#handleModifier" text="Modifier" />
+      <Button layoutX="238.0" layoutY="313.0" mnemonicParsing="false" onAction="#handleSupprimer" text="Supprimer" />
+      <Button fx:id="btnAjouter2" layoutX="382.0" layoutY="313.0" onAction="#EnvoyerDemende" text="Envoyer demende de Admin" />
 
 
 

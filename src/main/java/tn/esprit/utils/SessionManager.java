@@ -10,6 +10,7 @@ public class SessionManager {
 
     private SessionManager() {}
 
+
     public static SessionManager getInstance() {
         if (instance == null) {
             instance = new SessionManager();
@@ -22,7 +23,7 @@ public class SessionManager {
     }
 
     public Utilisateur getUtilisateurConnecte() {
-
+//iuhoigoiu
         return utilisateurConnecte;
     }
 

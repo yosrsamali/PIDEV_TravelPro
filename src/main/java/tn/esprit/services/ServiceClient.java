@@ -117,8 +117,8 @@ public class ServiceClient implements IService<Client> {
                 client = new Client();
                 client.setIdClient(rs.getInt("id_client"));
                 client.setId(rs.getInt("id_utilisateur"));
-                client.setNumTel(rs.getString("num_tel"));
-                client.setAdresse(rs.getString("adresse"));
+                client.setNumTel(rs.getString("num_tel_client"));
+                client.setAdresse(rs.getString("addresse_client"));
             }
         } catch (SQLException e) {
             System.out.println("❌ Erreur lors de la récupération du client : " + e.getMessage());

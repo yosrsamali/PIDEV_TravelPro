@@ -11,13 +11,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import tn.esprit.models.Admin;
+import tn.esprit.models.*;
 import tn.esprit.models.Client;
 import tn.esprit.models.Utilisateur;
 import tn.esprit.services.ServiceAdmin;
 import tn.esprit.services.ServiceClient;
-import tn.esprit.services.ServiceUtilisateur;
+import tn.esprit.services.*;
 import tn.esprit.utils.SessionManager;
+import java.time.LocalDateTime;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -205,6 +206,50 @@ public class Gereclient {
             System.out.println("❌ Erreur lors du chargement de GereAdmin.fxml : " + e.getMessage());
         }
     }
+
+
+    @FXML
+    private void EnvoyerDemende(ActionEvent event) {
+        // Récupérer le client connecté depuis la session
+        Utilisateur utilisateur = SessionManager.getInstance().getUtilisateurConnecte();
+
+        if (utilisateur == null) {
+            afficherPopup("Erreur", "❌ Aucun utilisateur connecté !");
+            return;
+        }
+
+        // Vérifier si c'est bien un client
+        if (!(utilisateur instanceof Client)) {
+            afficherPopup("Erreur", "❌ Seuls les clients peuvent envoyer une demande !");
+            return;
+        }
+
+        Client client = (Client) utilisateur;
+
+        // Vérifier si une demande existe déjà pour ce client
+        ServiceDemandeValidation serviceDemande = new ServiceDemandeValidation();
+        if (serviceDemande.demandeExiste(client.getId())) {
+            afficherPopup("Erreur", "⚠ Une demande est déjà en attente pour ce client.");
+            return;
+        }
+
+        // Ajouter une nouvelle demande
+        DemandeValidation nouvelleDemande = new DemandeValidation(client.getIdClient());
+        serviceDemande.add(nouvelleDemande);
+
+        // Afficher une popup de succès
+        afficherPopup("Succès", "✅ Votre demande a été envoyée avec succès !");
+    }
+
+    private void afficherPopup(String titre, String message) {
+        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.INFORMATION);
+        alert.setTitle(titre);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+
 
 
 

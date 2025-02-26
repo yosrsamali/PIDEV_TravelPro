@@ -156,6 +156,31 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
         return utilisateur; // Retourne null si aucun utilisateur n'est trouvé
     }
 
+    public Utilisateur getById(int id) {
+        Utilisateur utilisateur = null;
+        String qry = "SELECT * FROM utilisateur WHERE id_utilisateur = ?";
+
+        try {
+            PreparedStatement pst = cnx.prepareStatement(qry);
+            pst.setInt(1, id);
+
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                utilisateur = new Utilisateur();
+                utilisateur.setId(rs.getInt("id_utilisateur"));
+                utilisateur.setNom(rs.getString("nom_utilisateur"));
+                utilisateur.setPrenom(rs.getString("prenom"));
+                utilisateur.setMail(rs.getString("mail_utilisateur"));
+                utilisateur.setPassword(rs.getString("mot_de_passe_utilisateur"));
+                utilisateur.setRole(rs.getString("role_utilisateur"));
+            }
+        } catch (SQLException e) {
+            System.out.println("❌ Erreur lors de la récupération de l'utilisateur : " + e.getMessage());
+        }
+
+        return utilisateur; // Retourne null si aucun utilisateur n'est trouvé
+    }
 
 
     public List<Utilisateur> getAllAdmin() {

@@ -134,4 +134,26 @@ public class GereAdmin {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+
+    @FXML
+    private void Afficherlistdededemende(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListeDemande.fxml"));
+            Parent root = loader.load();
+
+            // Récupérer le contrôleur de la nouvelle interface
+            ListeDemandeController controller = loader.getController();
+            controller.chargerListeDemandes(); // Charger les demandes
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Liste des Demandes");
+            stage.show();
+        } catch (IOException e) {
+            showAlert("Erreur", "Impossible de charger la liste des demandes.");
+        }
+    }
+
+
 }
