@@ -1,4 +1,4 @@
-package tn.esprit.services;
+/*package tn.esprit.services;
 
 import javax.mail.*;
 import javax.mail.internet.*;
@@ -44,4 +44,4 @@ public class SendGridMailer {
             e.printStackTrace();
         }
     }
-}
+}*/
