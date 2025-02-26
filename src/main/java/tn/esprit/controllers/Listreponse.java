@@ -64,10 +64,10 @@ public class Listreponse {
             modifyField.setPromptText("Modifier la réponse...");
 
             Button modifyButton = new Button("Modifier");
-            modifyButton.setStyle("-fx-background-color: #FFA500; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 5px 10px; -fx-background-radius: 5px;");
+            modifyButton.setStyle("-fx-background-color: #088395; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 5px 10px; -fx-background-radius: 5px;");
 
             Button deleteButton = new Button("Supprimer");
-            deleteButton.setStyle("-fx-background-color: #FF0000; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 5px 10px; -fx-background-radius: 5px;");
+            deleteButton.setStyle("-fx-background-color: #088395; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 5px 10px; -fx-background-radius: 5px;");
 
             modifyButton.setOnAction(event -> {
                 String newResponse = modifyField.getText().trim(); // Enlève les espaces avant et après le texte
