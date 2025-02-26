@@ -112,4 +112,6 @@ public class ServiceActivite {
             System.out.println("❌ Erreur lors de la suppression de l'activité : " + e.getMessage());
         }
     }
+
+
 }

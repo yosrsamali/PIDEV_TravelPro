@@ -4,10 +4,9 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -17,16 +16,10 @@
         <Insets bottom="10" left="10" right="10" top="10" />
     </padding>
 
-    <TableView fx:id="activiteTableView" prefHeight="327.0" prefWidth="1064.0">
-        <columns>
-            <TableColumn fx:id="idColumn" prefWidth="11.0" text="ID" />
-            <TableColumn fx:id="nomColumn" prefWidth="189.0" text="Nom" />
-            <TableColumn fx:id="descriptionColumn" prefWidth="392.0" text="Description" />
-            <TableColumn fx:id="dateDebutColumn" prefWidth="142.0" text="Date Début" />
-            <TableColumn fx:id="dateFinColumn" prefWidth="176.0" text="Date Fin" />
-            <TableColumn fx:id="idEventColumn" minWidth="5.0" prefWidth="7.0" text="ID Événement" />
-        </columns>
-    </TableView>
+    <!-- Remplacement du TableView par un FlowPane pour afficher les cartes -->
+    <FlowPane fx:id="activiteFlowPane" prefHeight="327.0" prefWidth="1064.0" hgap="10" vgap="10">
+        <!-- Les cartes seront ajoutées dynamiquement ici -->
+    </FlowPane>
 
     <HBox spacing="10">
         <Label text="Nom:" />
@@ -60,8 +53,8 @@
 
     <HBox prefHeight="40.0" prefWidth="1236.0" spacing="10">
         <Button onAction="#addActivite" text="Ajouter" />
-        <Button onAction="#updateActivite" text="Modifier" />
-        <Button onAction="#deleteActivite" text="Supprimer" />
+        <Button onAction="#updateActivite" text="Update" styleClass="modifier-button" />
+
         <Button onAction="#refreshActivites" text="Rafraîchir" />
         <Button fx:id="retour" contentDisplay="CENTER" mnemonicParsing="false" onAction="#retourner" prefHeight="37.0" prefWidth="101.0" text="Retourner" textAlignment="CENTER" textFill="#a80e0e">
             <font>

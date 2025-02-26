@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import org.controlsfx.control.Notifications;
 
+
 public class evenementC implements Initializable {
 
     @FXML
@@ -299,14 +300,17 @@ public class evenementC implements Initializable {
 
         System.out.println("Application started: EventsInterface is set to visible");
     }
+
+
+
     private VBox createEventCard(evenement event) {
         VBox card = new VBox(5);
         card.setStyle("-fx-background-color: #F4F4F4; -fx-padding: 10px; -fx-border-radius: 10px; -fx-border-color: #CCC;");
         card.setAlignment(Pos.CENTER_LEFT);
-
+/*
         Label idLabel = new Label("ID: " + event.getIdEvent());
         idLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
-
+*/
         Label nameLabel = new Label("Nom: " + event.getNomEvent());
         nameLabel.setStyle("-fx-font-size: 14px;");
 
@@ -376,7 +380,7 @@ public class evenementC implements Initializable {
 
         buttonsContainer.getChildren().addAll(editButton,deleteButton);
 
-        card.getChildren().addAll(idLabel, nameLabel, locationLabel, dateLabel, typeLabel, imageView, buttonsContainer);
+        card.getChildren().addAll( nameLabel, locationLabel, dateLabel, typeLabel, imageView, buttonsContainer);
         return card;
     }
 
