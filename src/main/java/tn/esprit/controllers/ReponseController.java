@@ -9,13 +9,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import tn.esprit.services.ServiceAvis;
 import tn.esprit.services.ServiceReponse;
 import tn.esprit.models.Avis;
 import tn.esprit.models.Reponse;
-import java.util.Collections;
-import java.util.Comparator;
+
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -42,8 +42,8 @@ public class ReponseController {
         card.setSpacing(10);
         card.setStyle("-fx-padding: 10; -fx-border-color: lightgray; -fx-border-width: 1; -fx-background-color: #f9f9f9;");
 
-        Label noteLabel = new Label("Note: " + avis.getNote());
-        noteLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
+        // Afficher la note sous forme d'étoiles
+        HBox ratingBox = afficherNote(avis.getNote());
 
         Label commentaireLabel = new Label("Commentaire: " + avis.getCommentaire());
         commentaireLabel.setStyle("-fx-font-size: 12px;");
@@ -107,7 +107,7 @@ public class ReponseController {
         });
 
         viewResponsesButton.setOnAction(event -> {
-            Listreponse l1= new Listreponse();
+            Listreponse l1 = new Listreponse();
             l1.setIdavis(avis.getId_avis());
             changerScene(event, "/Listreponse.fxml");
         });
@@ -118,8 +118,24 @@ public class ReponseController {
         HBox actionBox = new HBox(10);
         actionBox.getChildren().addAll(modifyButton, deleteButton, viewResponsesButton);
 
-        card.getChildren().addAll(noteLabel, commentaireLabel, responseBox, feedbackLabel, actionBox);
+        card.getChildren().addAll(ratingBox, commentaireLabel, responseBox, feedbackLabel, actionBox);
         return card;
+    }
+
+    // Méthode pour afficher la note sous forme d'étoiles
+    private HBox afficherNote(int note) {
+        HBox ratingBox = new HBox(5); // Espacement entre les étoiles
+        for (int i = 0; i < 5; i++) {
+            Label star = new Label("⭐");
+            star.setFont(Font.font(24)); // Taille des étoiles
+            if (i < note) {
+                star.setStyle("-fx-text-fill: gold;"); // Étoile sélectionnée
+            } else {
+                star.setStyle("-fx-text-fill: gray;"); // Étoile non sélectionnée
+            }
+            ratingBox.getChildren().add(star);
+        }
+        return ratingBox;
     }
 
     private void changerScene(ActionEvent event, String fxmlPath) {
