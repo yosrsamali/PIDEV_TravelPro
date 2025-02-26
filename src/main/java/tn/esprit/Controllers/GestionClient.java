@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -48,17 +49,17 @@ public class GestionClient {
             System.out.println("✅ Bouton Ajouter cliqué !");
 
             // Vérification des champs
-            String address = tfAddress.getText();
-            String tel = tfTel.getText();
+            String address = tfAddress.getText().trim();
+            String tel = tfTel.getText().trim();
 
             if (address.isEmpty() || tel.isEmpty()) {
-                System.out.println("⚠ Veuillez remplir tous les champs !");
+                afficherAlerte("Erreur", "Veuillez remplir tous les champs !");
                 return;
             }
 
             // Vérifier si l'utilisateur existe
             if (user == null) {
-                System.out.println("❌ Aucun utilisateur sélectionné !");
+                afficherAlerte("Erreur", "Aucun utilisateur sélectionné !");
                 return;
             }
 
@@ -68,7 +69,7 @@ public class GestionClient {
 
             // Vérifier si l'utilisateur a bien été ajouté
             if (user.getId() == 0) {
-                System.out.println("❌ Erreur : l'utilisateur n'a pas été ajouté.");
+                afficherAlerte("Erreur", "L'utilisateur n'a pas été ajouté !");
                 return;
             }
 
@@ -82,6 +83,7 @@ public class GestionClient {
             newClient.setPrenom(user.getPrenom());
             newClient.setRole(user.getRole());
             newClient.setPassword(user.getPassword());
+            newClient.setCodeVerification(user.getCodeVerification());
 
             serviceClient.add(newClient);
             System.out.println("✅ Client ajouté avec succès !");
@@ -90,44 +92,43 @@ public class GestionClient {
             SessionManager.getInstance().setUtilisateurConnecte(newClient);
             System.out.println("✅ Client ajouté à la session !");
 
-            // **Redirection vers `GereClient.fxml`**
-            redirectToGereClient(event);
+            // **Redirection vers `CodeVerifer.fxml` pour vérification**
+            redirectToCodeVerifier(event);
         }
     }
 
-
-
-
-
-    private void redirectToGereClient(ActionEvent event) {
+    private void redirectToCodeVerifier(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/CodeVerifer.fxml"));
             Parent root = loader.load();
 
-            // Récupérer le contrôleur et transmettre les données du client
-            Gereclient gereClientController = loader.getController();
-           // gereClientController.ajouterdonner((Client) SessionManager.getInstance().getUtilisateurConnecte());
-
-            // Changer la scène
+            // Changer la scène vers la vérification du code
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.setTitle("Gestion du Client");
+            stage.setTitle("Vérification du Code");
             stage.show();
         } catch (IOException e) {
-            System.out.println("❌ Erreur lors du chargement de GereClient.fxml : " + e.getMessage());
+            afficherAlerte("Erreur", "Impossible de charger l'interface de vérification.");
+            e.printStackTrace();
         }
     }
 
     @FXML
     private void handleRetour(ActionEvent event) throws IOException {
-        // Charger le fichier user.fxml
+        // Charger user.fxml
         Parent root = FXMLLoader.load(getClass().getResource("/user.fxml"));
 
-        // Obtenir la scène actuelle et changer vers user.fxml
+        // Changer la scène vers user.fxml
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
     }
 
-
+    private void afficherAlerte(String titre, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titre);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }

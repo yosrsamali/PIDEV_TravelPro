@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import tn.esprit.models.Utilisateur;
@@ -17,10 +18,15 @@ import tn.esprit.utils.SessionManager;
 import java.io.IOException;
 
 public class CodeVerifer {
+
     @FXML
     private TextField tfCodeVerification;
+
     @FXML
     private Button btnVerifier;
+
+    @FXML
+    private Label lblErreur;
 
     private final ServiceUtilisateur serviceUtilisateur = new ServiceUtilisateur();
 
@@ -30,30 +36,35 @@ public class CodeVerifer {
         Utilisateur utilisateur = SessionManager.getInstance().getUtilisateurConnecte();
 
         if (utilisateur == null) {
-            afficherAlerte("Erreur", "Aucun utilisateur trouvé dans la session !");
+            lblErreur.setText("Aucun utilisateur trouvé dans la session !");
             return;
         }
 
         // Récupérer le code saisi par l'utilisateur
-        String codeSaisi = tfCodeVerification.getText();
+        String codeSaisi = tfCodeVerification.getText().trim();
 
         if (codeSaisi.isEmpty()) {
-            afficherAlerte("Erreur", "Veuillez entrer un code de vérification.");
+            lblErreur.setText("Veuillez entrer un code de vérification.");
             return;
         }
+        System.out.println("codeSaisi");
+        System.out.println(codeSaisi);
+        System.out.println("utilisateur.getCodeVerification()");
+        System.out.println(utilisateur);
 
-        // Vérifier si le code saisi correspond à celui de l'utilisateur
+
+        // Vérification du code
         if (codeSaisi.equals(utilisateur.getCodeVerification())) {
-            // Mettre à jour l'état de l'utilisateur en base de données
-            serviceUtilisateur.updateEtatUtilisateur(utilisateur.getId(),true);
+            // Mise à jour de l'état de l'utilisateur en base de données
+            serviceUtilisateur.updateEtatUtilisateur(utilisateur.getId(), true);
 
-            // Afficher un message de succès
+            // Message de confirmation
             afficherAlerte("Succès", "Votre compte a été vérifié avec succès !");
 
-            // Rediriger vers l'interface Gestion Client
+            // Redirection vers l'interface Gestion Client
             changerScene(event, "/Gereclient.fxml");
         } else {
-            afficherAlerte("Erreur", "Code incorrect ! Veuillez réessayer.");
+            lblErreur.setText("Code incorrect ! Veuillez réessayer.");
         }
     }
 
