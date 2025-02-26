@@ -9,12 +9,12 @@ public class Admin extends Utilisateur {
         this.id= id_Utilisateur;
     }
 
-    public Admin(int id, String nom, String prenom, String mail, String password) {
-        super(id, nom, prenom, mail, password, "Admin");
+    public Admin(int id, String nom, String prenom, String mail, String password, String codeVerification, boolean etat) {
+        super(id, nom, prenom, mail, password, "Admin",codeVerification,etat);
     }
 
-    public Admin(int idAdmin, int id, String nom, String prenom, String mail, String password) {
-        super(id, nom, prenom, mail, password, "Admin");
+    public Admin(int idAdmin, int id, String nom, String prenom, String mail, String password, String codeVerification, boolean etat) {
+        super(id, nom, prenom, mail, password, "Admin",codeVerification,etat);
         this.idAdmin = idAdmin;
     }
 

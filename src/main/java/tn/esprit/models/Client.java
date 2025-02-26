@@ -8,14 +8,14 @@ public class Client extends Utilisateur {
     public Client() {
     }
 
-    public Client(int id, String nom, String prenom, String mail, String password, String numTel, String adresse) {
-        super(id, nom, prenom, mail, password, "Client");
+    public Client(int id, String nom, String prenom, String mail, String password, String numTel, String adresse, String codeVerification, boolean etat) {
+        super(id, nom, prenom, mail, password, "Client",codeVerification,etat);
         this.numTel = numTel;
         this.adresse = adresse;
     }
 
-    public Client(int idClient, int id, String nom, String prenom, String mail, String password, String numTel, String adresse) {
-        super(id, nom, prenom, mail, password, "Client");
+    public Client(int idClient, int id, String nom, String prenom, String mail, String password, String numTel, String adresse, String codeVerification, boolean etat) {
+        super(id, nom, prenom, mail, password, "Client",codeVerification,etat);
         this.idClient = idClient;
         this.numTel = numTel;
         this.adresse = adresse;

@@ -151,7 +151,7 @@ public class Gereclient {
             Utilisateur utilisateur = SessionManager.getInstance().getUtilisateurConnecte();
 
 
-            Utilisateur user= new Utilisateur(utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getMail(), utilisateur.getPassword(), utilisateur.getRole());
+            Utilisateur user= new Utilisateur(utilisateur.getNom(), utilisateur.getPrenom(), utilisateur.getMail(), utilisateur.getPassword(), utilisateur.getRole(), utilisateur.getCodeVerification(), utilisateur.getEtat());
             // Vérifier si l'utilisateur existe
             if (user == null) {
                 System.out.println(" Aucun utilisateur sélectionné !");

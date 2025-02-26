@@ -7,25 +7,31 @@ public class Utilisateur {
     protected String mail;
     protected String password;
     protected String role;
+    protected String codeVerification;
+    protected boolean etat;
 
     public Utilisateur() {
     }
 
-    public Utilisateur(String nom, String prenom, String mail, String password, String role) {
+    public Utilisateur(String nom, String prenom, String mail, String password, String role, String codeVerification, boolean etat) {
         this.nom = nom;
         this.prenom = prenom;
         this.mail = mail;
         this.password = password;
         this.role = role;
+        this.codeVerification = codeVerification;
+        this.etat = etat;
     }
 
-    public Utilisateur(int id, String nom, String prenom, String mail, String password, String role) {
+    public Utilisateur(int id, String nom, String prenom, String mail, String password, String role, String codeVerification, boolean etat) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.mail = mail;
         this.password = password;
         this.role = role;
+        this.codeVerification = codeVerification;
+        this.etat = etat;
     }
 
     public int getId() { return id; }
@@ -46,6 +52,12 @@ public class Utilisateur {
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }
 
+    public String getCodeVerification() { return codeVerification; }
+    public void setCodeVerification(String codeVerification) { this.codeVerification = codeVerification; }
+
+    public boolean getEtat() { return etat; }
+    public void setEtat(boolean etat) { this.etat = etat; }
+
     @Override
     public String toString() {
         return "Utilisateur{" +
@@ -55,6 +67,8 @@ public class Utilisateur {
                 ", mail='" + mail + '\'' +
                 ", password='" + password + '\'' +
                 ", role='" + role + '\'' +
+                ", codeVerification='" + codeVerification + '\'' +
+                ", etat=" + etat +
                 '}';
     }
 }

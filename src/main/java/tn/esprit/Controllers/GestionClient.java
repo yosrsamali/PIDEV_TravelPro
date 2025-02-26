@@ -101,7 +101,7 @@ public class GestionClient {
 
     private void redirectToGereClient(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GereClient.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/CodeVerifer.fxml"));
             Parent root = loader.load();
 
             // Récupérer le contrôleur et transmettre les données du client
