@@ -3,7 +3,7 @@ package tn.esprit.services;
 import tn.esprit.interfaces.IService;
 import tn.esprit.models.Utilisateur;
 import tn.esprit.utils.MyDatabase;
-
+import tn.esprit.utils.MailService;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
     @Override
     public void add(Utilisateur utilisateur) {
 
-        String qry = "INSERT INTO `utilisateur`(`nom_utilisateur`, `prenom`, `mail_utilisateur`, `mot_de_passe_utilisateur`, `role_utilisateur`) VALUES (?,?,?,?,?)";
+        String qry = "INSERT INTO `utilisateur`(`nom_utilisateur`, `prenom`, `mail_utilisateur`, `mot_de_passe_utilisateur`, `role_utilisateur`,`code_verification`) VALUES (?,?,?,?,?,?)";
         try {
             PreparedStatement pstm = cnx.prepareStatement(qry, Statement.RETURN_GENERATED_KEYS);
             pstm.setString(1, utilisateur.getNom());
@@ -26,6 +26,8 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
             pstm.setString(4, utilisateur.getPassword());
 
             pstm.setString(5, utilisateur.getRole());
+            pstm.setString(6, utilisateur.getCodeVerification());
+
 
             int rowsAffected = pstm.executeUpdate();
             if (rowsAffected > 0) {
@@ -35,6 +37,14 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
                 }
             }
             System.out.println("✅ Utilisateur ajouté avec succès !");
+
+
+            String codeVerification = utilisateur.getCodeVerification(); // Générer le code
+            String sujet = "Votre Code de Vérification";
+            MailService.envoyerMail(utilisateur.getMail(), sujet, codeVerification);
+
+
+
         } catch (SQLException e) {
             System.out.println("❌ Erreur lors de l'ajout d'un utilisateur : " + e.getMessage());
         }
@@ -236,6 +246,18 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
         return clients;
     }
 
+    public void updateEtatUtilisateur(int idUtilisateur, boolean etat) {
+        String qry = "UPDATE utilisateur SET etat=? WHERE id_utilisateur=?";
+        try {
+            PreparedStatement pstm = cnx.prepareStatement(qry);
+            pstm.setBoolean(1, etat);
+            pstm.setInt(2, idUtilisateur);
+            pstm.executeUpdate();
+            System.out.println("✅ État de l'utilisateur mis à jour !");
+        } catch (SQLException e) {
+            System.out.println("❌ Erreur lors de la mise à jour de l'état : " + e.getMessage());
+        }
+    }
 
 
 

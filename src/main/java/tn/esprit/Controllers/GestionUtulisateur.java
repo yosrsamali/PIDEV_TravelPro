@@ -11,13 +11,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
-
-import java.util.List;
+import java.util.Random;
 
 public class GestionUtulisateur {
     @FXML
@@ -33,11 +30,18 @@ public class GestionUtulisateur {
 
     IService<Utilisateur> su = new ServiceUtilisateur();
 
+    /**
+     * Génère un code de vérification à 6 chiffres
+     */
+    private String generateVerificationCode() {
+        Random random = new Random();
+        int code = 100000 + random.nextInt(900000); // Génère un nombre entre 100000 et 999999
+        return String.valueOf(code);
+    }
 
     @FXML
     private void goToNextScene(ActionEvent event) {
         try {
-
             // Récupérer les données saisies
             String nom = tfNom.getText();
             String prenom = tfPrenome.getText();
@@ -45,9 +49,13 @@ public class GestionUtulisateur {
             String password = tfPassword.getText();
             String role = "Client";
 
-            // Créer un objet User
-            Utilisateur user = new Utilisateur(nom, prenom, mail, password, role);
+            // Générer le code de vérification
+            String codeVerification = generateVerificationCode();
+
+            // Créer un objet Utilisateur avec le code de vérification
+            Utilisateur user = new Utilisateur(nom, prenom, mail, password, role, codeVerification, false);
             System.out.println("Utilisateur créé : " + user);
+            System.out.println("Code de vérification généré : " + codeVerification);
 
             // Déterminer quelle interface charger
             String fxmlFile = "/client.fxml";
@@ -56,22 +64,19 @@ public class GestionUtulisateur {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent root = loader.load();
 
-
-                GestionClient clientController = loader.getController();
-                clientController.ajouterdonner(user);
-
+            GestionClient clientController = loader.getController();
+            clientController.ajouterdonner(user);
 
             // Changer de scène
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.setTitle( "Espace Client");
+            stage.setTitle("Espace Client");
             stage.show();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
 
     @FXML
     private void Verconnecret(ActionEvent event) throws IOException {
@@ -85,8 +90,4 @@ public class GestionUtulisateur {
         stage.setTitle("Connexion"); // Titre de la nouvelle fenêtre
         stage.show();
     }
-
-
-
-
 }

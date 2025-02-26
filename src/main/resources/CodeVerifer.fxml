@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.Controllers.CodeVerifer">
+   <children>
+      <TextField layoutX="225.0" layoutY="187.0" promptText="Entre le code de vérifier" />
+      <Label layoutX="237.0" layoutY="87.0" text="Entre le code de vérifier" />
+      <Button layoutX="237.0" layoutY="291.0" mnemonicParsing="false" text="Vérifier" />
+   </children>
+</AnchorPane>
