@@ -5,11 +5,23 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.Controllers.CodeVerifer">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.Controllers.CodeVerifer">
    <children>
-      <TextField layoutX="225.0" layoutY="187.0" promptText="Entre le code de vérifier" />
-      <Label layoutX="237.0" layoutY="87.0" text="Entre le code de vérifier" />
-      <Button layoutX="237.0" layoutY="291.0" mnemonicParsing="false" text="Vérifier" />
+      <!-- Titre -->
+      <Label layoutX="180.0" layoutY="50.0" text="Vérification du Code" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+      <!-- Champ pour entrer le code -->
+      <TextField fx:id="tfCodeVerification" layoutX="180.0" layoutY="150.0"
+                 prefWidth="240.0" promptText="Entrez le code de vérification" />
+
+      <!-- Label pour les messages d'erreur -->
+      <Label fx:id="lblErreur" layoutX="180.0" layoutY="190.0"
+             text="" style="-fx-text-fill: red; -fx-font-size: 12px;" />
+
+      <!-- Bouton de vérification -->
+      <Button fx:id="btnVerifier" layoutX="250.0" layoutY="250.0"
+              text="Vérifier" onAction="#verifierCode"
+              style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 8px 20px;" />
    </children>
 </AnchorPane>
