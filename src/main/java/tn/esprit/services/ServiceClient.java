@@ -6,7 +6,7 @@ import tn.esprit.interfaces.IService;
 import tn.esprit.models.Client;
 import tn.esprit.utils.MyDatabase;
 import tn.esprit.models.Utilisateur;
-
+import tn.esprit.utils.SmsService;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -34,6 +34,8 @@ public class ServiceClient implements IService<Client> {
                 }
             }
             System.out.println("Client ajouté avec succès !");
+            SmsService.sendSms("+216"+client.getNumTel(), "Votre code de vérification est : " + client.getCodeVerification());
+
         } catch (SQLException e) {
             System.out.println(" Erreur lors de l'ajout d'un client : " + e.getMessage());
         }
