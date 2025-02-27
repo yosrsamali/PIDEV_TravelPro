@@ -121,4 +121,70 @@ public class ServiceBilletAvion implements IService<BilletAvion> {
             System.out.println("Erreur lors de la suppression du billet d'avion: " + e.getMessage());
         }
     }
+    public List<BilletAvion> getAvailableBillets(String villeDepart, String villeArrivee, Date dateDepart, String classBillet) {
+        List<BilletAvion> availableBillets = new ArrayList<>();
+        String qry = "SELECT * FROM `billetavion` WHERE `villeDepart`=? AND `villeArrivee`=? AND `dateDepart`=? AND `class_Billet`=?";
+
+        try {
+            PreparedStatement pstm = cnx.prepareStatement(qry);
+            pstm.setString(1, villeDepart);
+            pstm.setString(2, villeArrivee);
+            pstm.setDate(3, new java.sql.Date(dateDepart.getTime())); // Convertir en java.sql.Date
+            pstm.setString(4, classBillet);
+
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                BilletAvion billet = new BilletAvion(
+                        rs.getInt("id"),
+                        rs.getString("compagnie"),
+                        rs.getString("class_Billet"),
+                        rs.getString("villeDepart"),
+                        rs.getString("villeArrivee"),
+                        rs.getDate("dateDepart"),
+                        rs.getDate("dateArrivee"),
+                        rs.getDouble("prix")
+                );
+                availableBillets.add(billet);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la recherche des billets disponibles: " + e.getMessage());
+        }
+
+        return availableBillets;
+    }
+    public List<BilletAvion> getAvailableBillets(String villeDepart, String villeArrivee, Date dateDepart, Date dateRetour, String classBillet) {
+        List<BilletAvion> availableBillets = new ArrayList<>();
+        String qry = "SELECT * FROM `billetavion` WHERE `villeDepart`=? AND `villeArrivee`=? AND `dateDepart`=? AND `dateArrivee`=? AND `class_Billet`=?";
+
+        try {
+            PreparedStatement pstm = cnx.prepareStatement(qry);
+            pstm.setString(1, villeDepart);
+            pstm.setString(2, villeArrivee);
+            pstm.setDate(3, dateDepart); // Date de départ
+            pstm.setDate(4, dateRetour); // Date de retour
+            pstm.setString(5, classBillet); // Classe du billet
+
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                BilletAvion billet = new BilletAvion(
+                        rs.getInt("id"),
+                        rs.getString("compagnie"),
+                        rs.getString("class_Billet"),
+                        rs.getString("villeDepart"),
+                        rs.getString("villeArrivee"),
+                        rs.getDate("dateDepart"),
+                        rs.getDate("dateArrivee"),
+                        rs.getDouble("prix")
+                );
+                availableBillets.add(billet);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la recherche des billets disponibles: " + e.getMessage());
+        }
+
+        return availableBillets;
+    }
+
 }

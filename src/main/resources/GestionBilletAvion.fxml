@@ -1,146 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.URL?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
-<AnchorPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.GestionBilletAvion">
+<AnchorPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/22.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.ReservationController">
    <stylesheets>
       <URL value="@css/style.css" />
    </stylesheets>
-   <children>
-      <Label layoutX="348.0" layoutY="250.0" prefHeight="30.0" prefWidth="81.0" text="compagnie:">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <TextField fx:id="tfCompagnie" alignment="TOP_CENTER" layoutX="468.0" layoutY="251.0" nodeOrientation="LEFT_TO_RIGHT" promptText="ex: Tunisair">
-         <font>
-            <Font name="System Italic" size="14.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </TextField>
-      <TextField fx:id="tfVilleDepart" alignment="TOP_CENTER" layoutX="468.0" layoutY="333.0" nodeOrientation="LEFT_TO_RIGHT" promptText="ex: Tunis">
-         <font>
-            <Font name="System Italic" size="14.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </TextField>
-      <TextField fx:id="tfVilleArrivee" alignment="TOP_CENTER" layoutX="468.0" layoutY="375.0" nodeOrientation="LEFT_TO_RIGHT" promptText="ex: Paris">
-         <font>
-            <Font name="System Italic" size="14.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </TextField>
-      <TextField fx:id="tfDateDepart" alignment="TOP_CENTER" layoutX="468.0" layoutY="417.0" nodeOrientation="LEFT_TO_RIGHT" promptText="ex: 10-10-2025">
-         <font>
-            <Font name="System Italic" size="14.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </TextField>
-      <TextField fx:id="tfDateArrivee" alignment="TOP_CENTER" layoutX="468.0" layoutY="457.0" nodeOrientation="LEFT_TO_RIGHT" promptText="ex: 10-11-2025">
-         <font>
-            <Font name="System Italic" size="14.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </TextField>
-      <Label layoutX="332.0" layoutY="332.0" prefHeight="30.0" prefWidth="111.0" text="ville de départ:">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="337.0" layoutY="374.0" prefHeight="30.0" prefWidth="101.0" text="ville a arrivée:">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="333.0" layoutY="416.0" prefHeight="30.0" prefWidth="111.0" text="date de départ:" textAlignment="CENTER">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="332.0" layoutY="456.0" prefHeight="30.0" prefWidth="111.0" text="date d'arrivée:">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Text layoutX="486.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ajout du Billet d'Avion " textAlignment="CENTER" wrappingWidth="281.33673095703125">
-         <font>
-            <Font name="Arial Bold" size="25.0" />
-         </font>
-      </Text>
-      <Button layoutX="487.0" layoutY="568.0" mnemonicParsing="false" onAction="#handleAjouterBillet" prefHeight="30.0" prefWidth="111.0" text="Ajouter" />
-      <Label layoutX="361.0" layoutY="290.0" prefHeight="30.0" prefWidth="54.0" text="classe:">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <TextField fx:id="tfClassBillet" alignment="TOP_CENTER" layoutX="468.0" layoutY="291.0" nodeOrientation="LEFT_TO_RIGHT" promptText="ex: business">
-         <font>
-            <Font name="System Italic" size="14.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </TextField>
-      <Label layoutX="368.0" layoutY="498.0" prefHeight="30.0" prefWidth="39.0" text="prix:">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <TextField fx:id="tfPrix" alignment="TOP_CENTER" layoutX="468.0" layoutY="499.0" nodeOrientation="LEFT_TO_RIGHT" promptText="ex: 750.0">
-         <font>
-            <Font name="System Italic" size="14.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </TextField>
-      <Button layoutX="643.0" layoutY="566.0" mnemonicParsing="false" onAction="#handleNaviguerAffichage" prefHeight="30.0" prefWidth="111.0" text="afficher" />
-      <ImageView fitHeight="111.0" fitWidth="122.0" layoutX="14.0" layoutY="16.0">
-         <image>
-            <Image url="@images/logo.png" />
-         </image>
-      </ImageView>
-   </children>
 
+   <!-- Titre du formulaire -->
+   <Label layoutX="435.0" layoutY="27.0" text="Formulaire de Réservation">
+      <font>
+         <Font name="System Bold" size="18.0" />
+      </font>
+   </Label>
+
+   <!-- GridPane pour les champs de base -->
+   <GridPane hgap="10" layoutX="229.0" layoutY="82.0" prefHeight="180.0" prefWidth="459.0" vgap="10">
+      <Label prefWidth="167.0" text="Lieu de Départ:" GridPane.columnIndex="0" GridPane.rowIndex="0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="departureField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+      <Label text="Lieu d'Arrivée:" GridPane.rowIndex="1">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="arrivalField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+      <Label text="Date de Voyage:" GridPane.rowIndex="2">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="travelDatePicker" prefHeight="26.0" prefWidth="295.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+      <Label text="Classe du Billet:" GridPane.rowIndex="3">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="classComboBox" GridPane.columnIndex="1" GridPane.rowIndex="3" prefWidth="150.0" />
+
+      <columnConstraints>
+         <ColumnConstraints />
+         <ColumnConstraints />
+      </columnConstraints>
+      <rowConstraints>
+         <RowConstraints />
+         <RowConstraints />
+         <RowConstraints />
+         <RowConstraints />
+      </rowConstraints>
+   </GridPane>
+
+   <!-- Bouton pour lancer la recherche des billets disponibles -->
+   <Button layoutX="229.0" layoutY="280.0" onAction="#handleSearchBillets" text="Rechercher des billets" />
 </AnchorPane>

@@ -128,4 +128,34 @@ public class ServiceVoiture implements IService<Voiture> {
             System.out.println("Erreur lors de la suppression de la voiture: " + e.getMessage());
         }
     }
+    public List<Voiture> getAvailableVoitures(Date dateDeLocation, Date dateDeRemise) {
+        List<Voiture> availableVoitures = new ArrayList<>();
+        String qry = "SELECT * FROM `voiture` WHERE `dateDeLocation`=? AND `dateDeRemise`=? AND `disponible`=true";
+
+        try {
+            PreparedStatement pstm = cnx.prepareStatement(qry);
+            pstm.setDate(1, dateDeLocation);
+            pstm.setDate(2, dateDeRemise);
+
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                Voiture voiture = new Voiture(
+                        rs.getInt("id"),
+                        rs.getString("marque"),
+                        rs.getString("modele"),
+                        rs.getInt("annee"),
+                        rs.getDouble("prixParJour"),
+                        rs.getBoolean("disponible"),
+                        rs.getDate("dateDeLocation"),
+                        rs.getDate("dateDeRemise")
+                );
+                availableVoitures.add(voiture);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la recherche des voitures disponibles: " + e.getMessage());
+        }
+
+        return availableVoitures;
+    }
 }

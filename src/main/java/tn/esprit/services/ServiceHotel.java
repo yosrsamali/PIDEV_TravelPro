@@ -158,4 +158,37 @@ public class ServiceHotel implements IService<Hotel> {
         alert.setContentText(message);
         alert.showAndWait();
     }
+    public List<Hotel> getAvailableHotels(String ville, Date dateCheckIn, Date dateCheckOut, String typeDeChambre) {
+        List<Hotel> availableHotels = new ArrayList<>();
+        String qry = "SELECT * FROM `hotel` WHERE `ville`=? AND `dateCheckIn`=? AND `dateCheckOut`=? AND `typeDeChambre`=?";
+
+        try {
+            PreparedStatement pstm = cnx.prepareStatement(qry);
+            pstm.setString(1, ville);
+            pstm.setDate(2, dateCheckIn);
+            pstm.setDate(3, dateCheckOut);
+            pstm.setString(4, typeDeChambre);
+
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                Hotel hotel = new Hotel(
+                        rs.getString("nom"),
+                        rs.getString("ville"),
+                        rs.getDouble("prixParNuit"),
+                        rs.getBoolean("disponible"),
+                        rs.getInt("nombreEtoile"),
+                        rs.getString("typeDeChambre"),
+                        rs.getDate("dateCheckIn"),
+                        rs.getDate("dateCheckOut")
+                );
+                hotel.setId(rs.getInt("id"));
+                availableHotels.add(hotel);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la recherche des hôtels disponibles: " + e.getMessage());
+        }
+
+        return availableHotels;
+    }
 }
