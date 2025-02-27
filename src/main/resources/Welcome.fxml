@@ -50,7 +50,15 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
+
+        <!-- Nouveau bouton pour Créer une Réservation -->
+        <Button mnemonicParsing="false" onAction="#naviguerVersCreerReservation" prefHeight="50.0" prefWidth="200.0" text="Créer Réservation">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </Button>
     </VBox>
+
     <ImageView fitHeight="111.0" fitWidth="122.0" layoutX="14.0" layoutY="16.0">
         <image>
             <Image url="@images/logo.png" />

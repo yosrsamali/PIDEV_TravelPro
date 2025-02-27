@@ -1,7 +1,11 @@
 package tn.esprit.controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import tn.esprit.models.BilletAvion;
 import tn.esprit.models.Hotel;
 import tn.esprit.models.Reservation;
@@ -11,6 +15,7 @@ import tn.esprit.services.ServiceHotel;
 import tn.esprit.services.ServiceReservation;
 import tn.esprit.services.ServiceVoiture;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 
@@ -155,7 +160,7 @@ public class ReservationController {
                     selectedVoiture.getId(),
                     selectedBillet.getId(),
                     selectedHotel.getId(),
-                    1,  // id_client (à remplacer par l'ID du client connecté)
+                    0,  // id_client (à remplacer par l'ID du client connecté)
                     "En attente"  // statut de la réservation
             );
 
@@ -206,5 +211,22 @@ public class ReservationController {
         selectedBillet = null;
         selectedVoiture = null;
         selectedHotel = null;
+    }
+    @FXML
+    public void handleShowReservations() {
+        try {
+            // Charger la nouvelle vue
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ReservationList.fxml"));
+            Parent root = loader.load();
+
+            // Afficher la nouvelle vue dans une nouvelle fenêtre ou dans la même fenêtre
+            Stage stage = new Stage();
+            stage.setTitle("Mes réservations");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Erreur lors du chargement de la vue des réservations.");
+        }
     }
 }

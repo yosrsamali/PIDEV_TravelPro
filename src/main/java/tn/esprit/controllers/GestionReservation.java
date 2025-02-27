@@ -11,7 +11,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import tn.esprit.models.Reservation;
+import tn.esprit.models.Voiture;
+import tn.esprit.models.BilletAvion;
+import tn.esprit.models.Hotel;
 import tn.esprit.services.ServiceReservation;
+import tn.esprit.services.ServiceVoiture;
+import tn.esprit.services.ServiceBilletAvion;
+import tn.esprit.services.ServiceHotel;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,6 +28,9 @@ public class GestionReservation {
     private FlowPane reservationContainer; // FlowPane pour afficher les cartes
 
     private final ServiceReservation serviceReservation = new ServiceReservation();
+    private final ServiceVoiture serviceVoiture = new ServiceVoiture();
+    private final ServiceBilletAvion serviceBilletAvion = new ServiceBilletAvion();
+    private final ServiceHotel serviceHotel = new ServiceHotel();
 
     @FXML
     public void initialize() {
@@ -43,19 +52,41 @@ public class GestionReservation {
         VBox card = new VBox(10);
         card.setStyle("-fx-border-color: black; -fx-border-radius: 10; -fx-padding: 10; -fx-background-color: #f4f4f4;");
 
-        // Affichage des informations de la réservation
-        Label voitureLabel = new Label("Voiture: " + (reservation.getId_voiture() == 0 ? "Non spécifié" : "ID " + reservation.getId_voiture()));
+        // Détails de la voiture
+        Label voitureLabel;
+        if (reservation.getId_voiture() == 0) {
+            voitureLabel = new Label("Voiture: Non spécifié");
+        } else {
+            Voiture voiture = serviceVoiture.getById(reservation.getId_voiture());
+            voitureLabel = new Label("Voiture: " + (voiture != null ? voiture.getMarque() + " " + voiture.getModele() : "Inconnu"));
+        }
         voitureLabel.setFont(new Font(14));
 
-        Label billetLabel = new Label("Billet Avion: " + (reservation.getId_billetAvion() == 0 ? "Non spécifié" : "ID " + reservation.getId_billetAvion()));
+        // Détails du billet avion
+        Label billetLabel;
+        if (reservation.getId_billetAvion() == 0) {
+            billetLabel = new Label("Billet Avion: Non spécifié");
+        } else {
+            BilletAvion billet = serviceBilletAvion.getById(reservation.getId_billetAvion());
+            billetLabel = new Label("Billet Avion: " + (billet != null ? billet.getCompagnie() + " (" + billet.getVilleDepart() + " -> " + billet.getVilleArrivee() + ")" : "Inconnu"));
+        }
         billetLabel.setFont(new Font(14));
 
-        Label hotelLabel = new Label("Hotel: " + (reservation.getId_hotel() == 0 ? "Non spécifié" : "ID " + reservation.getId_hotel()));
+        // Détails de l'hôtel
+        Label hotelLabel;
+        if (reservation.getId_hotel() == 0) {
+            hotelLabel = new Label("Hôtel: Non spécifié");
+        } else {
+            Hotel hotel = serviceHotel.getById(reservation.getId_hotel());
+            hotelLabel = new Label("Hôtel: " + (hotel != null ? hotel.toString() : "Inconnu"));
+        }
         hotelLabel.setFont(new Font(14));
 
+        // Détails du client (on garde l'ID pour l'instant)
         Label clientLabel = new Label("Client: ID " + reservation.getId_client());
         clientLabel.setFont(new Font(14));
 
+        // Statut
         Label statutLabel = new Label("Statut: " + reservation.getStatut());
         statutLabel.setFont(new Font(14));
 
@@ -96,6 +127,7 @@ public class GestionReservation {
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
+            stage.setOnHidden(event -> afficherReservations()); // Rafraîchir après fermeture
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

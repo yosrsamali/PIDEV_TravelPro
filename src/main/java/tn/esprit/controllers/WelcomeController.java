@@ -59,4 +59,18 @@ public class WelcomeController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void naviguerVersCreerReservation() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ReservationForm.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Créer une Réservation");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

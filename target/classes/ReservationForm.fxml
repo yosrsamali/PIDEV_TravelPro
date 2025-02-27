@@ -7,6 +7,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -76,20 +78,20 @@
     <Button layoutX="81.0" layoutY="372.0" onAction="#handleSearchBillets" text="Rechercher Billet Avion" />
 
     <!-- ListView pour afficher les résultats des billets -->
-    <ListView fx:id="billetListView" layoutX="47.0" layoutY="444.0" prefHeight="91.0" prefWidth="262.0" />
+    <ListView fx:id="billetListView" layoutX="46.0" layoutY="444.0" prefHeight="91.0" prefWidth="262.0" />
 
     <!-- Bouton pour lancer la recherche des voitures disponibles -->
     <Button layoutX="461.0" layoutY="373.0" onAction="#handleSearchVoiture" text="Rechercher Voiture" />
 
     <!-- Label pour le type de chambre -->
-    <Label layoutX="216.0" layoutY="290.0" text="Type de chambre:">
+    <Label layoutX="216.0" layoutY="294.0" text="Type de chambre:">
         <font>
             <Font name="System Bold" size="14.0" />
         </font>
     </Label>
 
     <!-- ComboBox pour le type de chambre -->
-    <ComboBox fx:id="typeChambreComboBox" layoutX="398.0" layoutY="287.0" prefHeight="26.0" prefWidth="150.0" />
+    <ComboBox fx:id="typeChambreComboBox" layoutX="398.0" layoutY="291.0" prefHeight="26.0" prefWidth="150.0" />
 
     <!-- Bouton pour lancer la recherche des hôtels disponibles -->
     <Button fx:id="addCarButton" layoutX="821.0" layoutY="373.0" onAction="#handleSearchHotel" text="Rechercher Hôtel" />
@@ -101,5 +103,10 @@
     <ListView fx:id="voitureListView" layoutX="420.0" layoutY="444.0" prefHeight="91.0" prefWidth="262.0" />
 
     <!-- ListView pour afficher les résultats des hôtels -->
-    <ListView fx:id="hotelListView" layoutX="767.0" layoutY="447.0" prefHeight="91.0" prefWidth="262.0" />
+    <ListView fx:id="hotelListView" layoutX="766.0" layoutY="444.0" prefHeight="91.0" prefWidth="262.0" />
+    <!-- Bouton pour afficher les réservations -->
+    <Button layoutX="463.0" layoutY="700.0" onAction="#handleShowReservations" text="Afficher les réservations" />
+    <ImageView fitHeight="136.0" fitWidth="150.0" layoutX="10.0" layoutY="10.0">
+        <Image url="@images/logo.png"/>
+    </ImageView>
 </AnchorPane>

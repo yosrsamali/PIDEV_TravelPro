@@ -90,5 +90,31 @@ public class ServiceReservation implements IService<Reservation> {
         } catch (SQLException e) {
             System.out.println("Erreur lors de la suppression de la réservation: " + e.getMessage());
         }
+
+    }
+    public List<Reservation> getReservationsByClientId(int clientId) {
+        List<Reservation> reservations = new ArrayList<>();
+        String qry = "SELECT * FROM `reservation` WHERE `id_client` = ?";
+
+        try (PreparedStatement pstm = cnx.prepareStatement(qry)) {
+            pstm.setInt(1, clientId);
+            ResultSet rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                Reservation reservation = new Reservation(
+                        rs.getInt("id_voiture"),
+                        rs.getInt("id_billetAvion"),
+                        rs.getInt("id_hotel"),
+                        rs.getInt("id_client"),
+                        rs.getString("statut")
+                );
+                reservation.setId_reservation(rs.getInt("id_reservation"));
+                reservations.add(reservation);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la récupération des réservations : " + e.getMessage());
+        }
+
+        return reservations;
     }
 }

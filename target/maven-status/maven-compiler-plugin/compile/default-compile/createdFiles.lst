@@ -9,6 +9,8 @@ tn\esprit\controllers\ModifierReservationController.class
 tn\esprit\controllers\ModifierVoitureController.class
 tn\esprit\controllers\ModifierHotelController.class
 tn\esprit\controllers\GestionReservation.class
+tn\esprit\controllers\ReservationListController.class
 tn\esprit\controllers\GestionHotel.class
 tn\esprit\controllers\AffichageBilletController.class
 tn\esprit\controllers\AffichageHotelsController.class
+tn\esprit\controllers\ReservationCell.class

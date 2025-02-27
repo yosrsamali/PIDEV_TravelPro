@@ -90,16 +90,8 @@ public class BilletAvion {
     }
 
     @Override
+
     public String toString() {
-        return "BilletAvion{" +
-                "id=" + id +
-                ", compagnie='" + compagnie + '\'' +
-                ", class_Billet='" + class_Billet + '\'' +
-                ", villeDepart='" + villeDepart + '\'' +
-                ", villeArrivee='" + villeArrivee + '\'' +
-                ", dateDepart=" + dateDepart +
-                ", dateArrivee=" + dateArrivee +
-                ", prix=" + prix +
-                '}';
+        return getCompagnie() + " - " + getPrix() + " €";
     }
 }

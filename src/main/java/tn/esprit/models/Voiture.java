@@ -29,18 +29,10 @@ public class Voiture {
     public Voiture() {
     }
 
+
     @Override
     public String toString() {
-        return "Voiture{" +
-                "id=" + id +
-                ", marque='" + marque + '\'' +
-                ", modele='" + modele + '\'' +
-                ", annee=" + annee +
-                ", prixParJour=" + prixParJour +
-                ", disponible=" + disponible +
-                ", dateDeLocation=" + dateDeLocation +
-                ", dateDeRemise=" + dateDeRemise +
-                '}';
+        return getMarque() + " " + getModele() + " (" + getAnnee() + ") - " + getPrixParJour() + " €/jour";
     }
 
     // Getters et Setters

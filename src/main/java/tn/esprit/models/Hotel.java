@@ -100,16 +100,6 @@ public class Hotel {
 
     @Override
     public String toString() {
-        return "Hotel{" +
-                "id=" + id +
-                ", nom='" + nom + '\'' +
-                ", ville='" + ville + '\'' +
-                ", prixParNuit=" + prixParNuit +
-                ", disponible=" + disponible +
-                ", nombreEtoile=" + nombreEtoile +
-                ", typeDeChambre='" + typeDeChambre + '\'' +
-                ", dateCheckIn=" + dateCheckIn +
-                ", dateCheckOut=" + dateCheckOut +
-                '}';
+        return getNom() + " - " + getVille() + " (" + getNombreEtoile() + " étoiles) - " + getPrixParNuit() + " €/nuit";
     }
 }

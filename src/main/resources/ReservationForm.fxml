@@ -7,6 +7,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -102,4 +104,9 @@
 
     <!-- ListView pour afficher les résultats des hôtels -->
     <ListView fx:id="hotelListView" layoutX="766.0" layoutY="444.0" prefHeight="91.0" prefWidth="262.0" />
+    <!-- Bouton pour afficher les réservations -->
+    <Button layoutX="463.0" layoutY="700.0" onAction="#handleShowReservations" text="Afficher les réservations" />
+    <ImageView fitHeight="136.0" fitWidth="150.0" layoutX="10.0" layoutY="10.0">
+        <Image url="@images/logo.png"/>
+    </ImageView>
 </AnchorPane>
