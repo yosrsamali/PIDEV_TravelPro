@@ -10,21 +10,15 @@ import java.util.List;
 public class ServiceActivite {
     private Connection cnx;
 
-    // Constructeur : Connexion à la base de données
     public ServiceActivite() {
         cnx = MyDatabase.getInstance().getCnx();
     }
 
-    // ✅ Ajouter une activité
     public void add(Activite activite) {
         if (activite.getDateDebutA() == null || activite.getDateFinA() == null) {
             System.out.println("❌ Erreur : Les dates ne doivent pas être null !");
             return;
         }
-
-        System.out.println("Ajout de l'activité avec : " +
-                "Date de début = " + activite.getDateDebutA() +
-                ", Date de fin = " + activite.getDateFinA());
 
         String qry = "INSERT INTO `activite` (`nomActivite`, `description`, `dateDebutA`, `dateFinA`, `idEvent`) VALUES (?, ?, ?, ?, ?)";
         try {
@@ -32,10 +26,8 @@ public class ServiceActivite {
             pstm.setString(1, activite.getNomActivite());
             pstm.setString(2, activite.getDescription());
             pstm.setDate(3, new java.sql.Date(activite.getDateDebutA().getTime()));
-            pstm.setDate(4, new java.sql.Date(activite.getDateDebutA().getTime()));
+            pstm.setDate(4, new java.sql.Date(activite.getDateFinA().getTime()));
             pstm.setInt(5, activite.getIdEvent());
-
-
 
             pstm.executeUpdate();
             System.out.println("✅ Activité ajoutée avec succès !");
@@ -44,7 +36,6 @@ public class ServiceActivite {
         }
     }
 
-    // ✅ Récupérer toutes les activités
     public List<Activite> getAll() {
         List<Activite> activites = new ArrayList<>();
         String qry = "SELECT * FROM `activite`";
@@ -57,8 +48,8 @@ public class ServiceActivite {
                 act.setNomActivite(rs.getString("nomActivite"));
                 act.setDescription(rs.getString("description"));
                 act.setDateDebutA(rs.getDate("dateDebutA"));
-                act.setDateFinA(rs.getDate("dateDebutA"));
-                //act.setIdEvent(rs.getInt("int idEvent"));
+                act.setDateFinA(rs.getDate("dateFinA"));
+                act.setIdEvent(rs.getInt("idEvent"));
                 activites.add(act);
             }
         } catch (SQLException e) {
@@ -67,7 +58,6 @@ public class ServiceActivite {
         return activites;
     }
 
-    // ✅ Mettre à jour une activité
     public void update(Activite activite, int id) {
         if (activite.getDateDebutA() == null || activite.getDateFinA() == null) {
             System.out.println("❌ Erreur : Les dates ne doivent pas être null !");
@@ -95,7 +85,6 @@ public class ServiceActivite {
         }
     }
 
-    // ✅ Supprimer une activité
     public void delete(int id) {
         String qry = "DELETE FROM `activite` WHERE `idActivite` = ?";
         try {
@@ -112,6 +101,4 @@ public class ServiceActivite {
             System.out.println("❌ Erreur lors de la suppression de l'activité : " + e.getMessage());
         }
     }
-
-
 }

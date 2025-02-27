@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
 public class activiteC implements Initializable {
 
     @FXML
-    private FlowPane activiteFlowPane; // Remplacement de TableView par FlowPane
+    private FlowPane activiteFlowPane;
 
     @FXML
     private TextField nomActiviteInput;
@@ -51,57 +51,50 @@ public class activiteC implements Initializable {
     private TextField filterInput;
 
     private ServiceActivite serviceActivite = new ServiceActivite();
-    private Activite selectedActivite; // Pour stocker l'activité sélectionnée
+    private Activite selectedActivite;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loadActivites(); // Charger les cartes au démarrage
+        loadActivites();
     }
 
-    // Méthode pour charger les activités depuis la base de données
     private void loadActivites() {
-        activiteFlowPane.getChildren().clear(); // Vider les cartes existantes
+        activiteFlowPane.getChildren().clear();
         List<Activite> activites = serviceActivite.getAll();
         if (activites.isEmpty()) {
             showAlert("Information", "Aucune activité trouvée.");
         } else {
             for (Activite activite : activites) {
-                addActiviteCard(activite); // Ajouter une carte pour chaque activité
+                addActiviteCard(activite);
             }
         }
     }
 
-    // Méthode pour ajouter une carte d'activité
     private void addActiviteCard(Activite activite) {
         VBox card = new VBox(10);
         card.setPadding(new Insets(10));
         card.setStyle("-fx-border-color: #cccccc; -fx-border-radius: 5; -fx-background-color: #f9f9f9;");
 
-        // Afficher les informations de l'activité
         Label nomLabel = new Label("Nom: " + activite.getNomActivite());
         Label descriptionLabel = new Label("Description: " + activite.getDescription());
         Label dateDebutLabel = new Label("Date Début: " + activite.getDateDebutA());
         Label dateFinLabel = new Label("Date Fin: " + activite.getDateFinA());
 
-        // Ajouter des boutons pour modifier et supprimer
         Button modifierButton = new Button("Modifier");
         Button supprimerButton = new Button("Supprimer");
 
-        // Associer les actions aux boutons
         modifierButton.setOnAction(event -> modifierActivite(activite));
         supprimerButton.setOnAction(event -> supprimerActivite(activite));
 
-        // Ajouter les éléments à la carte
         HBox buttonsBox = new HBox(10, modifierButton, supprimerButton);
         card.getChildren().addAll(nomLabel, descriptionLabel, dateDebutLabel, dateFinLabel, buttonsBox);
 
-        // Ajouter la carte au FlowPane
         activiteFlowPane.getChildren().add(card);
     }
 
     @FXML
     void addActivite(ActionEvent event) {
-        if (nomActiviteInput.getText().isEmpty() || descriptionInput.getText().isEmpty() || dateDebutInput.getValue() == null || dateFinInput.getValue() == null || idEventInput.getText().isEmpty()) {
+        if (nomActiviteInput.getText().isEmpty() || descriptionInput.getText().isEmpty() || dateDebutInput.getValue() == null || dateFinInput.getValue() == null ) {
             showAlert("Erreur", "Veuillez remplir tous les champs.");
             return;
         }
@@ -109,20 +102,16 @@ public class activiteC implements Initializable {
         try {
             int idEvent = Integer.parseInt(idEventInput.getText());
 
-            // Vérifier si l'idEvent existe dans la table evenement
-
-
             Activite activite = new Activite();
             activite.setNomActivite(nomActiviteInput.getText());
             activite.setDescription(descriptionInput.getText());
             activite.setDateDebutA(Date.valueOf(dateDebutInput.getValue()));
             activite.setDateFinA(Date.valueOf(dateFinInput.getValue()));
-            activite.setIdEvent(idEvent);
+           // activite.setIdEvent(idEvent);
 
             serviceActivite.add(activite);
-            loadActivites(); // Recharger les cartes après l'ajout
+            loadActivites();
 
-            // Réinitialiser les champs
             nomActiviteInput.clear();
             descriptionInput.clear();
             dateDebutInput.setValue(null);
@@ -148,26 +137,20 @@ public class activiteC implements Initializable {
         }
 
         try {
-            // Vérifier que la date de début est avant la date de fin
             if (dateDebutInput.getValue().isAfter(dateFinInput.getValue())) {
                 showAlert("Erreur", "La date de début doit être avant la date de fin.");
                 return;
             }
 
-            // Mettre à jour les données de l'activité sélectionnée
             selectedActivite.setNomActivite(nomActiviteInput.getText());
             selectedActivite.setDescription(descriptionInput.getText());
             selectedActivite.setDateDebutA(Date.valueOf(dateDebutInput.getValue()));
             selectedActivite.setDateFinA(Date.valueOf(dateFinInput.getValue()));
             selectedActivite.setIdEvent(Integer.parseInt(idEventInput.getText()));
 
-            // Mettre à jour l'activité dans la base de données
             serviceActivite.update(selectedActivite, selectedActivite.getIdActivite());
-
-            // Recharger les cartes
             loadActivites();
 
-            // Réinitialiser les champs
             nomActiviteInput.clear();
             descriptionInput.clear();
             dateDebutInput.setValue(null);
@@ -187,40 +170,28 @@ public class activiteC implements Initializable {
             return;
         }
 
-        // Supprimer l'activité de la base de données
         serviceActivite.delete(selectedActivite.getIdActivite());
-
-        // Recharger les cartes
         loadActivites();
-
         showAlert("Succès", "Activité supprimée avec succès.");
     }
 
-    // Méthode pour pré-remplir les champs du formulaire avec les données de l'activité sélectionnée
     private void modifierActivite(Activite activite) {
         nomActiviteInput.setText(activite.getNomActivite());
         descriptionInput.setText(activite.getDescription());
-        dateDebutInput.setValue(activite.getDateDebutA().toLocalDate()); // Conversion correcte
-        dateFinInput.setValue(activite.getDateFinA().toLocalDate()); // Conversion correcte
+        dateDebutInput.setValue(activite.getDateDebutA().toLocalDate());
+        dateFinInput.setValue(activite.getDateFinA().toLocalDate());
         idEventInput.setText(String.valueOf(activite.getIdEvent()));
-
-        // Stocker l'activité sélectionnée pour la mise à jour
         selectedActivite = activite;
     }
 
-    // Méthode pour supprimer une activité
     private void supprimerActivite(Activite activite) {
         if (activite == null) {
             showAlert("Erreur", "Aucune activité sélectionnée.");
             return;
         }
 
-        // Supprimer l'activité de la base de données
         serviceActivite.delete(activite.getIdActivite());
-
-        // Recharger les cartes
         loadActivites();
-
         showAlert("Succès", "Activité supprimée avec succès.");
     }
 
@@ -228,12 +199,12 @@ public class activiteC implements Initializable {
     void searchActivite(ActionEvent event) {
         String searchText = searchInput.getText().trim();
         if (searchText.isEmpty()) {
-            loadActivites(); // Recharger toutes les activités si le champ de recherche est vide
+            loadActivites();
             return;
         }
 
         List<Activite> activites = serviceActivite.getAll();
-        activiteFlowPane.getChildren().clear(); // Vider les cartes existantes
+        activiteFlowPane.getChildren().clear();
 
         for (Activite activite : activites) {
             if (String.valueOf(activite.getIdActivite()).contains(searchText) ||
@@ -247,12 +218,12 @@ public class activiteC implements Initializable {
     void filterActivite(ActionEvent event) {
         String filterText = filterInput.getText().trim();
         if (filterText.isEmpty()) {
-            loadActivites(); // Recharger toutes les activités si le champ de filtre est vide
+            loadActivites();
             return;
         }
 
         List<Activite> activites = serviceActivite.getAll();
-        activiteFlowPane.getChildren().clear(); // Vider les cartes existantes
+        activiteFlowPane.getChildren().clear();
 
         for (Activite activite : activites) {
             if (String.valueOf(activite.getIdActivite()).contains(filterText) ||
@@ -284,12 +255,11 @@ public class activiteC implements Initializable {
 
     @FXML
     void refreshActivites(ActionEvent event) {
-        loadActivites(); // Recharger toutes les cartes
-        searchInput.clear(); // Vide le champ de recherche
-        filterInput.clear(); // Vide le champ de filtre
+        loadActivites();
+        searchInput.clear();
+        filterInput.clear();
     }
 
-    // Méthode pour afficher une alerte
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -298,16 +268,13 @@ public class activiteC implements Initializable {
         alert.showAndWait();
     }
 
-    // Méthode pour retourner à l'interface précédente
     public void retourner(ActionEvent actionEvent) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/tools1.fxml"));
             Parent root = fxmlLoader.load();
-
-            // Changer la scène de la même fenêtre (Stage)
-            Stage stage = (Stage) dateDebutInput.getScene().getWindow(); // Récupérer le Stage actuel
-            stage.setScene(new Scene(root)); // Remplacer la scène avec l'interface d'ajout
-            stage.setTitle("travelPro"); // Mettre à jour le titre de la fenêtre
+            Stage stage = (Stage) dateDebutInput.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("travelPro");
         } catch (IOException e) {
             e.printStackTrace();
             showAlert("Erreur", "Impossible de charger l'interface d'ajout.");
