@@ -94,33 +94,37 @@ public class activiteC implements Initializable {
 
     @FXML
     void addActivite(ActionEvent event) {
-        if (nomActiviteInput.getText().isEmpty() || descriptionInput.getText().isEmpty() || dateDebutInput.getValue() == null || dateFinInput.getValue() == null ) {
+        // Vérifier que tous les champs obligatoires sont remplis
+        if (nomActiviteInput.getText().isEmpty() || descriptionInput.getText().isEmpty() ||
+                dateDebutInput.getValue() == null || dateFinInput.getValue() == null) {
             showAlert("Erreur", "Veuillez remplir tous les champs.");
             return;
         }
 
         try {
-            int idEvent = Integer.parseInt(idEventInput.getText());
-
+            // Créer une nouvelle activité
             Activite activite = new Activite();
             activite.setNomActivite(nomActiviteInput.getText());
             activite.setDescription(descriptionInput.getText());
             activite.setDateDebutA(Date.valueOf(dateDebutInput.getValue()));
             activite.setDateFinA(Date.valueOf(dateFinInput.getValue()));
-           // activite.setIdEvent(idEvent);
 
+            // Ajouter l'activité (l'idEvent sera géré automatiquement dans le service)
             serviceActivite.add(activite);
+
+            // Recharger la liste des activités
             loadActivites();
 
+            // Réinitialiser les champs
             nomActiviteInput.clear();
             descriptionInput.clear();
             dateDebutInput.setValue(null);
             dateFinInput.setValue(null);
-            idEventInput.clear();
 
             showAlert("Succès", "Activité ajoutée avec succès.");
-        } catch (NumberFormatException e) {
-            showAlert("Erreur", "L'ID de l'événement doit être un nombre.");
+        } catch (Exception e) {
+            showAlert("Erreur", "Une erreur s'est produite lors de l'ajout de l'activité.");
+            e.printStackTrace();
         }
     }
 
@@ -131,37 +135,43 @@ public class activiteC implements Initializable {
             return;
         }
 
-        if (nomActiviteInput.getText().isEmpty() || descriptionInput.getText().isEmpty() || dateDebutInput.getValue() == null || dateFinInput.getValue() == null || idEventInput.getText().isEmpty()) {
+        // Vérifier que tous les champs obligatoires sont remplis
+        if (nomActiviteInput.getText().isEmpty() || descriptionInput.getText().isEmpty() || dateDebutInput.getValue() == null || dateFinInput.getValue() == null) {
             showAlert("Erreur", "Veuillez remplir tous les champs.");
             return;
         }
 
         try {
+            // Vérifier que la date de début est avant la date de fin
             if (dateDebutInput.getValue().isAfter(dateFinInput.getValue())) {
                 showAlert("Erreur", "La date de début doit être avant la date de fin.");
                 return;
             }
 
+            // Mettre à jour uniquement les champs modifiables (sans toucher à l'ID de l'événement)
             selectedActivite.setNomActivite(nomActiviteInput.getText());
             selectedActivite.setDescription(descriptionInput.getText());
             selectedActivite.setDateDebutA(Date.valueOf(dateDebutInput.getValue()));
             selectedActivite.setDateFinA(Date.valueOf(dateFinInput.getValue()));
-            selectedActivite.setIdEvent(Integer.parseInt(idEventInput.getText()));
 
+            // Mettre à jour l'activité dans la base de données
             serviceActivite.update(selectedActivite, selectedActivite.getIdActivite());
+
+            // Recharger les cartes
             loadActivites();
 
+            // Réinitialiser les champs (sans toucher à idEventInput)
             nomActiviteInput.clear();
             descriptionInput.clear();
             dateDebutInput.setValue(null);
             dateFinInput.setValue(null);
-            idEventInput.clear();
 
             showAlert("Succès", "Activité mise à jour avec succès.");
-        } catch (NumberFormatException e) {
-            showAlert("Erreur", "L'ID de l'événement doit être un nombre.");
+        } catch (Exception e) {
+            showAlert("Erreur", "Une erreur est survenue lors de la mise à jour.");
         }
     }
+
 
     @FXML
     void deleteActivite(ActionEvent event) {

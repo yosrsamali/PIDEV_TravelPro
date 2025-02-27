@@ -20,6 +20,13 @@ public class ServiceActivite {
             return;
         }
 
+        // Récupérer un idEvent valide depuis la table evenement
+        int idEvent = getValidEventId();
+        if (idEvent == -1) {
+            System.out.println("❌ Erreur : Aucun événement valide trouvé.");
+            return;
+        }
+
         String qry = "INSERT INTO `activite` (`nomActivite`, `description`, `dateDebutA`, `dateFinA`, `idEvent`) VALUES (?, ?, ?, ?, ?)";
         try {
             PreparedStatement pstm = cnx.prepareStatement(qry);
@@ -27,13 +34,43 @@ public class ServiceActivite {
             pstm.setString(2, activite.getDescription());
             pstm.setDate(3, new java.sql.Date(activite.getDateDebutA().getTime()));
             pstm.setDate(4, new java.sql.Date(activite.getDateFinA().getTime()));
-            pstm.setInt(5, activite.getIdEvent());
+            pstm.setInt(5, idEvent);
 
             pstm.executeUpdate();
             System.out.println("✅ Activité ajoutée avec succès !");
         } catch (SQLException e) {
             System.out.println("❌ Erreur lors de l'ajout de l'activité : " + e.getMessage());
         }
+    }
+
+    // Méthode pour récupérer un idEvent valide
+    private int getValidEventId() {
+        String qry = "SELECT `idEvent` FROM `evenement` LIMIT 1"; // Récupérer le premier événement
+        try {
+            Statement stm = cnx.createStatement();
+            ResultSet rs = stm.executeQuery(qry);
+            if (rs.next()) {
+                return rs.getInt("idEvent");
+            }
+        } catch (SQLException e) {
+            System.out.println("❌ Erreur lors de la récupération de l'ID de l'événement : " + e.getMessage());
+        }
+        return -1; // Retourner -1 si aucun événement n'est trouvé
+    }
+
+    // Méthode pour récupérer un ID d'événement par défaut
+    private int getDefaultEventId() {
+        String qry = "SELECT `idEvent` FROM `evenement` LIMIT 1"; // Récupérer le premier événement
+        try {
+            Statement stm = cnx.createStatement();
+            ResultSet rs = stm.executeQuery(qry);
+            if (rs.next()) {
+                return rs.getInt("idEvent");
+            }
+        } catch (SQLException e) {
+            System.out.println("❌ Erreur lors de la récupération de l'ID de l'événement : " + e.getMessage());
+        }
+        return 1; // Retourner une valeur par défaut si aucun événement n'est trouvé
     }
 
     public List<Activite> getAll() {
@@ -64,15 +101,15 @@ public class ServiceActivite {
             return;
         }
 
-        String qry = "UPDATE `activite` SET `nomActivite` = ?, `description` = ?, `dateDebutA` = ?, `dateFinA` = ?, `idEvent` = ? WHERE `idActivite` = ?";
+        // Requête sans modifier `idEvent`
+        String qry = "UPDATE `activite` SET `nomActivite` = ?, `description` = ?, `dateDebutA` = ?, `dateFinA` = ? WHERE `idActivite` = ?";
         try {
             PreparedStatement pstm = cnx.prepareStatement(qry);
             pstm.setString(1, activite.getNomActivite());
             pstm.setString(2, activite.getDescription());
             pstm.setDate(3, new java.sql.Date(activite.getDateDebutA().getTime()));
             pstm.setDate(4, new java.sql.Date(activite.getDateFinA().getTime()));
-            pstm.setInt(5, activite.getIdEvent());
-            pstm.setInt(6, id);
+            pstm.setInt(5, id);  // On ne modifie pas `idEvent`
 
             int rowsUpdated = pstm.executeUpdate();
             if (rowsUpdated > 0) {
@@ -84,6 +121,7 @@ public class ServiceActivite {
             System.out.println("❌ Erreur lors de la mise à jour de l'activité : " + e.getMessage());
         }
     }
+
 
     public void delete(int id) {
         String qry = "DELETE FROM `activite` WHERE `idActivite` = ?";

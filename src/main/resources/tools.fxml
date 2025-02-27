@@ -34,7 +34,7 @@
         <Label text="Date Fin:" />
         <DatePicker fx:id="dateFinInput" />
         <Label text="ID Événement:" />
-        <TextField fx:id="idEventInput" />
+        <TextField fx:id="idEventInput" editable="false" visible="false"/>
     </HBox>
 
     <HBox spacing="10">
