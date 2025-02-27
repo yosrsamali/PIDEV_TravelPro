@@ -7,14 +7,19 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import tn.esprit.models.Client;
 import tn.esprit.models.Utilisateur;
-import java.io.IOException;
-import javafx.scene.control.Alert;
 import tn.esprit.services.ServiceClient;
 import tn.esprit.services.ServiceUtilisateur;
+import tn.esprit.utils.CloudinaryUploader;
 
+import java.io.File;
+import java.io.IOException;
+import javafx.scene.control.Alert;
 
 public class ModifierClientController {
 
@@ -30,7 +35,10 @@ public class ModifierClientController {
     private TextField tfNum;
     @FXML
     private TextField tfLieux;
+    @FXML
+    private ImageView imageView;
 
+    private File selectedFile;
     private Client client;
     private Utilisateur utilisateur;
     private final ServiceUtilisateur serviceUtilisateur = new ServiceUtilisateur();
@@ -44,9 +52,29 @@ public class ModifierClientController {
         tfNom.setText(utilisateur.getNom());
         tfPrenome.setText(utilisateur.getPrenom());
         tfMail.setText(utilisateur.getMail());
-        tfPasswor.setText(utilisateur.getPassword());  // Assurez-vous que c'est sécurisé
-        tfNum.setText(String.valueOf(client.getNumTel()));
+        tfPasswor.setText(utilisateur.getPassword());
+        tfNum.setText(client.getNumTel());
         tfLieux.setText(client.getAdresse());
+
+
+
+
+        if (client.getImageUrl() == null && client.getImageUrl().equals("https://static.thenounproject.com/png/1743561-200.png")) {
+            imageView.setImage(new Image(client.getImageUrl()));
+        } else {
+            imageView.setImage(new Image(client.getImageUrl()));        }
+    }
+
+    @FXML
+    private void handleSelectImage() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg"));
+        selectedFile = fileChooser.showOpenDialog(null);
+
+        if (selectedFile != null) {
+            imageView.setImage(new Image(selectedFile.toURI().toString()));
+           // client.setImageUrl(imageView.getImage().toString());
+        }
     }
 
     @FXML
@@ -64,17 +92,31 @@ public class ModifierClientController {
         client.setNumTel(tfNum.getText());
         client.setAdresse(tfLieux.getText());
 
+        // Vérifier si une nouvelle image est sélectionnée
+        if (selectedFile != null) {
+            try {
+                String imageUrl = CloudinaryUploader.uploadFile(selectedFile);
+                System.out.println("imageUrl=="+imageUrl);
+                // Envoie l'image au cloud
+                client.setImageUrl(imageUrl);
+            } catch (Exception e) {
+                showAlert("Erreur", "Échec de l'upload de l'image.");
+                e.printStackTrace(); // Affiche l'erreur complète dans la console
+                return;
+            }
+
+        }
+
         // Mise à jour dans la base de données
         try {
             serviceUtilisateur.update(utilisateur);
             serviceClient.update(client);
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Gereclient.fxml"));
-            Parent root = loader.load();
-            Gereclient clientController = loader.getController();
-           // clientController.ajouterdonner(client,utilisateur);
+
             showAlert("Succès", "Client mis à jour avec succès !");
 
-
+            // Redirection
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Gereclient.fxml"));
+            Parent root = loader.load();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Profile");
@@ -85,9 +127,6 @@ public class ModifierClientController {
         }
     }
 
-
-
-
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -96,16 +135,11 @@ public class ModifierClientController {
         alert.showAndWait();
     }
 
-
     @FXML
     private void handleRetour(ActionEvent event) throws IOException {
-        // Charger user.fxml (assurez-vous qu'il est dans resources/)
         Parent root = FXMLLoader.load(getClass().getResource("/user.fxml"));
-
-        // Obtenir la scène actuelle et changer vers user.fxml
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
     }
-
 }

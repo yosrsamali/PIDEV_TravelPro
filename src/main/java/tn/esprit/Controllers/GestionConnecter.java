@@ -76,7 +76,9 @@ public class GestionConnecter {
                 clientDetails.setNom(utilisateur.getNom());
                 clientDetails.setPrenom(utilisateur.getPrenom());
                 clientDetails.setRole(utilisateur.getRole());
-                clientDetails.setPassword(utilisateur.getPassword());                SessionManager.getInstance().setUtilisateurConnecte(clientDetails);
+                clientDetails.setPassword(utilisateur.getPassword());
+
+                SessionManager.getInstance().setUtilisateurConnecte(clientDetails);
 
                 loader = new FXMLLoader(getClass().getResource("/GereClient.fxml"));
                 root = loader.load();

@@ -57,7 +57,7 @@ public class ServiceClient implements IService<Client> {
                 c.setId(rs.getInt("id_Utilisateur"));
                 c.setNumTel(rs.getString("num_Tel"));
                 c.setAdresse(rs.getString("adresse"));
-
+                c.setImageUrl(rs.getString("image_url"));
                 clients.add(c);
             }
         } catch (SQLException e) {
@@ -69,12 +69,14 @@ public class ServiceClient implements IService<Client> {
 
     @Override
     public void update(Client client) {
-        String qry = "UPDATE client SET num_tel_client=?, addresse_client=? WHERE id_client=?";
+        String qry = "UPDATE client SET num_tel_client=?, addresse_client=?,image_url=? WHERE id_client=?";
         try {
             PreparedStatement pstm = cnx.prepareStatement(qry);
             pstm.setString(1, client.getNumTel());
             pstm.setString(2, client.getAdresse());
-            pstm.setInt(3, client.getIdClient());
+            pstm.setString(3, client.getImageUrl());
+
+            pstm.setInt(4, client.getIdClient());
 
             int rowsUpdated = pstm.executeUpdate();
             if (rowsUpdated > 0) {
@@ -121,6 +123,7 @@ public class ServiceClient implements IService<Client> {
                 client.setId(rs.getInt("id_utilisateur"));
                 client.setNumTel(rs.getString("num_tel_client"));
                 client.setAdresse(rs.getString("addresse_client"));
+                client.setImageUrl(rs.getString("image_url"));
             }
         } catch (SQLException e) {
             System.out.println("❌ Erreur lors de la récupération du client : " + e.getMessage());
@@ -184,6 +187,7 @@ public Client getClientParIdUtilisateur(int id_utilisateur) {
             client.setId(rs.getInt("id_utilisateur"));
             client.setNumTel(rs.getString("num_tel_client"));
             client.setAdresse(rs.getString("addresse_client"));
+            client.setImageUrl(rs.getString("image_url"));
         }
     } catch (SQLException e) {
         System.out.println("Erreur lors de la récupération du client : " + e.getMessage());

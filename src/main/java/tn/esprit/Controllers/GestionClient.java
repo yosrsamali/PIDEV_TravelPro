@@ -84,7 +84,7 @@ public class GestionClient {
             newClient.setRole(user.getRole());
             newClient.setPassword(user.getPassword());
             newClient.setCodeVerification(user.getCodeVerification());
-
+            newClient.setImageUrl("https://static.thenounproject.com/png/1743561-200.png");
             serviceClient.add(newClient);
             System.out.println("✅ Client ajouté avec succès !");
 
