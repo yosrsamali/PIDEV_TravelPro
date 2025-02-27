@@ -34,6 +34,9 @@ public class ModifierPanier {
     private Label labelTotalPrice;
     @FXML
     private Button btnBackToMain; // Back button added
+    @FXML
+    private Button btnCheckout;
+
 
     private final ServicePanier servicePanier = new ServicePanier();
     private ObservableList<PanierProduit> cartList = FXCollections.observableArrayList();
@@ -42,6 +45,7 @@ public class ModifierPanier {
     // Initialize method - Load data for a specific panier
     @FXML
     public void initialize() {
+        btnCheckout.setOnAction(event -> openPaymentInterface());
         colNomProduit.setCellValueFactory(new PropertyValueFactory<>("nomProduit"));
         colPrixProduit.setCellValueFactory(new PropertyValueFactory<>("prixVente"));
         colQuantite.setCellValueFactory(new PropertyValueFactory<>("quantite"));
@@ -165,6 +169,22 @@ public class ModifierPanier {
     private void updateTotalPrice() {
         double total = cartList.stream().mapToDouble(p -> p.getQuantite() * p.getPrixVente()).sum();
         labelTotalPrice.setText(total + " TND");
+    }
+    private void openPaymentInterface() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/PaymentInterface.fxml"));
+            Parent root = loader.load();
+
+            PaymentController controller = loader.getController();
+            controller.setTotalAmount(cartList.stream().mapToDouble(p -> p.getQuantite() * p.getPrixVente()).sum());
+
+            Stage stage = new Stage();
+            stage.setTitle("Payment");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Scene switching method

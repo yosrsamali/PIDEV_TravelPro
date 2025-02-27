@@ -38,7 +38,7 @@
         <HBox alignment="CENTER" spacing="30">
             <Label styleClass="label" text="Total Price:" />
             <Label fx:id="labelTotalPrice" styleClass="label" text="0 TND" />
-            <Button fx:id="btnCheckout" styleClass="button" text="Checkout" />
+            <Button fx:id="btnCheckout" styleClass="button" text="Checkout"  />
         </HBox>
 
     </VBox>

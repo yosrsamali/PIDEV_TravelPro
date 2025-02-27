@@ -66,22 +66,27 @@
 
 /* Back Button */
 .button {
-    -fx-background-color: #088395;
+    -fx-background-color: linear-gradient(to bottom, #37B7C3, #071952);
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-border-radius: 5px;
-    -fx-padding: 7px 15px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 0, 3);
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-width: 2px;
+    -fx-border-color: #071952;
+    -fx-cursor: hand;
+    -fx-transition: 0.3s;
 }
 
 .button:hover {
-    -fx-background-color: #37B7C3;
-    -fx-cursor: hand;
+    -fx-background-color: linear-gradient(to bottom, #071952, #37B7C3);
+    -fx-border-color: #37B7C3;
 }
 
 .button:pressed {
-    -fx-background-color: #056674;
+    -fx-background-color: #071952;
+    -fx-border-color: #37B7C3;
 }
 
 

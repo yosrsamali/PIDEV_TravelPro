@@ -3,42 +3,53 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="720" prefWidth="1280" styleClass="root" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.AjouterProduit_Panier">
 
-    <!-- Main Card Container -->
-    <VBox alignment="CENTER" layoutX="173.0" layoutY="23.0" prefHeight="674.0" prefWidth="1012.0" spacing="30" styleClass="card">
+    <!-- Main Container -->
+    <VBox alignment="CENTER" layoutX="173.0" layoutY="23.0" prefHeight="674.0" prefWidth="1078.0" spacing="20" styleClass="card">
         <padding>
             <Insets bottom="50" left="50" right="50" top="40" />
         </padding>
 
         <!-- Header -->
-        <Label styleClass="title-label" text="Shop - Available Products" />
+        <Label styleClass="title-label" text="Boutique - Produits Disponibles" />
 
-        <!-- TableView -->
-        <TableView fx:id="productTableView" maxWidth="-Infinity" prefHeight="514.0" prefWidth="893.0" VBox.vgrow="NEVER">
-            <columns>
-                <TableColumn fx:id="colNomProduit" prefWidth="250.0" text="Product Name" />
-                <TableColumn fx:id="colPrixAchat" prefWidth="169.0" text="Price" />
-                <TableColumn fx:id="colQuantite" prefWidth="290.0" text="Quantity" />
-                <TableColumn fx:id="colAction" prefWidth="182.0" text="Action" />
-            </columns>
-        </TableView>
+        <!-- Search Bar -->
+        <HBox alignment="CENTER" spacing="10">
+            <TextField fx:id="searchField" prefWidth="400" promptText="Search product..." />
+            <Button fx:id="btnSearch" styleClass="button" text="Search" />
+            <Button fx:id="btnClear" styleClass="button" text="Clear" />
+        </HBox>
 
+        <!-- Scrollable Product List -->
+        <ScrollPane fitToWidth="true" prefHeight="514.0" prefWidth="893.0">
+            <content>
+                <GridPane fx:id="productGridPane" hgap="20" vgap="20">
+                    <padding>
+                        <Insets bottom="10" left="10" right="10" top="10" />
+                    </padding>
+                </GridPane>
+            </content>
+        </ScrollPane>
     </VBox>
 
-        <!-- Back Button -->
-     <Button fx:id="btnBack" layoutX="14.0" layoutY="145.0" prefHeight="30.0" prefWidth="133.0" styleClass="button" text="Back " />
-   <ImageView fitHeight="107.0" fitWidth="134.0" layoutX="14.0" layoutY="23.0">
-      <image>
-         <Image url="@images/logo_with_name.png" />
-      </image>
-   </ImageView>
+    <!-- Back Button -->
+    <Button fx:id="btnBack" layoutX="14.0" layoutY="145.0" prefHeight="30.0" prefWidth="133.0" styleClass="button" text="Back" />
+
+    <!-- Logo -->
+    <ImageView fitHeight="107.0" fitWidth="134.0" layoutX="14.0" layoutY="23.0">
+        <image>
+            <Image url="@images/logo_with_name.png" />
+        </image>
+    </ImageView>
 
 </AnchorPane>

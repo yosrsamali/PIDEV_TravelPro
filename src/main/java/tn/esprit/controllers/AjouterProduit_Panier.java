@@ -1,38 +1,41 @@
 package tn.esprit.controllers;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import tn.esprit.models.Produit;
 import tn.esprit.services.ServicePanier;
 import tn.esprit.services.ServiceProduit;
 import tn.esprit.interfaces.IService;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class AjouterProduit_Panier {
 
     @FXML
-    private TableView<Produit> productTableView;
+    private GridPane productGridPane;
+
     @FXML
-    private TableColumn<Produit, String> colNomProduit;
+    private Button btnBack;
+
     @FXML
-    private TableColumn<Produit, Double> colPrixAchat;
+    private TextField searchField;
+
     @FXML
-    private TableColumn<Produit, Integer> colQuantite;
-    @FXML
-    private TableColumn<Produit, Void> colAction;
-    @FXML
-    private Button btnBack; // Back button
+    private Button btnClear;
 
     private IService<Produit> sp = new ServiceProduit();
     private ServicePanier servicePanier = new ServicePanier();
@@ -41,75 +44,60 @@ public class AjouterProduit_Panier {
 
     @FXML
     public void initialize() {
-        colNomProduit.setCellValueFactory(new PropertyValueFactory<>("nomProduit"));
-        colPrixAchat.setCellValueFactory(new PropertyValueFactory<>("prixVente"));
+        loadProducts(sp.getAll());
+        btnBack.setOnAction(event -> goBackToMain());
+        btnClear.setOnAction(event -> clearSearch());
 
-        loadProducts();
-
-        colQuantite.setCellFactory(param -> new TableCell<>() {
-            private final Spinner<Integer> spinner = new Spinner<>(1, 100, 1);
-
-            @Override
-            protected void updateItem(Integer item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    Produit produit = getTableView().getItems().get(getIndex());
-                    spinnerMap.put(produit.getIdProduit(), spinner);
-                    setGraphic(spinner);
-                }
-            }
-        });
-
-        colAction.setCellFactory(param -> new TableCell<>() {
-            private final Button btnAdd = new Button("Add");
-
-            {
-                btnAdd.setOnAction(event -> {
-                    Produit produit = getTableView().getItems().get(getIndex());
-                    Spinner<Integer> spinner = spinnerMap.get(produit.getIdProduit());
-
-                    if (spinner != null) {
-                        int quantity = spinner.getValue();
-                        addToCart(produit, quantity);
-                    } else {
-                        showAlert("Error", "Failed to retrieve quantity.");
-                    }
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(new HBox(btnAdd));
-                }
-            }
-        });
-
-        btnBack.setOnAction(event -> goBackToMain()); // Set action for Back button
+        // Add listener for real-time search
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> filterProducts(newValue));
     }
 
-    private void loadProducts() {
-        ObservableList<Produit> produits = FXCollections.observableArrayList(sp.getAll());
+    private void loadProducts(List<Produit> produits) {
+        productGridPane.getChildren().clear(); // Clear previous items
+        int col = 0;
+        int row = 0;
 
-        colPrixAchat.setText("Price");
-        colPrixAchat.setCellFactory(tc -> new TableCell<Produit, Double>() {
-            @Override
-            protected void updateItem(Double price, boolean empty) {
-                super.updateItem(price, empty);
-                if (empty || price == null) {
-                    setText(null);
-                } else {
-                    setText(String.format("%.2f TND", price));
-                }
+        for (Produit produit : produits) {
+            VBox card = createProductCard(produit);
+
+            productGridPane.add(card, col, row);
+
+            col++;
+            if (col == 4) {
+                col = 0;
+                row++;
             }
-        });
+        }
+    }
 
-        productTableView.setItems(produits);
+    private VBox createProductCard(Produit produit) {
+        VBox card = new VBox(10);
+        card.setStyle("-fx-background-color: #f4f4f4; -fx-padding: 15; -fx-border-radius: 10; -fx-background-radius: 10; -fx-alignment: center; -fx-border-color: #3fbfee; -fx-border-width: 2;");
+        ImageView imageView = new ImageView();
+        imageView.setFitWidth(150);
+        imageView.setFitHeight(150);
+
+        File file = new File(produit.getImagePath());
+        if (file.exists()) {
+            imageView.setImage(new Image(file.toURI().toString()));
+        } else {
+            imageView.setImage(new Image(getClass().getResource("/images/default.png").toExternalForm()));
+        }
+
+        Label nameLabel = new Label(produit.getNomProduit());
+        nameLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+
+        Label priceLabel = new Label(String.format("%.2f TND", produit.getPrixVente()));
+
+        Spinner<Integer> spinner = new Spinner<>(1, produit.getQuantiteProduit(), 1);
+        spinnerMap.put(produit.getIdProduit(), spinner);
+
+        Button btnAdd = new Button("Add to Cart");
+        btnAdd.setStyle("-fx-background-color: #3ab3e7; -fx-text-fill: white;");
+        btnAdd.setOnAction(event -> addToCart(produit, spinner.getValue()));
+
+        card.getChildren().addAll(imageView, nameLabel, priceLabel, spinner, btnAdd);
+        return card;
     }
 
     private void addToCart(Produit produit, int quantity) {
@@ -135,5 +123,16 @@ public class AjouterProduit_Panier {
             showAlert("Error", "Failed to load main interface.");
             e.printStackTrace();
         }
+    }
+
+    private void clearSearch() {
+        searchField.clear();
+    }
+
+    private void filterProducts(String query) {
+        List<Produit> filteredProducts = sp.getAll().stream()
+                .filter(p -> p.getNomProduit().toLowerCase().contains(query.toLowerCase()))
+                .collect(Collectors.toList());
+        loadProducts(filteredProducts);
     }
 }
