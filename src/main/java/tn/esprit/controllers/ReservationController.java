@@ -27,24 +27,24 @@ public class ReservationController {
     @FXML private DatePicker travelDatePicker;
     @FXML private DatePicker returnDatePicker;
     @FXML private ComboBox<String> classComboBox;
-    @FXML private ListView<BilletAvion> billetListView;  // Changé pour stocker des objets BilletAvion
+    @FXML private ListView<BilletAvion> billetListView;
 
     // Champs pour les voitures
-    @FXML private ListView<Voiture> voitureListView;  // Changé pour stocker des objets Voiture
+    @FXML private ListView<Voiture> voitureListView;
 
     // Champs pour les hôtels
     @FXML private ComboBox<String> typeChambreComboBox;
-    @FXML private ListView<Hotel> hotelListView;  // Changé pour stocker des objets Hotel
+    @FXML private ListView<Hotel> hotelListView;
 
     // Boutons
     @FXML private Button addHotelButton;
     @FXML private Button addCarButton;
 
     // Services
-    private ServiceBilletAvion serviceBilletAvion = new ServiceBilletAvion();
-    private ServiceVoiture serviceVoiture = new ServiceVoiture();
-    private ServiceHotel serviceHotel = new ServiceHotel();
-    private ServiceReservation serviceReservation = new ServiceReservation();  // Ajout du service de réservation
+    private final ServiceBilletAvion serviceBilletAvion = new ServiceBilletAvion();
+    private final ServiceVoiture serviceVoiture = new ServiceVoiture();
+    private final ServiceHotel serviceHotel = new ServiceHotel();
+    private final ServiceReservation serviceReservation = new ServiceReservation();
 
     // Attributs pour stocker les sélections
     private BilletAvion selectedBillet;
@@ -61,172 +61,163 @@ public class ReservationController {
 
         // Ajouter des écouteurs pour capturer les sélections
         billetListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                selectedBillet = newSelection;
-            }
+            selectedBillet = newSelection;
         });
 
         voitureListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                selectedVoiture = newSelection;
-            }
+            selectedVoiture = newSelection;
         });
 
         hotelListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                selectedHotel = newSelection;
-            }
+            selectedHotel = newSelection;
         });
     }
 
     // Méthode pour rechercher les billets d'avion disponibles
     @FXML
     public void handleSearchBillets() {
-        // Récupérer les valeurs des champs
-        String villeDepart = departureField.getText();
-        String villeArrivee = arrivalField.getText();
-        Date dateDepart = Date.valueOf(travelDatePicker.getValue());
-        Date dateRetour = Date.valueOf(returnDatePicker.getValue());
-        String classBillet = classComboBox.getValue();
+        try {
+            String villeDepart = departureField.getText();
+            String villeArrivee = arrivalField.getText();
+            Date dateDepart = Date.valueOf(travelDatePicker.getValue());
+            Date dateRetour = Date.valueOf(returnDatePicker.getValue());
+            String classBillet = classComboBox.getValue();
 
-        // Rechercher les billets disponibles
-        List<BilletAvion> availableBillets = serviceBilletAvion.getAvailableBillets(villeDepart, villeArrivee, dateDepart, dateRetour, classBillet);
+            List<BilletAvion> availableBillets = serviceBilletAvion.getAvailableBillets(villeDepart, villeArrivee, dateDepart, dateRetour, classBillet);
 
-        // Afficher les résultats dans la ListView
-        billetListView.getItems().clear();
-        billetListView.getItems().addAll(availableBillets);
+            billetListView.getItems().clear();
+            billetListView.getItems().addAll(availableBillets);
 
-        System.out.println("Nombre de billets trouvés : " + availableBillets.size());
+            System.out.println("Nombre de billets trouvés : " + availableBillets.size());
+        } catch (Exception e) {
+            showAlert("Erreur", "Une erreur est survenue lors de la recherche des billets.", Alert.AlertType.ERROR);
+        }
     }
 
     // Méthode pour rechercher les voitures disponibles
     @FXML
     public void handleSearchVoiture() {
-        // Récupérer les valeurs des champs
-        Date dateDeLocation = Date.valueOf(travelDatePicker.getValue());
-        Date dateDeRemise = Date.valueOf(returnDatePicker.getValue());
+        try {
+            Date dateDeLocation = Date.valueOf(travelDatePicker.getValue());
+            Date dateDeRemise = Date.valueOf(returnDatePicker.getValue());
 
-        // Rechercher les voitures disponibles
-        List<Voiture> availableVoitures = serviceVoiture.getAvailableVoitures(dateDeLocation, dateDeRemise);
+            List<Voiture> availableVoitures = serviceVoiture.getAvailableVoitures(dateDeLocation, dateDeRemise);
 
-        // Afficher les résultats dans la ListView
-        voitureListView.getItems().clear();
-        voitureListView.getItems().addAll(availableVoitures);
+            voitureListView.getItems().clear();
+            voitureListView.getItems().addAll(availableVoitures);
 
-        System.out.println("Nombre de voitures trouvées : " + availableVoitures.size());
+            System.out.println("Nombre de voitures trouvées : " + availableVoitures.size());
+        } catch (Exception e) {
+            showAlert("Erreur", "Une erreur est survenue lors de la recherche des voitures.", Alert.AlertType.ERROR);
+        }
     }
 
     // Méthode pour rechercher les hôtels disponibles
     @FXML
     public void handleSearchHotel() {
-        // Récupérer les valeurs des champs
-        String villeArrivee = arrivalField.getText();
-        Date dateCheckIn = Date.valueOf(travelDatePicker.getValue());
-        Date dateCheckOut = Date.valueOf(returnDatePicker.getValue());
-        String typeDeChambre = typeChambreComboBox.getValue();
+        try {
+            String villeArrivee = arrivalField.getText();
+            Date dateCheckIn = Date.valueOf(travelDatePicker.getValue());
+            Date dateCheckOut = Date.valueOf(returnDatePicker.getValue());
+            String typeDeChambre = typeChambreComboBox.getValue();
 
-        // Rechercher les hôtels disponibles
-        List<Hotel> availableHotels = serviceHotel.getAvailableHotels(villeArrivee, dateCheckIn, dateCheckOut, typeDeChambre);
+            List<Hotel> availableHotels = serviceHotel.getAvailableHotels(villeArrivee, dateCheckIn, dateCheckOut, typeDeChambre);
 
-        // Afficher les résultats dans la ListView
-        hotelListView.getItems().clear();
-        hotelListView.getItems().addAll(availableHotels);
+            hotelListView.getItems().clear();
+            hotelListView.getItems().addAll(availableHotels);
 
-        System.out.println("Nombre d'hôtels trouvés : " + availableHotels.size());
+            System.out.println("Nombre d'hôtels trouvés : " + availableHotels.size());
+        } catch (Exception e) {
+            showAlert("Erreur", "Une erreur est survenue lors de la recherche des hôtels.", Alert.AlertType.ERROR);
+        }
     }
 
     // Méthode pour valider la réservation
     @FXML
     public void handleSubmitReservation() {
-        // Vérifier que tous les éléments sont sélectionnés
         if (selectedBillet == null || selectedVoiture == null || selectedHotel == null) {
-            System.out.println("Veuillez sélectionner un billet, une voiture et un hôtel.");
+            showAlert("Erreur", "Veuillez sélectionner un billet, une voiture et un hôtel.", Alert.AlertType.WARNING);
             return;
         }
 
-        // Afficher une boîte de dialogue de confirmation
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
         confirmationAlert.setTitle("Confirmation de réservation");
         confirmationAlert.setHeaderText("Confirmer la réservation");
         confirmationAlert.setContentText("Êtes-vous sûr de vouloir créer cette réservation ?");
 
-        // Attendre la réponse de l'utilisateur
         ButtonType result = confirmationAlert.showAndWait().orElse(ButtonType.CANCEL);
 
-        // Si l'utilisateur confirme, créer la réservation
         if (result == ButtonType.OK) {
-            // Créer une nouvelle réservation
             Reservation reservation = new Reservation(
                     selectedVoiture.getId(),
                     selectedBillet.getId(),
                     selectedHotel.getId(),
                     0,  // id_client (à remplacer par l'ID du client connecté)
-                    "En attente"  // statut de la réservation
+                    "En attente"
             );
 
-            // Ajouter la réservation à la base de données
             serviceReservation.add(reservation);
 
-            // Afficher un message de succès
+            // Envoyer un e-mail avec les informations de la réservation
+            String clientEmail = "oussemaxxj@gmail.com"; // Remplacez par l'e-mail du client
+            String subject = "Confirmation de votre réservation";
+            String content = "Votre réservation a été créée avec succès.\n\n" +
+                    "Détails de la réservation :\n" +
+                    "Billet : " + selectedBillet.getCompagnie() + " - " + selectedBillet.getPrix() + " €\n" +
+                    "Voiture : " + selectedVoiture.getMarque() + " " + selectedVoiture.getModele() + "\n" +
+                    "Hôtel : " + selectedHotel.getNom() + " - " + selectedHotel.getVille() + "\n";
+
+            EmailService emailService = new EmailService("yassin.abida00@gmail.com", "kbng hjxw ijwr zfhr");
+            emailService.sendEmail(clientEmail, subject, content);
+
             System.out.println("Réservation créée avec succès !");
             System.out.println("Billet : " + selectedBillet.getCompagnie() + " - " + selectedBillet.getPrix() + " €");
             System.out.println("Voiture : " + selectedVoiture.getMarque() + " " + selectedVoiture.getModele());
             System.out.println("Hôtel : " + selectedHotel.getNom() + " - " + selectedHotel.getVille());
 
-            // Afficher une boîte de dialogue d'information pour confirmer l'ajout
-            Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-            successAlert.setTitle("Réservation créée");
-            successAlert.setHeaderText(null);
-            successAlert.setContentText("La réservation a été créée avec succès !");
-            successAlert.showAndWait();
-
-            // Vider le formulaire après l'ajout
+            showAlert("Succès", "La réservation a été créée avec succès !", Alert.AlertType.INFORMATION);
             clearForm();
         } else {
-            // Afficher un message si l'utilisateur annule
             System.out.println("Création de la réservation annulée.");
         }
     }
-
     // Méthode pour vider le formulaire
     private void clearForm() {
-        // Réinitialiser les champs de texte
         departureField.clear();
         arrivalField.clear();
-
-        // Réinitialiser les DatePicker
         travelDatePicker.setValue(null);
         returnDatePicker.setValue(null);
-
-        // Réinitialiser les ComboBox
         classComboBox.getSelectionModel().clearSelection();
         typeChambreComboBox.getSelectionModel().clearSelection();
-
-        // Réinitialiser les ListView
         billetListView.getItems().clear();
         voitureListView.getItems().clear();
         hotelListView.getItems().clear();
-
-        // Réinitialiser les sélections
         selectedBillet = null;
         selectedVoiture = null;
         selectedHotel = null;
     }
+
+    // Méthode pour afficher une boîte de dialogue d'alerte
+    private void showAlert(String title, String message, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
     @FXML
     public void handleShowReservations() {
         try {
-            // Charger la nouvelle vue
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ReservationList.fxml"));
             Parent root = loader.load();
-
-            // Afficher la nouvelle vue dans une nouvelle fenêtre ou dans la même fenêtre
             Stage stage = new Stage();
             stage.setTitle("Mes réservations");
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Erreur lors du chargement de la vue des réservations.");
+            showAlert("Erreur", "Erreur lors du chargement de la vue des réservations.", Alert.AlertType.ERROR);
         }
     }
 }
