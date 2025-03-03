@@ -125,7 +125,14 @@
                            <Button fx:id="AddImageBtn" onAction="#choisirImage1" prefHeight="21.0" prefWidth="31.0" text="+" />
                        </children>
                    </HBox>
-
+                   <HBox spacing="10" styleClass="input-field">
+                       <children>
+                           <TextField fx:id="locationField" promptText="Rechercher un emplacement" />
+                           <Button text="Rechercher" onAction="#handleSearchLocation"/>
+                           <TextField fx:id="latitudeField" promptText="Latitude" editable="false"/>
+                           <TextField fx:id="longitudeField" promptText="Longitude" editable="false"/>
+                       </children>
+                   </HBox>
                   <HBox id="submitField" prefHeight="60.0" prefWidth="1290.0">
                      <children>
                         <Button fx:id="AddEventBtn" mnemonicParsing="false" onAction="#addEvent" prefHeight="37.0" prefWidth="267.0" styleClass="orangebtn" text="Add">

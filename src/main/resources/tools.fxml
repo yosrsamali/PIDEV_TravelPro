@@ -2,67 +2,89 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
 
-<VBox prefHeight="483.0" prefWidth="1266.0" spacing="10" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.activiteC">
+<VBox prefHeight="807.0" prefWidth="1109.0" spacing="10" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.activiteC">
     <padding>
         <Insets bottom="10" left="10" right="10" top="10" />
     </padding>
 
-    <!-- Remplacement du FlowPane par un ScrollPane contenant un FlowPane -->
-    <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
-        <FlowPane fx:id="activiteFlowPane" hgap="10" prefHeight="327.0" prefWidth="1064.0" vgap="10">
-            <!-- Les cartes seront ajoutées dynamiquement ici -->
-        </FlowPane>
-    </ScrollPane>
-
+    <!-- Barre de recherche et filtrage -->
     <HBox spacing="10">
-        <Label text="Nom:" />
-        <TextField fx:id="nomActiviteInput" />
-        <Label text="Description:" />
-        <TextArea fx:id="descriptionInput" />
-        <Label text="Date Début:" />
-        <DatePicker fx:id="dateDebutInput" />
-        <Label text="Date Fin:" />
-        <DatePicker fx:id="dateFinInput" />
-        <Label text="ID Événement:" />
-        <TextField fx:id="idEventInput" editable="false" visible="false"/>
-    </HBox>
-
-    <HBox spacing="10">
-        <Label text="Rechercher par ID ou Nom:" />
-        <TextField fx:id="searchInput" />
+        <Label text="Rechercher par:" />
+        <ComboBox fx:id="searchCriteriaComboBox" promptText="Critère de recherche" />
+        <TextField fx:id="searchInput" promptText="Entrez votre recherche" />
         <Button onAction="#searchActivite" text="Rechercher" />
     </HBox>
 
+    <!-- Barre de tri -->
     <HBox spacing="10">
-        <Label text="Filtrer par ID ou Nom:" />
-        <TextField fx:id="filterInput" />
-        <Button onAction="#filterActivite" text="Filtrer" />
+        <Label text="Trier par:" />
+        <ComboBox fx:id="sortCriteriaComboBox" promptText="Critère de tri" />
+        <Button onAction="#trierActivites" text="Trier" />
     </HBox>
 
-    <HBox spacing="10">
-        <Button onAction="#sortById" text="Trier par ID" />
-        <Button onAction="#sortByName" text="Trier par Nom" />
+    <!-- Conteneur principal pour le ScrollPane et le formulaire -->
+    <HBox spacing="20">
+        <!-- Zone d'affichage des activités -->
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxHeight="560" maxWidth="750" minWidth="500" prefWidth="800.0" vbarPolicy="AS_NEEDED">
+            <GridPane fx:id="activiteGridPane" hgap="10" prefWidth="480.0" vgap="10">
+                <!-- Les cartes d'activités seront ajoutées dynamiquement ici -->
+            </GridPane>
+        </ScrollPane>
+
+        <!-- Formulaire d'ajout/modification d'activité -->
+        <VBox prefWidth="250.0" spacing="10">
+            <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Formulaire d'activité" />
+            <HBox spacing="10">
+                <Label prefHeight="20.0" prefWidth="149.0" text="Nom:" />
+                <TextField fx:id="nomActiviteInput" prefHeight="42.0" prefWidth="189.0" promptText="Nom de l'activité" />
+            </HBox>
+            <HBox spacing="10">
+                <Label prefHeight="20.0" prefWidth="153.0" text="Description:" />
+                <TextArea fx:id="descriptionInput" prefHeight="50.0" prefWidth="200.0" promptText="Description de l'activité" />
+            </HBox>
+            <HBox spacing="10">
+                <Label prefHeight="20.0" prefWidth="154.0" text="Date Début:" />
+                <DatePicker fx:id="dateDebutInput" />
+            </HBox>
+            <HBox spacing="10">
+                <Label prefHeight="20.0" prefWidth="156.0" text="Date Fin:" />
+                <DatePicker fx:id="dateFinInput" />
+            </HBox>
+        </VBox>
     </HBox>
 
-    <HBox prefHeight="40.0" prefWidth="1236.0" spacing="10">
+    <!-- Boutons d'actions -->
+    <HBox spacing="10">
         <Button onAction="#addActivite" text="Ajouter" />
-        <Button onAction="#updateActivite" styleClass="modifier-button" text="Update" />
-
+        <Button onAction="#updateActivite" text="Modifier" />
         <Button onAction="#refreshActivites" text="Rafraîchir" />
-        <Button fx:id="retour" contentDisplay="CENTER" mnemonicParsing="false" onAction="#retourner" prefHeight="37.0" prefWidth="117.0" text="Retourner" textAlignment="CENTER" textFill="#a80e0e">
-            <font>
-                <Font name="System Italic" size="12.0" />
-            </font>
-        </Button>
+        <Button onAction="#retourner" text="Retourner" />
     </HBox>
+
+    <!-- Graphique des statistiques -->
+    <VBox spacing="10">
+        <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Statistiques des activités" />
+        <BarChart fx:id="activiteBarChart">
+            <xAxis>
+                <CategoryAxis fx:id="xAxis" label="Mois" />
+            </xAxis>
+            <yAxis>
+                <NumberAxis fx:id="yAxis" label="Nombre d'activités" />
+            </yAxis>
+        </BarChart>
+        <Label fx:id="averageDurationLabel" style="-fx-font-size: 14;" />
+    </VBox>
 </VBox>

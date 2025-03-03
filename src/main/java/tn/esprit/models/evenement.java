@@ -11,10 +11,13 @@ public class evenement {
     private String type;
     private String image;
     private int idReservation;
+    private double latitude;
+    private double longitude;
+
 
     public evenement() {}
 
-    public evenement(String nomEvent, String lieu, Date dateDebutE, Date dateFinE, String type, int idReservation,String image) {
+    public evenement(String nomEvent, String lieu, Date dateDebutE, Date dateFinE, String type, int idReservation,String image, double latitude, double longitude) {
         this.nomEvent = nomEvent;
         this.lieu = lieu;
         this.dateDebutE = dateDebutE;
@@ -22,6 +25,8 @@ public class evenement {
         this.type = type;
         this.idReservation = idReservation;
         this.image = image;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
     public evenement(String nomEvent, String lieu, Date dateDebutE, Date dateFinE, String type,String image) {
         this.nomEvent = nomEvent;
@@ -30,6 +35,7 @@ public class evenement {
         this.dateFinE = dateFinE;
         this.type = type;
         this.image = image;
+
     }
 
     public evenement(int idEvent, String nomEvent, String lieu, Date dateDebutE, Date dateFinE, String type,String image,int idReservation) {
@@ -67,6 +73,12 @@ public class evenement {
     public String getImage() { return image; }
     public void setImage(String image) { this.image = image; }
 
+    public double getLatitude() { return latitude; }
+    public void setLatitude(double latitude) { this.latitude = latitude; }
+
+    public double getLongitude() { return longitude; }
+    public void setLongitude(double longitude) { this.longitude = longitude; }
+
     @Override
     public String toString() {
         return "evenement{" +
@@ -76,6 +88,8 @@ public class evenement {
                 ", dateFinE=" + dateFinE +
                 ", type='" + type + '\'' +
                 ", image='" + image + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
                 ", idReservation=" + idReservation +
                 '}';
     }

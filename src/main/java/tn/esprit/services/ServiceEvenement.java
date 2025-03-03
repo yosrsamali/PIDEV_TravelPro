@@ -50,7 +50,7 @@ public class ServiceEvenement implements IService {
 
    */ @Override
     public void add(evenement e) {
-        String req = "INSERT INTO `evenement`( `nomEvent`, `lieu`,`dateDebutE`, `dateFinE`, `type`, `image`,`idReservation`) VALUES (?, ?, ?, ? ,?,?,?)";
+        String req = "INSERT INTO `evenement`( `nomEvent`, `lieu`,`dateDebutE`, `dateFinE`, `type`, `image`,`idReservation`,`latitude`,`longitude`) VALUES (?, ?, ?, ? ,?,?,?,?,?)";
         try {
             pste = cnx.prepareStatement(req);
             pste.setString(1, e.getNomEvent());
@@ -60,6 +60,8 @@ public class ServiceEvenement implements IService {
             pste.setString(5, e.getType());
             pste.setString(6, e.getImage());
             pste.setInt(7, e.getIdReservation());
+            pste.setDouble(8,e.getLatitude());
+            pste.setDouble(9,e.getLongitude());
             pste.executeUpdate();
             System.out.println("Evenement créée");
         } catch (Exception ex) {

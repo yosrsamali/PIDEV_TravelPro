@@ -8,8 +8,12 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -23,57 +27,64 @@ import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class activiteC implements Initializable {
 
-    @FXML
-    private FlowPane activiteFlowPane;
-
-    @FXML
-    private TextField nomActiviteInput;
-
-    @FXML
-    private TextArea descriptionInput;
-
-    @FXML
-    private DatePicker dateDebutInput;
-
-    @FXML
-    private DatePicker dateFinInput;
-
-    @FXML
-    private TextField idEventInput;
-
-    @FXML
-    private TextField searchInput;
-
-    @FXML
-    private TextField filterInput;
+    @FXML private GridPane activiteGridPane;
+    @FXML private TextField nomActiviteInput;
+    @FXML private TextArea descriptionInput;
+    @FXML private DatePicker dateDebutInput;
+    @FXML private DatePicker dateFinInput;
+    @FXML private ComboBox<String> searchCriteriaComboBox;
+    @FXML private TextField searchInput;
+    @FXML private ComboBox<String> sortCriteriaComboBox;
+    @FXML private BarChart<String, Number> activiteBarChart;
+    @FXML private CategoryAxis xAxis;
+    @FXML private NumberAxis yAxis;
+    @FXML private Label averageDurationLabel;
 
     private ServiceActivite serviceActivite = new ServiceActivite();
     private Activite selectedActivite;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Initialiser les ComboBox
+        searchCriteriaComboBox.setItems(FXCollections.observableArrayList("Nom", "Description", "Date Début", "Date Fin"));
+        searchCriteriaComboBox.getSelectionModel().selectFirst();
+
+        sortCriteriaComboBox.setItems(FXCollections.observableArrayList("Nom", "Date Début", "Date Fin"));
+        sortCriteriaComboBox.getSelectionModel().selectFirst();
+
+        // Charger les activités
         loadActivites();
+
+        // Générer les statistiques
+        generateStatistics();
     }
 
     private void loadActivites() {
-        activiteFlowPane.getChildren().clear();
+        activiteGridPane.getChildren().clear();
         List<Activite> activites = serviceActivite.getAll();
         if (activites.isEmpty()) {
             showAlert("Information", "Aucune activité trouvée.");
         } else {
+            int row = 0, col = 0;
             for (Activite activite : activites) {
-                addActiviteCard(activite);
+                addActiviteCard(activite, row, col);
+                col++;
+                if (col > 2) { // 3 cartes par ligne
+                    col = 0;
+                    row++;
+                }
             }
         }
     }
 
-    private void addActiviteCard(Activite activite) {
+    private void addActiviteCard(Activite activite, int row, int col) {
         VBox card = new VBox(10);
         card.setPadding(new Insets(10));
-        card.setStyle("-fx-border-color: #cccccc; -fx-border-radius: 5; -fx-background-color: #f9f9f9;");
+        card.getStyleClass().add("card");
 
         Label nomLabel = new Label("Nom: " + activite.getNomActivite());
         Label descriptionLabel = new Label("Description: " + activite.getDescription());
@@ -83,44 +94,43 @@ public class activiteC implements Initializable {
         Button modifierButton = new Button("Modifier");
         Button supprimerButton = new Button("Supprimer");
 
+        // Ajouter des Tooltips
+        Tooltip.install(modifierButton, new Tooltip("Modifier cette activité"));
+        Tooltip.install(supprimerButton, new Tooltip("Supprimer cette activité"));
+
         modifierButton.setOnAction(event -> modifierActivite(activite));
         supprimerButton.setOnAction(event -> supprimerActivite(activite));
 
         HBox buttonsBox = new HBox(10, modifierButton, supprimerButton);
         card.getChildren().addAll(nomLabel, descriptionLabel, dateDebutLabel, dateFinLabel, buttonsBox);
 
-        activiteFlowPane.getChildren().add(card);
+        activiteGridPane.add(card, col, row);
     }
 
     @FXML
     void addActivite(ActionEvent event) {
-        // Vérifier que tous les champs obligatoires sont remplis
         if (nomActiviteInput.getText().isEmpty() || descriptionInput.getText().isEmpty() ||
                 dateDebutInput.getValue() == null || dateFinInput.getValue() == null) {
             showAlert("Erreur", "Veuillez remplir tous les champs.");
             return;
         }
 
+        if (dateDebutInput.getValue().isAfter(dateFinInput.getValue())) {
+            showAlert("Erreur", "La date de début doit être avant la date de fin.");
+            return;
+        }
+
         try {
-            // Créer une nouvelle activité
             Activite activite = new Activite();
             activite.setNomActivite(nomActiviteInput.getText());
             activite.setDescription(descriptionInput.getText());
             activite.setDateDebutA(Date.valueOf(dateDebutInput.getValue()));
             activite.setDateFinA(Date.valueOf(dateFinInput.getValue()));
 
-            // Ajouter l'activité (l'idEvent sera géré automatiquement dans le service)
             serviceActivite.add(activite);
-
-            // Recharger la liste des activités
             loadActivites();
-
-            // Réinitialiser les champs
-            nomActiviteInput.clear();
-            descriptionInput.clear();
-            dateDebutInput.setValue(null);
-            dateFinInput.setValue(null);
-
+            clearFields();
+            generateStatistics(); // Rafraîchir les statistiques
             showAlert("Succès", "Activité ajoutée avec succès.");
         } catch (Exception e) {
             showAlert("Erreur", "Une erreur s'est produite lors de l'ajout de l'activité.");
@@ -135,43 +145,32 @@ public class activiteC implements Initializable {
             return;
         }
 
-        // Vérifier que tous les champs obligatoires sont remplis
-        if (nomActiviteInput.getText().isEmpty() || descriptionInput.getText().isEmpty() || dateDebutInput.getValue() == null || dateFinInput.getValue() == null) {
+        if (nomActiviteInput.getText().isEmpty() || descriptionInput.getText().isEmpty() ||
+                dateDebutInput.getValue() == null || dateFinInput.getValue() == null) {
             showAlert("Erreur", "Veuillez remplir tous les champs.");
             return;
         }
 
-        try {
-            // Vérifier que la date de début est avant la date de fin
-            if (dateDebutInput.getValue().isAfter(dateFinInput.getValue())) {
-                showAlert("Erreur", "La date de début doit être avant la date de fin.");
-                return;
-            }
+        if (dateDebutInput.getValue().isAfter(dateFinInput.getValue())) {
+            showAlert("Erreur", "La date de début doit être avant la date de fin.");
+            return;
+        }
 
-            // Mettre à jour uniquement les champs modifiables (sans toucher à l'ID de l'événement)
+        try {
             selectedActivite.setNomActivite(nomActiviteInput.getText());
             selectedActivite.setDescription(descriptionInput.getText());
             selectedActivite.setDateDebutA(Date.valueOf(dateDebutInput.getValue()));
             selectedActivite.setDateFinA(Date.valueOf(dateFinInput.getValue()));
 
-            // Mettre à jour l'activité dans la base de données
             serviceActivite.update(selectedActivite, selectedActivite.getIdActivite());
-
-            // Recharger les cartes
             loadActivites();
-
-            // Réinitialiser les champs (sans toucher à idEventInput)
-            nomActiviteInput.clear();
-            descriptionInput.clear();
-            dateDebutInput.setValue(null);
-            dateFinInput.setValue(null);
-
+            clearFields();
+            generateStatistics(); // Rafraîchir les statistiques
             showAlert("Succès", "Activité mise à jour avec succès.");
         } catch (Exception e) {
             showAlert("Erreur", "Une erreur est survenue lors de la mise à jour.");
         }
     }
-
 
     @FXML
     void deleteActivite(ActionEvent event) {
@@ -182,84 +181,74 @@ public class activiteC implements Initializable {
 
         serviceActivite.delete(selectedActivite.getIdActivite());
         loadActivites();
-        showAlert("Succès", "Activité supprimée avec succès.");
-    }
-
-    private void modifierActivite(Activite activite) {
-        nomActiviteInput.setText(activite.getNomActivite());
-        descriptionInput.setText(activite.getDescription());
-        dateDebutInput.setValue(activite.getDateDebutA().toLocalDate());
-        dateFinInput.setValue(activite.getDateFinA().toLocalDate());
-        idEventInput.setText(String.valueOf(activite.getIdEvent()));
-        selectedActivite = activite;
-    }
-
-    private void supprimerActivite(Activite activite) {
-        if (activite == null) {
-            showAlert("Erreur", "Aucune activité sélectionnée.");
-            return;
-        }
-
-        serviceActivite.delete(activite.getIdActivite());
-        loadActivites();
+        generateStatistics(); // Rafraîchir les statistiques
         showAlert("Succès", "Activité supprimée avec succès.");
     }
 
     @FXML
     void searchActivite(ActionEvent event) {
         String searchText = searchInput.getText().trim();
+        String criteria = searchCriteriaComboBox.getValue();
+
         if (searchText.isEmpty()) {
             loadActivites();
             return;
         }
 
         List<Activite> activites = serviceActivite.getAll();
-        activiteFlowPane.getChildren().clear();
+        activiteGridPane.getChildren().clear();
+
+        boolean found = false;
 
         for (Activite activite : activites) {
-            if (String.valueOf(activite.getIdActivite()).contains(searchText) ||
-                    activite.getNomActivite().toLowerCase().contains(searchText.toLowerCase())) {
-                addActiviteCard(activite);
+            switch (criteria) {
+                case "Nom":
+                    if (activite.getNomActivite().toLowerCase().contains(searchText.toLowerCase())) {
+                        addActiviteCard(activite, 0, 0); // Ajouter dynamiquement
+                        found = true;
+                    }
+                    break;
+                case "Description":
+                    if (activite.getDescription().toLowerCase().contains(searchText.toLowerCase())) {
+                        addActiviteCard(activite, 0, 0);
+                        found = true;
+                    }
+                    break;
+                // Ajouter d'autres cas si nécessaire
             }
         }
+
+        if (!found) {
+            showAlert("Recherche", "Aucune activité trouvée pour : " + searchText);
+        }
     }
 
     @FXML
-    void filterActivite(ActionEvent event) {
-        String filterText = filterInput.getText().trim();
-        if (filterText.isEmpty()) {
-            loadActivites();
-            return;
+    void trierActivites(ActionEvent event) {
+        String criteria = sortCriteriaComboBox.getValue();
+        List<Activite> activites = serviceActivite.getAll();
+
+        switch (criteria) {
+            case "Nom":
+                activites.sort(Comparator.comparing(Activite::getNomActivite));
+                break;
+            case "Date Début":
+                activites.sort(Comparator.comparing(Activite::getDateDebutA));
+                break;
+            case "Date Fin":
+                activites.sort(Comparator.comparing(Activite::getDateFinA));
+                break;
         }
 
-        List<Activite> activites = serviceActivite.getAll();
-        activiteFlowPane.getChildren().clear();
-
+        activiteGridPane.getChildren().clear();
+        int row = 0, col = 0;
         for (Activite activite : activites) {
-            if (String.valueOf(activite.getIdActivite()).contains(filterText) ||
-                    activite.getNomActivite().toLowerCase().contains(filterText.toLowerCase())) {
-                addActiviteCard(activite);
+            addActiviteCard(activite, row, col);
+            col++;
+            if (col > 2) { // 3 cartes par ligne
+                col = 0;
+                row++;
             }
-        }
-    }
-
-    @FXML
-    void sortById(ActionEvent event) {
-        List<Activite> activites = serviceActivite.getAll();
-        activites.sort(Comparator.comparingInt(Activite::getIdActivite));
-        activiteFlowPane.getChildren().clear();
-        for (Activite activite : activites) {
-            addActiviteCard(activite);
-        }
-    }
-
-    @FXML
-    void sortByName(ActionEvent event) {
-        List<Activite> activites = serviceActivite.getAll();
-        activites.sort(Comparator.comparing(Activite::getNomActivite));
-        activiteFlowPane.getChildren().clear();
-        for (Activite activite : activites) {
-            addActiviteCard(activite);
         }
     }
 
@@ -267,7 +256,42 @@ public class activiteC implements Initializable {
     void refreshActivites(ActionEvent event) {
         loadActivites();
         searchInput.clear();
-        filterInput.clear();
+    }
+
+    @FXML
+    void retourner(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/tools1.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = (Stage) activiteGridPane.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("TravelPro");
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Erreur", "Impossible de charger l'interface d'accueil.");
+        }
+    }
+
+    private void modifierActivite(Activite activite) {
+        nomActiviteInput.setText(activite.getNomActivite());
+        descriptionInput.setText(activite.getDescription());
+        dateDebutInput.setValue(activite.getDateDebutA().toLocalDate());
+        dateFinInput.setValue(activite.getDateFinA().toLocalDate());
+        selectedActivite = activite;
+    }
+
+    private void supprimerActivite(Activite activite) {
+        serviceActivite.delete(activite.getIdActivite());
+        loadActivites();
+        generateStatistics(); // Rafraîchir les statistiques
+        showAlert("Succès", "Activité supprimée avec succès.");
+    }
+
+    private void clearFields() {
+        nomActiviteInput.clear();
+        descriptionInput.clear();
+        dateDebutInput.setValue(null);
+        dateFinInput.setValue(null);
     }
 
     private void showAlert(String title, String message) {
@@ -278,16 +302,36 @@ public class activiteC implements Initializable {
         alert.showAndWait();
     }
 
-    public void retourner(ActionEvent actionEvent) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/tools1.fxml"));
-            Parent root = fxmlLoader.load();
-            Stage stage = (Stage) dateDebutInput.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("travelPro");
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert("Erreur", "Impossible de charger l'interface d'ajout.");
-        }
+    private void generateStatistics() {
+        // Réinitialiser le graphique
+        activiteBarChart.getData().clear();
+
+        // Récupérer les activités
+        List<Activite> activites = serviceActivite.getAll();
+
+        // Compter le nombre d'activités par mois
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Nombre d'activités par mois");
+
+        activites.stream()
+                .collect(Collectors.groupingBy(
+                        activite -> activite.getDateDebutA().toLocalDate().getMonth().toString(),
+                        Collectors.counting()
+                ))
+                .forEach((month, count) -> series.getData().add(new XYChart.Data<>(month, count)));
+
+        // Ajouter les données au graphique
+        activiteBarChart.getData().add(series);
+
+        // Calculer la durée moyenne des activités
+        double averageDuration = calculateAverageDuration(activites);
+        averageDurationLabel.setText("Durée moyenne des activités : " + String.format("%.2f", averageDuration) + " jours");
+    }
+
+    private double calculateAverageDuration(List<Activite> activites) {
+        return activites.stream()
+                .mapToLong(activite -> activite.getDateFinA().getTime() - activite.getDateDebutA().getTime())
+                .average()
+                .orElse(0) / (1000 * 60 * 60 * 24); // Convertir en jours
     }
 }

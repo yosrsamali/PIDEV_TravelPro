@@ -25,14 +25,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import tn.esprit.models.evenement;
 import tn.esprit.services.ServiceEvenement;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Date;
@@ -192,6 +199,13 @@ public class evenementC implements Initializable {
     @FXML
     private TextField filterInput;
 
+    @FXML
+    private TextField locationField;
+    @FXML
+    private TextField latitudeField;
+    @FXML
+    private TextField longitudeField;
+
 
     @FXML
     private TextField typeEvent1;
@@ -344,6 +358,12 @@ public class evenementC implements Initializable {
         imageView.setFitWidth(80);
         imageView.setFitHeight(50);
 
+        // 📌 WebView pour afficher la carte du stade
+        WebView mapView = new WebView();
+        mapView.setPrefSize(250, 150); // Ajuster la taille de la carte
+        String mapUrl = "https://www.openstreetmap.org/#map=15/" + event.getLatitude() + "/" + event.getLongitude();
+        mapView.getEngine().load(mapUrl);
+
         HBox buttonsContainer = new HBox(10);
         buttonsContainer.setAlignment(Pos.CENTER_LEFT);
 
@@ -380,7 +400,7 @@ public class evenementC implements Initializable {
 
         buttonsContainer.getChildren().addAll(editButton,deleteButton);
 
-        card.getChildren().addAll( nameLabel, locationLabel, dateLabel, typeLabel, imageView, buttonsContainer);
+        card.getChildren().addAll( nameLabel, locationLabel, dateLabel, typeLabel, imageView,mapView, buttonsContainer);
         return card;
     }
 
@@ -510,7 +530,7 @@ public class evenementC implements Initializable {
         else {
             java.sql.Date datee = java.sql.Date.valueOf(dateEvent.getValue());
             java.sql.Date datee2 = java.sql.Date.valueOf(dateEventInput.getValue());
-            evenement e1 = new evenement(nomEventIInput.getText(),LieuIEventnput.getText(),datee,datee2, TypeEventInput.getText(),1,ImageEventInput.getText());
+            evenement e1 = new evenement(nomEventIInput.getText(),LieuIEventnput.getText(),datee,datee2, TypeEventInput.getText(),1,ImageEventInput.getText(),Float.parseFloat(latitudeField.getText()),Float.parseFloat(longitudeField.getText()));
             e.add(e1);
             nomEventIInput.clear();
             dateEvent.setValue(null);
@@ -690,6 +710,46 @@ public class evenementC implements Initializable {
         searchInput.clear(); // Vider le champ de recherche
         data(); // Recharger toutes les données
     }
+
+    @FXML
+    public void handleSearchLocation() {
+        String query = locationField.getText();
+        if (query.isEmpty()) return;
+
+        try {
+            String encodedQuery = URLEncoder.encode(query, "UTF-8");
+            String apiUrl = "https://nominatim.openstreetmap.org/search?format=json&q=" + encodedQuery;
+
+            URL url = new URL(apiUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("User-Agent", "GestionStade/1.0");
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+
+            JSONArray results = new JSONArray(response.toString());
+            if (results.length() > 0) {
+                JSONObject firstResult = results.getJSONObject(0);
+                double lat = firstResult.getDouble("lat");
+                double lon = firstResult.getDouble("lon");
+
+                latitudeField.setText(String.valueOf(lat));
+                longitudeField.setText(String.valueOf(lon));
+            } else {
+                latitudeField.setText("Non trouvé");
+                longitudeField.setText("Non trouvé");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 }

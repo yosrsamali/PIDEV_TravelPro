@@ -127,3 +127,17 @@
 .scroll-pane .viewport {
     -fx-background-color: transparent;
 }
+/* style.css */
+.card {
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5;
+    -fx-background-color: #f9f9f9;
+    -fx-padding: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 5);
+}
+
+
+.text-field, .text-area, .date-picker {
+    -fx-pref-width: 200;
+    -fx-pref-height: 30;
+}
