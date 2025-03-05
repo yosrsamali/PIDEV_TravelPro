@@ -79,19 +79,16 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
 
     @Override
     public void update(Utilisateur utilisateur) {
-        String qry = "UPDATE utilisateur SET nom_utilisateur=?, prenom=?, mail_utilisateur=?, mot_de_passe_utilisateur=?, role_utilisateur=? WHERE id_utilisateur=?";
+        String qry = "UPDATE utilisateur SET nom_utilisateur=?, prenom=?, mail_utilisateur=?, role_utilisateur=? WHERE id_utilisateur=?";
 
         try {
-            // Si le mot de passe est modifié, on le hache avant de le mettre à jour
-            String motDePasseHache = BCrypt.hashpw(utilisateur.getPassword(), BCrypt.gensalt());
 
             PreparedStatement pstm = cnx.prepareStatement(qry);
             pstm.setString(1, utilisateur.getNom());
             pstm.setString(2, utilisateur.getPrenom());
             pstm.setString(3, utilisateur.getMail());
-            pstm.setString(4, motDePasseHache); // Sauvegarde du mot de passe haché
-            pstm.setString(5, utilisateur.getRole());
-            pstm.setInt(6, utilisateur.getId());
+            pstm.setString(4, utilisateur.getRole());
+            pstm.setInt(5, utilisateur.getId());
 
             pstm.executeUpdate();
         } catch (SQLException e) {

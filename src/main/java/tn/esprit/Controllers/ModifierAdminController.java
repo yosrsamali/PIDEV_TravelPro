@@ -27,10 +27,7 @@ public class ModifierAdminController {
     private TextField tfPrenom;
     @FXML
     private TextField tfMail;
-    @FXML
-    private TextField tfPassword;
-    @FXML
-    private TextField tfRole;
+
 
     @FXML
     private Label lblNomError;
@@ -38,12 +35,7 @@ public class ModifierAdminController {
     private Label lblPrenomError;
     @FXML
     private Label lblMailError;
-    @FXML
-    private Label lblPasswordStrength;
-    @FXML
-    private Label lblPasswordError;
-    @FXML
-    private Label lblRoleError;
+
 
     private Admin admin;
     private Utilisateur utilisateur;
@@ -57,8 +49,6 @@ public class ModifierAdminController {
         tfNom.setText(utilisateur.getNom());
         tfPrenom.setText(utilisateur.getPrenom());
         tfMail.setText(utilisateur.getMail());
-        tfPassword.setText(utilisateur.getPassword());
-        tfRole.setText(utilisateur.getRole());
     }
 
     // Action de modification
@@ -76,8 +66,6 @@ public class ModifierAdminController {
         utilisateur.setNom(tfNom.getText());
         utilisateur.setPrenom(tfPrenom.getText());
         utilisateur.setMail(tfMail.getText());
-        utilisateur.setPassword(tfPassword.getText());
-        utilisateur.setRole(tfRole.getText());
 
         try {
             // Mise à jour dans la base de données
@@ -119,20 +107,8 @@ public class ModifierAdminController {
             isValid = false;
         }
 
-        // Validation du mot de passe
-        String password = tfPassword.getText();
-        if (!isValidPassword(password)) {
-            lblPasswordError.setText("Mot de passe trop faible");
-            isValid = false;
-        } else {
-            lblPasswordStrength.setText("Force: " + getPasswordStrength(password));
-        }
 
-        // Validation du rôle
-        if (tfRole.getText().isEmpty()) {
-            lblRoleError.setText("Rôle est requis");
-            isValid = false;
-        }
+
 
         return isValid;
     }
@@ -164,9 +140,6 @@ public class ModifierAdminController {
         lblNomError.setText("");
         lblPrenomError.setText("");
         lblMailError.setText("");
-        lblPasswordStrength.setText("");
-        lblPasswordError.setText("");
-        lblRoleError.setText("");
     }
 
     // Affichage des alertes

@@ -58,9 +58,9 @@
                <Label style="-fx-text-fill: #071952; -fx-font-size: 12px;" text="se connecter avec compte existant?" />
                <Hyperlink fx:id="Verconnecret" onAction="#Verconnecret" style="-fx-font-size: 12px;" text="se connecter" />
             </HBox>
-            <Label style="-fx-text-fill: #686D76; -fx-font-size: 12px;" text="Nous collectons vos informations afin de créer votre compte en toute sécurité et dans le strict respect des réglementations en vigueur à l’échelle mondiale." />
 
          </VBox>
       </StackPane>
+      <Label layoutX="573.0" layoutY="546.0" maxWidth="373.0" prefHeight="79.0" prefWidth="373.0" style="-fx-text-fill: #686D76; -fx-font-size: 12px; -fx-wrap-text: true;" text="Nous collectons vos informations afin de créer votre compte en toute sécurité et dans le strict respect des réglementations en vigueur à l’échelle mondiale." textAlignment="CENTER" />
    </children>
 </AnchorPane>

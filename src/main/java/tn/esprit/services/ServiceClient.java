@@ -34,7 +34,7 @@ public class ServiceClient implements IService<Client> {
                 }
             }
             System.out.println("Client ajouté avec succès !");
-            SmsService.sendSms("+216"+client.getNumTel(), "Votre code de vérification est : " + client.getCodeVerification());
+           // SmsService.sendSms("+216"+client.getNumTel(), "Votre code de vérification est : " + client.getCodeVerification());
 
         } catch (SQLException e) {
             System.out.println(" Erreur lors de l'ajout d'un client : " + e.getMessage());

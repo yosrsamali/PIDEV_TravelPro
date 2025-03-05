@@ -47,5 +47,8 @@
          <Label style="-fx-text-fill: #071952; -fx-font-size: 12px;" text="Pas de compte ?" />
          <Hyperlink onAction="#VerUser" style="-fx-font-size: 12px;" text="Créer un compte" />
       </HBox>
+
+
+
    </children>
 </AnchorPane>
