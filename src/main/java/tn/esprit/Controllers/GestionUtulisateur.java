@@ -17,16 +17,30 @@ import java.io.IOException;
 import java.util.Random;
 
 public class GestionUtulisateur {
+
     @FXML
     private TextField tfNom;
+
     @FXML
     private TextField tfPrenome;
+
     @FXML
     private TextField tfMail;
+
     @FXML
     private TextField tfPassword;
+
     @FXML
-    private Label lbUsers; // Assuming you have a label to display users
+    private Label lblNomError;
+
+    @FXML
+    private Label lblPrenomError;
+
+    @FXML
+    private Label lblMailError;
+
+    @FXML
+    private Label lblPasswordError;
 
     IService<Utilisateur> su = new ServiceUtilisateur();
 
@@ -41,6 +55,11 @@ public class GestionUtulisateur {
 
     @FXML
     private void goToNextScene(ActionEvent event) {
+        // Valider les champs avant de continuer
+        if (!validateFields()) {
+            return; // Arrêter l'exécution si la validation échoue
+        }
+
         try {
             // Récupérer les données saisies
             String nom = tfNom.getText();
@@ -89,5 +108,63 @@ public class GestionUtulisateur {
         stage.setScene(new Scene(root));
         stage.setTitle("Connexion"); // Titre de la nouvelle fenêtre
         stage.show();
+    }
+
+    /**
+     * Valide les champs du formulaire
+     */
+    private boolean validateFields() {
+        boolean isValid = true;
+
+        // Validation du nom
+        if (tfNom.getText().isEmpty()) {
+            lblNomError.setText("Nom est requis");
+            isValid = false;
+        } else if (!tfNom.getText().matches("[a-zA-Z]+")) {
+            lblNomError.setText("Le nom doit contenir uniquement des lettres");
+            isValid = false;
+        } else {
+            lblNomError.setText("");
+        }
+
+        // Validation du prénom
+        if (tfPrenome.getText().isEmpty()) {
+            lblPrenomError.setText("Prénom est requis");
+            isValid = false;
+        } else if (!tfPrenome.getText().matches("[a-zA-Z]+")) {
+            lblPrenomError.setText("Le prénom doit contenir uniquement des lettres");
+            isValid = false;
+        } else {
+            lblPrenomError.setText("");
+        }
+
+        // Validation de l'email
+        if (!isValidEmail(tfMail.getText())) {
+            lblMailError.setText("Email invalide");
+            isValid = false;
+        } else {
+            lblMailError.setText("");
+        }
+
+        // Validation du mot de passe
+        if (tfPassword.getText().isEmpty()) {
+            lblPasswordError.setText("Mot de passe est requis");
+            isValid = false;
+        } else if (tfPassword.getText().length() < 6) {
+            lblPasswordError.setText("Mot de passe trop faible (min. 6 caractères)");
+            isValid = false;
+        } else {
+            lblPasswordError.setText("");
+        }
+
+        return isValid;
+    }
+
+    /**
+     * Vérifie si l'email est valide
+     */
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return email.matches(emailRegex);
     }
 }

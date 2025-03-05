@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import tn.esprit.models.Admin;
@@ -15,6 +16,8 @@ import tn.esprit.services.ServiceAdmin;
 import tn.esprit.services.ServiceUtilisateur;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ModifierAdminController {
 
@@ -29,14 +32,24 @@ public class ModifierAdminController {
     @FXML
     private TextField tfRole;
 
+    @FXML
+    private Label lblNomError;
+    @FXML
+    private Label lblPrenomError;
+    @FXML
+    private Label lblMailError;
+    @FXML
+    private Label lblPasswordStrength;
+    @FXML
+    private Label lblPasswordError;
+    @FXML
+    private Label lblRoleError;
+
     private Admin admin;
     private Utilisateur utilisateur;
     private final ServiceUtilisateur serviceUtilisateur = new ServiceUtilisateur();
     private final ServiceAdmin serviceAdmin = new ServiceAdmin();
 
-    /**
-     * Pré-remplir les champs avec les données de l'admin.
-     */
     public void setAdminData(Admin admin, Utilisateur utilisateur) {
         this.admin = admin;
         this.utilisateur = utilisateur;
@@ -44,51 +57,119 @@ public class ModifierAdminController {
         tfNom.setText(utilisateur.getNom());
         tfPrenom.setText(utilisateur.getPrenom());
         tfMail.setText(utilisateur.getMail());
-        tfPassword.setText(utilisateur.getPassword()); // Assurez-vous de la gestion sécurisée des mots de passe
+        tfPassword.setText(utilisateur.getPassword());
         tfRole.setText(utilisateur.getRole());
     }
 
-    /**
-     * Méthode pour modifier les informations de l'admin.
-     */
+    // Action de modification
     @FXML
     private void handleModifier(ActionEvent event) {
-        if (admin == null || utilisateur == null) {
-            showAlert("Erreur", "Aucun administrateur sélectionné pour la modification.");
+        // Effacer les erreurs précédentes
+        clearErrorMessages();
+
+        // Validation des champs
+        if (!validateFields()) {
             return;
         }
 
-        // Mettre à jour les nouvelles valeurs
+        // Mettre à jour les données utilisateur
         utilisateur.setNom(tfNom.getText());
         utilisateur.setPrenom(tfPrenom.getText());
         utilisateur.setMail(tfMail.getText());
         utilisateur.setPassword(tfPassword.getText());
         utilisateur.setRole(tfRole.getText());
 
-        // Mise à jour dans la base de données
         try {
+            // Mise à jour dans la base de données
             serviceUtilisateur.update(utilisateur);
             serviceAdmin.update(admin);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/GereAdmin.fxml"));
             Parent root = loader.load();
             GereAdmin adminController = loader.getController();
-            //adminController.ajouterdonner(admin, utilisateur);
             showAlert("Succès", "Administrateur mis à jour avec succès !");
-
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Profil Administrateur");
             stage.show();
-
         } catch (Exception e) {
             showAlert("Erreur", "Une erreur est survenue lors de la mise à jour : " + e.getMessage());
         }
     }
 
-    /**
-     * Méthode pour afficher des alertes.
-     */
+    // Validation des champs
+    private boolean validateFields() {
+        boolean isValid = true;
+
+        // Validation du nom
+        if (tfNom.getText().isEmpty()) {
+            lblNomError.setText("Nom est requis");
+            isValid = false;
+        }
+
+        // Validation du prénom
+        if (tfPrenom.getText().isEmpty()) {
+            lblPrenomError.setText("Prénom est requis");
+            isValid = false;
+        }
+
+        // Validation de l'email
+        if (!isValidEmail(tfMail.getText())) {
+            lblMailError.setText("Email invalide");
+            isValid = false;
+        }
+
+        // Validation du mot de passe
+        String password = tfPassword.getText();
+        if (!isValidPassword(password)) {
+            lblPasswordError.setText("Mot de passe trop faible");
+            isValid = false;
+        } else {
+            lblPasswordStrength.setText("Force: " + getPasswordStrength(password));
+        }
+
+        // Validation du rôle
+        if (tfRole.getText().isEmpty()) {
+            lblRoleError.setText("Rôle est requis");
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    // Validation de l'email avec regex
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
+    // Vérification de la validité du mot de passe
+    private boolean isValidPassword(String password) {
+        return password.length() >= 6; // Mot de passe de base (min. 6 caractères)
+    }
+
+    // Vérification de la force du mot de passe
+    private String getPasswordStrength(String password) {
+        if (password.length() >= 8 && password.matches(".*[A-Z].*") && password.matches(".*[0-9].*")) {
+            return "Forte";
+        } else {
+            return "Faible";
+        }
+    }
+
+    // Effacer les messages d'erreur
+    private void clearErrorMessages() {
+        lblNomError.setText("");
+        lblPrenomError.setText("");
+        lblMailError.setText("");
+        lblPasswordStrength.setText("");
+        lblPasswordError.setText("");
+        lblRoleError.setText("");
+    }
+
+    // Affichage des alertes
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -97,9 +178,7 @@ public class ModifierAdminController {
         alert.showAndWait();
     }
 
-    /**
-     * Méthode pour retourner à l'interface utilisateur précédente.
-     */
+    // Retourner à la page précédente
     @FXML
     private void handleRetour(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/admin.fxml"));
