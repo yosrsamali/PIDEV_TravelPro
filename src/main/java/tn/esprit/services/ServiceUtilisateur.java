@@ -4,6 +4,7 @@ import tn.esprit.interfaces.IService;
 import tn.esprit.models.Utilisateur;
 import tn.esprit.utils.MyDatabase;
 import tn.esprit.utils.MailService;
+import org.mindrot.jbcrypt.BCrypt; // Import de BCrypt pour le hachage
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,20 +15,22 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
     public ServiceUtilisateur() {
         cnx = MyDatabase.getInstance().getCnx();
     }
+
     @Override
     public void add(Utilisateur utilisateur) {
+        // Hachage du mot de passe
+        String motDePasseHache = BCrypt.hashpw(utilisateur.getPassword(), BCrypt.gensalt());
 
-        String qry = "INSERT INTO `utilisateur`(`nom_utilisateur`, `prenom`, `mail_utilisateur`, `mot_de_passe_utilisateur`, `role_utilisateur`,`code_verification`) VALUES (?,?,?,?,?,?)";
+        String qry = "INSERT INTO `utilisateur`(`nom_utilisateur`, `prenom`, `mail_utilisateur`, `mot_de_passe_utilisateur`, `role_utilisateur`, `code_verification`) VALUES (?,?,?,?,?,?)";
         try {
             PreparedStatement pstm = cnx.prepareStatement(qry, Statement.RETURN_GENERATED_KEYS);
             pstm.setString(1, utilisateur.getNom());
             pstm.setString(2, utilisateur.getPrenom());
             pstm.setString(3, utilisateur.getMail());
-            pstm.setString(4, utilisateur.getPassword());
+            pstm.setString(4, motDePasseHache);  // Sauvegarde du mot de passe haché
 
             pstm.setString(5, utilisateur.getRole());
             pstm.setString(6, utilisateur.getCodeVerification());
-
 
             int rowsAffected = pstm.executeUpdate();
             if (rowsAffected > 0) {
@@ -38,46 +41,14 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
             }
             System.out.println("✅ Utilisateur ajouté avec succès !");
 
-
             String codeVerification = utilisateur.getCodeVerification(); // Générer le code
             String sujet = "Votre Code de Vérification";
             MailService.envoyerMail(utilisateur.getMail(), sujet, codeVerification);
-
-
 
         } catch (SQLException e) {
             System.out.println("❌ Erreur lors de l'ajout d'un utilisateur : " + e.getMessage());
         }
     }
-/*
-    @Override
-    public List<Utilisateur> getAll() {
-        List<Utilisateur> utilisateurs = new ArrayList<>();
-        String qry = "SELECT * FROM `utilisateur`";
-
-        try {
-            Statement stm = cnx.createStatement();
-            ResultSet rs = stm.executeQuery(qry);
-
-            while (rs.next()) {
-                Utilisateur u = new Utilisateur();
-                u.setId(rs.getInt("id_utilisateur "));
-                u.setNom(rs.getString("nom"));
-                u.setPrenom(rs.getString("prenom"));
-                u.setMail(rs.getString("mail"));
-                u.setPassword(rs.getString("password"));
-                u.setRole(rs.getString("role"));
-
-                utilisateurs.add(u);
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return utilisateurs;
-    }
-*/
-
 
     @Override
     public List<Utilisateur> getAll() {
@@ -90,11 +61,11 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
 
             while (rs.next()) {
                 Utilisateur u = new Utilisateur();
-                u.setId(rs.getInt("id_utilisateur")); // Fixed extra space
+                u.setId(rs.getInt("id_utilisateur"));
                 u.setNom(rs.getString("nom_utilisateur"));
                 u.setPrenom(rs.getString("prenom"));
                 u.setMail(rs.getString("mail_utilisateur"));
-                u.setPassword(rs.getString("mot_de_passe_utilisateur"));
+                u.setPassword(rs.getString("mot_de_passe_utilisateur")); // Mot de passe haché
                 u.setRole(rs.getString("role_utilisateur"));
 
                 utilisateurs.add(u);
@@ -106,16 +77,19 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
         return utilisateurs;
     }
 
-
     @Override
     public void update(Utilisateur utilisateur) {
         String qry = "UPDATE utilisateur SET nom_utilisateur=?, prenom=?, mail_utilisateur=?, mot_de_passe_utilisateur=?, role_utilisateur=? WHERE id_utilisateur=?";
+
         try {
+            // Si le mot de passe est modifié, on le hache avant de le mettre à jour
+            String motDePasseHache = BCrypt.hashpw(utilisateur.getPassword(), BCrypt.gensalt());
+
             PreparedStatement pstm = cnx.prepareStatement(qry);
             pstm.setString(1, utilisateur.getNom());
             pstm.setString(2, utilisateur.getPrenom());
             pstm.setString(3, utilisateur.getMail());
-            pstm.setString(4, utilisateur.getPassword());
+            pstm.setString(4, motDePasseHache); // Sauvegarde du mot de passe haché
             pstm.setString(5, utilisateur.getRole());
             pstm.setInt(6, utilisateur.getId());
 
@@ -138,32 +112,37 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
         }
     }
 
-
     public Utilisateur getByMailAndPassword(String mail, String password) {
         Utilisateur utilisateur = null;
-        String qry = "SELECT * FROM utilisateur WHERE mail_utilisateur = ? AND mot_de_passe_utilisateur = ?";
+        String qry = "SELECT * FROM utilisateur WHERE mail_utilisateur = ?";
 
         try {
             PreparedStatement pst = cnx.prepareStatement(qry);
             pst.setString(1, mail);
-            pst.setString(2, password);
 
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
-                utilisateur = new Utilisateur();
-                utilisateur.setId(rs.getInt("id_utilisateur"));
-                utilisateur.setNom(rs.getString("nom_utilisateur"));
-                utilisateur.setPrenom(rs.getString("prenom"));
-                utilisateur.setMail(rs.getString("mail_utilisateur"));
-                utilisateur.setPassword(rs.getString("mot_de_passe_utilisateur"));
-                utilisateur.setRole(rs.getString("role_utilisateur"));
+                String motDePasseHache = rs.getString("mot_de_passe_utilisateur");
+
+                // Vérification du mot de passe
+                if (BCrypt.checkpw(password, motDePasseHache)) {
+                    utilisateur = new Utilisateur();
+                    utilisateur.setId(rs.getInt("id_utilisateur"));
+                    utilisateur.setNom(rs.getString("nom_utilisateur"));
+                    utilisateur.setPrenom(rs.getString("prenom"));
+                    utilisateur.setMail(rs.getString("mail_utilisateur"));
+                    utilisateur.setPassword(rs.getString("mot_de_passe_utilisateur"));
+                    utilisateur.setRole(rs.getString("role_utilisateur"));
+                } else {
+                    System.out.println("❌ Mot de passe incorrect");
+                }
             }
         } catch (SQLException e) {
             System.out.println("Error fetching user: " + e.getMessage());
         }
 
-        return utilisateur; // Retourne null si aucun utilisateur n'est trouvé
+        return utilisateur; // Retourne null si aucun utilisateur n'est trouvé ou si le mot de passe ne correspond pas
     }
 
     public Utilisateur getById(int id) {
@@ -192,6 +171,7 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
         return utilisateur; // Retourne null si aucun utilisateur n'est trouvé
     }
 
+    // ... (le reste des méthodes inchangées)
 
     public List<Utilisateur> getAllAdmin() {
         List<Utilisateur> admins = new ArrayList<>();
@@ -203,12 +183,12 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
 
             while (rs.next()) {
                 Utilisateur admin = new Utilisateur();
-                admin.setId(rs.getInt("id_utilisateur "));
-                admin.setNom(rs.getString("nom"));
+                admin.setId(rs.getInt("id_utilisateur"));
+                admin.setNom(rs.getString("nom_utilisateur"));
                 admin.setPrenom(rs.getString("prenom"));
-                admin.setMail(rs.getString("mail"));
-                admin.setPassword(rs.getString("password"));
-                admin.setRole(rs.getString("role"));
+                admin.setMail(rs.getString("mail_utilisateur"));
+                admin.setPassword(rs.getString("mot_de_passe_utilisateur"));
+                admin.setRole(rs.getString("role_utilisateur"));
 
                 admins.add(admin);
             }
@@ -229,12 +209,12 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
 
             while (rs.next()) {
                 Utilisateur utilisateur = new Utilisateur();
-                utilisateur.setId(rs.getInt("id_utilisateur "));
-                utilisateur.setNom(rs.getString("nom"));
+                utilisateur.setId(rs.getInt("id_utilisateur"));
+                utilisateur.setNom(rs.getString("nom_utilisateur"));
                 utilisateur.setPrenom(rs.getString("prenom"));
-                utilisateur.setMail(rs.getString("mail"));
-                utilisateur.setPassword(rs.getString("password"));
-                utilisateur.setRole(rs.getString("role"));
+                utilisateur.setMail(rs.getString("mail_utilisateur"));
+                utilisateur.setPassword(rs.getString("mot_de_passe_utilisateur"));
+                utilisateur.setRole(rs.getString("role_utilisateur"));
 
                 clients.add(utilisateur);
             }
@@ -258,7 +238,4 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
             System.out.println("❌ Erreur lors de la mise à jour de l'état : " + e.getMessage());
         }
     }
-
-
-
 }
