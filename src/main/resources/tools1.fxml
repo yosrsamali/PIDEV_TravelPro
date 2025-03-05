@@ -22,7 +22,7 @@
          <children>
              <HBox spacing="10">
                  <TextField fx:id="searchInput" promptText="Rechercher par nom ou ID" />
-                 <Button onAction="#searchEvenement" text="Rechercher" />
+
                  <Button onAction="#refreshEvenements" text="Rafraîchir" />
              </HBox>
 

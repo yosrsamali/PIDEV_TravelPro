@@ -310,6 +310,7 @@ public class evenementC implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         data();
         // Set the default page visible at startup
+        setupDynamicSearch();
         EventsInterface.setVisible(true);
         AddEventPage.setVisible(false);
         ParticipantsPage.setVisible(false);
@@ -364,6 +365,7 @@ public class evenementC implements Initializable {
         // Bouton "Voir la carte"
         Button viewMapButton = new Button("Voir la carte");
         viewMapButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+        System.out.println(event.getLatitude()+""+event.getLongitude());
         viewMapButton.setOnAction(e -> openMapWindow(event.getLatitude(), event.getLongitude()));
 
         HBox buttonsContainer = new HBox(10);
@@ -649,32 +651,43 @@ public class evenementC implements Initializable {
         }
 
     }
-    @FXML
-    void searchEvenement(ActionEvent event) {
-        String searchText = searchInput.getText().trim().toLowerCase();
+    private void setupDynamicSearch() {
+        // Créer une ObservableList à partir de la liste des événements
+        ObservableList<evenement> observableList = FXCollections.observableArrayList(e.getAll());
 
-        if (searchText.isEmpty()) {
-            data(); // Recharger toutes les données si le champ de recherche est vide
-            return;
-        }
+        // Créer une FilteredList pour filtrer les événements
+        FilteredList<evenement> filteredData = new FilteredList<>(observableList, b -> true);
 
-        // Filtrer les événements
-        FilteredList<evenement> filteredData = new FilteredList<>(FXCollections.observableArrayList(e.getAll()), b -> true);
-        filteredData.setPredicate(evt -> {
-            if (searchText == null || searchText.isEmpty()) {
-                return true; // Afficher tous les événements si le champ de recherche est vide
-            }
+        // Lier le champ de recherche à la FilteredList
+        searchInput.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(evt -> {
+                // Si le champ de recherche est vide, afficher tous les événements
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
 
-            // Vérifier si le nom ou l'ID correspond
-            String lowerCaseFilter = searchText.toLowerCase();
-            return evt.getNomEvent().toLowerCase().contains(lowerCaseFilter)
-                    || String.valueOf(evt.getIdEvent()).contains(lowerCaseFilter);
+                // Convertir le texte de recherche en minuscules pour une recherche insensible à la casse
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                // Vérifier si le nom ou l'ID de l'événement correspond au texte de recherche
+                return evt.getNomEvent().toLowerCase().contains(lowerCaseFilter)
+                        || String.valueOf(evt.getIdEvent()).contains(lowerCaseFilter);
+            });
+
+            // Mettre à jour l'affichage avec les résultats filtrés
+            updateEventCards(filteredData);
         });
 
-        // Mettre à jour eventsVBox avec les résultats filtrés
+        // Afficher les événements filtrés
+        updateEventCards(filteredData);
+    }
+    private void updateEventCards(FilteredList<evenement> filteredData) {
+        // Effacer les cartes existantes
         eventsVBox.getChildren().clear();
-        for (evenement evt : filteredData) {
-            VBox eventCard = createEventCard(evt);
+
+        // Ajouter les cartes des événements filtrés
+        for (evenement event : filteredData) {
+            VBox eventCard = createEventCard(event);
             eventsVBox.getChildren().add(eventCard);
         }
     }
@@ -752,8 +765,7 @@ public class evenementC implements Initializable {
     }
     private void openMapWindow(double latitude, double longitude) {
         // Coordonnées de la Tour Eiffel pour tester
-        latitude = 25.074281692504883;
-        longitude = 55.18853759765625;
+
 
         System.out.println("Latitude: " + latitude + ", Longitude: " + longitude);
 

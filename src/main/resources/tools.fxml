@@ -19,10 +19,8 @@
 
     <!-- Barre de recherche et filtrage -->
     <HBox spacing="10">
-        <Label text="Rechercher par:" />
-        <ComboBox fx:id="searchCriteriaComboBox" promptText="Critère de recherche" />
         <TextField fx:id="searchInput" promptText="Entrez votre recherche" />
-        <Button onAction="#searchActivite" text="Rechercher" />
+
     </HBox>
 
     <!-- Barre de tri -->

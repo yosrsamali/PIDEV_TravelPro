@@ -85,6 +85,9 @@ public class ServiceEvenement implements IService {
                 se.setType(rs.getString("type"));
                 se.setIdReservation(rs.getInt("idReservation"));
                 se.setImage(rs.getString("image"));
+                se.setLatitude(rs.getDouble("latitude"));
+                se.setLongitude(rs.getDouble("longitude"));
+
                 evenements.add(se);
 
             }
@@ -159,6 +162,7 @@ public class ServiceEvenement implements IService {
                         rs.getString("type"),
                         rs.getString("image"),
                         rs.getInt("idReservation")
+
                 );
             } else {
                 System.out.println("⚠ Aucun événement trouvé avec l'ID " + id);

@@ -15,6 +15,7 @@ public class evenement {
     private double longitude;
 
 
+
     public evenement() {}
 
     public evenement(String nomEvent, String lieu, Date dateDebutE, Date dateFinE, String type, int idReservation,String image, double latitude, double longitude) {
@@ -27,6 +28,7 @@ public class evenement {
         this.image = image;
         this.latitude = latitude;
         this.longitude = longitude;
+
     }
     public evenement(String nomEvent, String lieu, Date dateDebutE, Date dateFinE, String type,String image) {
         this.nomEvent = nomEvent;
@@ -38,7 +40,7 @@ public class evenement {
 
     }
 
-    public evenement(int idEvent, String nomEvent, String lieu, Date dateDebutE, Date dateFinE, String type,String image,int idReservation) {
+    public evenement(int idEvent, String nomEvent, String lieu, Date dateDebutE, Date dateFinE, String type,String image, int idReservation) {
         this.idEvent = idEvent;
         this.nomEvent = nomEvent;
         this.idReservation = idReservation;
@@ -47,6 +49,7 @@ public class evenement {
         this.dateFinE = dateFinE;
         this.dateDebutE = dateDebutE;
         this.lieu = lieu;
+
     }
 
     public int getIdEvent() { return idEvent; }
@@ -78,6 +81,8 @@ public class evenement {
 
     public double getLongitude() { return longitude; }
     public void setLongitude(double longitude) { this.longitude = longitude; }
+
+
 
     @Override
     public String toString() {

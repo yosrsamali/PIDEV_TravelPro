@@ -1,6 +1,8 @@
 package tn.esprit.controller;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +20,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import tn.esprit.models.Activite;
+import tn.esprit.models.evenement;
 import tn.esprit.services.ServiceActivite;
 
 import java.io.IOException;
@@ -50,15 +53,13 @@ public class activiteC implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Initialiser les ComboBox
-        searchCriteriaComboBox.setItems(FXCollections.observableArrayList("Nom", "Description", "Date Début", "Date Fin"));
-        searchCriteriaComboBox.getSelectionModel().selectFirst();
 
-        sortCriteriaComboBox.setItems(FXCollections.observableArrayList("Nom", "Date Début", "Date Fin"));
-        sortCriteriaComboBox.getSelectionModel().selectFirst();
 
         // Charger les activités
         loadActivites();
-
+        setupDynamicSearch();
+        sortCriteriaComboBox.setItems(FXCollections.observableArrayList("Nom", "Date Début", "Date Fin"));
+        sortCriteriaComboBox.getSelectionModel().selectFirst();
         // Générer les statistiques
 
     }
@@ -185,43 +186,7 @@ public class activiteC implements Initializable {
         showAlert("Succès", "Activité supprimée avec succès.");
     }
 
-    @FXML
-    void searchActivite(ActionEvent event) {
-        String searchText = searchInput.getText().trim();
-        String criteria = searchCriteriaComboBox.getValue();
 
-        if (searchText.isEmpty()) {
-            loadActivites();
-            return;
-        }
-
-        List<Activite> activites = serviceActivite.getAll();
-        activiteGridPane.getChildren().clear();
-
-        boolean found = false;
-
-        for (Activite activite : activites) {
-            switch (criteria) {
-                case "Nom":
-                    if (activite.getNomActivite().toLowerCase().contains(searchText.toLowerCase())) {
-                        addActiviteCard(activite, 0, 0); // Ajouter dynamiquement
-                        found = true;
-                    }
-                    break;
-                case "Description":
-                    if (activite.getDescription().toLowerCase().contains(searchText.toLowerCase())) {
-                        addActiviteCard(activite, 0, 0);
-                        found = true;
-                    }
-                    break;
-                // Ajouter d'autres cas si nécessaire
-            }
-        }
-
-        if (!found) {
-            showAlert("Recherche", "Aucune activité trouvée pour : " + searchText);
-        }
-    }
 
     @FXML
     void trierActivites(ActionEvent event) {
@@ -315,6 +280,51 @@ public class activiteC implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
             showAlert("Erreur", "Impossible de charger la fenêtre des statistiques.");
+        }
+    }
+    private void setupDynamicSearch() {
+        // Créer une ObservableList à partir de la liste des événements
+        ObservableList<Activite> observableList = FXCollections.observableArrayList(serviceActivite.getAll());
+
+        // Créer une FilteredList pour filtrer les événements
+        FilteredList<Activite> filteredData = new FilteredList<>(observableList, b -> true);
+
+        // Lier le champ de recherche à la FilteredList
+        searchInput.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(evt -> {
+                // Si le champ de recherche est vide, afficher tous les événements
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Convertir le texte de recherche en minuscules pour une recherche insensible à la casse
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                // Vérifier si le nom ou l'ID de l'événement correspond au texte de recherche
+                return evt.getNomActivite().toLowerCase().contains(lowerCaseFilter)
+                        || String.valueOf(evt.getDescription()).contains(lowerCaseFilter);
+            });
+
+            // Mettre à jour l'affichage avec les résultats filtrés
+            updateActiviteCards(filteredData);
+        });
+
+        // Afficher les événements filtrés
+        updateActiviteCards(filteredData);
+    }
+    private void updateActiviteCards(FilteredList<Activite> filteredData) {
+        // Effacer les cartes existantes
+        activiteGridPane.getChildren().clear();
+
+        // Ajouter les cartes des activités filtrées
+        int row = 0, col = 0;
+        for (Activite activite : filteredData) {
+            addActiviteCard(activite, row, col);
+            col++;
+            if (col > 2) { // 3 cartes par ligne
+                col = 0;
+                row++;
+            }
         }
     }
 
