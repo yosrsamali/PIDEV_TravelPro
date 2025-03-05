@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="10" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.StatsEvenementController">
+    <Label text="Statistiques des Événements" style="-fx-font-size: 16; -fx-font-weight: bold;" />
+
+    <!-- Histogramme des événements par mois -->
+    <BarChart fx:id="evenementBarChart">
+        <xAxis>
+            <CategoryAxis fx:id="xAxis" label="Mois" />
+        </xAxis>
+        <yAxis>
+            <NumberAxis fx:id="yAxis" label="Nombre d'événements" />
+        </yAxis>
+    </BarChart>
+
+    <!-- Camembert des types d'événements -->
+    <PieChart fx:id="evenementPieChart" />
+
+    <!-- Labels pour les statistiques avancées -->
+    <Label fx:id="mostPopularEventLabel" style="-fx-font-size: 14;" />
+    <Label fx:id="averageDurationLabel" style="-fx-font-size: 14;" />
+</VBox>

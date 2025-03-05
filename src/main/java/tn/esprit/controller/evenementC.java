@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
@@ -46,6 +47,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import org.controlsfx.control.Notifications;
+import javafx.scene.layout.StackPane;
+import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 
 
 public class evenementC implements Initializable {
@@ -321,10 +325,7 @@ public class evenementC implements Initializable {
         VBox card = new VBox(5);
         card.setStyle("-fx-background-color: #F4F4F4; -fx-padding: 10px; -fx-border-radius: 10px; -fx-border-color: #CCC;");
         card.setAlignment(Pos.CENTER_LEFT);
-/*
-        Label idLabel = new Label("ID: " + event.getIdEvent());
-        idLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
-*/
+
         Label nameLabel = new Label("Nom: " + event.getNomEvent());
         nameLabel.setStyle("-fx-font-size: 14px;");
 
@@ -336,13 +337,13 @@ public class evenementC implements Initializable {
 
         Label typeLabel = new Label("Type: " + event.getType());
         typeLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #555;");
-        System.out.println(event.getImage());
+
         ImageView imageView = new ImageView();
         if (event.getImage() != null && !event.getImage().isEmpty()) {
             try {
                 File file = new File(event.getImage());
                 if (file.exists()) {
-                    Image image = new Image(file.toURI().toString()); // Convertir chemin local en URL valide
+                    Image image = new Image(file.toURI().toString());
                     imageView.setImage(image);
                 } else {
                     System.out.println("⚠ Fichier image introuvable: " + event.getImage());
@@ -358,11 +359,12 @@ public class evenementC implements Initializable {
         imageView.setFitWidth(80);
         imageView.setFitHeight(50);
 
-        // 📌 WebView pour afficher la carte du stade
-        WebView mapView = new WebView();
-        mapView.setPrefSize(250, 150); // Ajuster la taille de la carte
-        String mapUrl = "https://www.openstreetmap.org/#map=15/" + event.getLatitude() + "/" + event.getLongitude();
-        mapView.getEngine().load(mapUrl);
+
+
+        // Bouton "Voir la carte"
+        Button viewMapButton = new Button("Voir la carte");
+        viewMapButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+        viewMapButton.setOnAction(e -> openMapWindow(event.getLatitude(), event.getLongitude()));
 
         HBox buttonsContainer = new HBox(10);
         buttonsContainer.setAlignment(Pos.CENTER_LEFT);
@@ -376,7 +378,7 @@ public class evenementC implements Initializable {
                     .text("L'événement a été supprimé avec succès")
                     .position(Pos.BOTTOM_RIGHT)
                     .showConfirm();
-            data(); // Refresh list after deletion
+            data(); // Rafraîchir la liste après la suppression
         });
 
         Button editButton = new Button("Edit");
@@ -389,7 +391,7 @@ public class evenementC implements Initializable {
             dateEventInput.setValue(event.getDateDebutE().toLocalDate());
             dateEvent.setValue(event.getDateFinE().toLocalDate());
             ImageEventInput.setText(event.getImage());
-            i=event.getIdEvent();
+            i = event.getIdEvent();
             EventsInterface.setVisible(false);
             AddEventPage.setVisible(false);
             ParticipantsPage.setVisible(false);
@@ -397,10 +399,9 @@ public class evenementC implements Initializable {
             UpdateEventPage.setVisible(true);
         });
 
+        buttonsContainer.getChildren().addAll(editButton, deleteButton, viewMapButton);
 
-        buttonsContainer.getChildren().addAll(editButton,deleteButton);
-
-        card.getChildren().addAll( nameLabel, locationLabel, dateLabel, typeLabel, imageView,mapView, buttonsContainer);
+        card.getChildren().addAll(nameLabel, locationLabel, dateLabel, typeLabel, imageView, buttonsContainer);
         return card;
     }
 
@@ -749,6 +750,53 @@ public class evenementC implements Initializable {
             e.printStackTrace();
         }
     }
+    private void openMapWindow(double latitude, double longitude) {
+        // Coordonnées de la Tour Eiffel pour tester
+        latitude = 25.074281692504883;
+        longitude = 55.18853759765625;
+
+        System.out.println("Latitude: " + latitude + ", Longitude: " + longitude);
+
+        try {
+            Stage mapStage = new Stage();
+            mapStage.setTitle("Carte de l'événement");
+
+            WebView webView = new WebView();
+            webView.setPrefSize(600, 400);
+
+            String mapUrl = "https://www.openstreetmap.org/export/embed.html?bbox=" +
+                    (longitude - 0.01) + "%2C" + (latitude - 0.01) + "%2C" +
+                    (longitude + 0.01) + "%2C" + (latitude + 0.01) + "&amp;layer=mapnik";
+            webView.getEngine().load(mapUrl);
+
+            Scene scene = new Scene(new StackPane(webView));
+            mapStage.setScene(scene);
+            mapStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Erreur", "Impossible d'ouvrir la carte.");
+        }
+    }
+
+    private void showAlert(String erreur, String s) {
+    }
+
+    @FXML
+    void ouvrirStatistiques(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/statistiquesEvenement.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Statistiques des Événements");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Erreur", "Impossible de charger la fenêtre des statistiques.");
+        }
+    }
+
 
 
 

@@ -80,4 +80,6 @@ public class Activite {
                 ", idEvent=" + idEvent +
                 '}';
     }
+
+
 }

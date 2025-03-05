@@ -60,7 +60,7 @@ public class activiteC implements Initializable {
         loadActivites();
 
         // Générer les statistiques
-        generateStatistics();
+
     }
 
     private void loadActivites() {
@@ -130,7 +130,7 @@ public class activiteC implements Initializable {
             serviceActivite.add(activite);
             loadActivites();
             clearFields();
-            generateStatistics(); // Rafraîchir les statistiques
+
             showAlert("Succès", "Activité ajoutée avec succès.");
         } catch (Exception e) {
             showAlert("Erreur", "Une erreur s'est produite lors de l'ajout de l'activité.");
@@ -165,7 +165,7 @@ public class activiteC implements Initializable {
             serviceActivite.update(selectedActivite, selectedActivite.getIdActivite());
             loadActivites();
             clearFields();
-            generateStatistics(); // Rafraîchir les statistiques
+             // Rafraîchir les statistiques
             showAlert("Succès", "Activité mise à jour avec succès.");
         } catch (Exception e) {
             showAlert("Erreur", "Une erreur est survenue lors de la mise à jour.");
@@ -181,7 +181,7 @@ public class activiteC implements Initializable {
 
         serviceActivite.delete(selectedActivite.getIdActivite());
         loadActivites();
-        generateStatistics(); // Rafraîchir les statistiques
+         // Rafraîchir les statistiques
         showAlert("Succès", "Activité supprimée avec succès.");
     }
 
@@ -283,7 +283,7 @@ public class activiteC implements Initializable {
     private void supprimerActivite(Activite activite) {
         serviceActivite.delete(activite.getIdActivite());
         loadActivites();
-        generateStatistics(); // Rafraîchir les statistiques
+
         showAlert("Succès", "Activité supprimée avec succès.");
     }
 
@@ -302,36 +302,24 @@ public class activiteC implements Initializable {
         alert.showAndWait();
     }
 
-    private void generateStatistics() {
-        // Réinitialiser le graphique
-        activiteBarChart.getData().clear();
+    @FXML
+    void ouvrirStatistiques(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/statistiques.fxml"));
+            Parent root = fxmlLoader.load();
 
-        // Récupérer les activités
-        List<Activite> activites = serviceActivite.getAll();
-
-        // Compter le nombre d'activités par mois
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("Nombre d'activités par mois");
-
-        activites.stream()
-                .collect(Collectors.groupingBy(
-                        activite -> activite.getDateDebutA().toLocalDate().getMonth().toString(),
-                        Collectors.counting()
-                ))
-                .forEach((month, count) -> series.getData().add(new XYChart.Data<>(month, count)));
-
-        // Ajouter les données au graphique
-        activiteBarChart.getData().add(series);
-
-        // Calculer la durée moyenne des activités
-        double averageDuration = calculateAverageDuration(activites);
-        averageDurationLabel.setText("Durée moyenne des activités : " + String.format("%.2f", averageDuration) + " jours");
+            Stage stage = new Stage();
+            stage.setTitle("Statistiques des Activités");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Erreur", "Impossible de charger la fenêtre des statistiques.");
+        }
     }
 
-    private double calculateAverageDuration(List<Activite> activites) {
-        return activites.stream()
-                .mapToLong(activite -> activite.getDateFinA().getTime() - activite.getDateDebutA().getTime())
-                .average()
-                .orElse(0) / (1000 * 60 * 60 * 24); // Convertir en jours
-    }
+
+
+
+
 }

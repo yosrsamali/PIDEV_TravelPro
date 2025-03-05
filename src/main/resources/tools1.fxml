@@ -23,7 +23,6 @@
              <HBox spacing="10">
                  <TextField fx:id="searchInput" promptText="Rechercher par nom ou ID" />
                  <Button onAction="#searchEvenement" text="Rechercher" />
-
                  <Button onAction="#refreshEvenements" text="Rafraîchir" />
              </HBox>
 
@@ -48,15 +47,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button layoutX="855.0" layoutY="-24.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#goToParticipantPage" prefHeight="46.0" prefWidth="187.0" styleClass="UpperSectionBtn" stylesheets="@css/product.css" text="Participants">
-                     <graphic>
-                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@icons/participants.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
+                    <Button layoutX="851.0" layoutY="-26.0" onAction="#ouvrirStatistiques" prefHeight="42.0" prefWidth="179.0" text="Voir Statistiques" />
                </children>
             </Pane>
              <Pane fx:id="ListContainer" prefHeight="200.0" prefWidth="1271.0">
@@ -128,9 +119,9 @@
                    <HBox spacing="10" styleClass="input-field">
                        <children>
                            <TextField fx:id="locationField" promptText="Rechercher un emplacement" />
-                           <Button text="Rechercher" onAction="#handleSearchLocation"/>
-                           <TextField fx:id="latitudeField" promptText="Latitude" editable="false"/>
-                           <TextField fx:id="longitudeField" promptText="Longitude" editable="false"/>
+                           <Button onAction="#handleSearchLocation" text="Rechercher" />
+                           <TextField fx:id="latitudeField" editable="false" promptText="Latitude" />
+                           <TextField fx:id="longitudeField" editable="false" promptText="Longitude" />
                        </children>
                    </HBox>
                   <HBox id="submitField" prefHeight="60.0" prefWidth="1290.0">

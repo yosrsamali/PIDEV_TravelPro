@@ -11,9 +11,6 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.chart.BarChart?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.NumberAxis?>
 
 <VBox prefHeight="807.0" prefWidth="1109.0" spacing="10" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.activiteC">
     <padding>
@@ -72,19 +69,12 @@
         <Button onAction="#updateActivite" text="Modifier" />
         <Button onAction="#refreshActivites" text="Rafraîchir" />
         <Button onAction="#retourner" text="Retourner" />
+        <Button onAction="#ouvrirStatistiques" text="Voir Statistiques" />
+
     </HBox>
 
     <!-- Graphique des statistiques -->
     <VBox spacing="10">
-        <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Statistiques des activités" />
-        <BarChart fx:id="activiteBarChart">
-            <xAxis>
-                <CategoryAxis fx:id="xAxis" label="Mois" />
-            </xAxis>
-            <yAxis>
-                <NumberAxis fx:id="yAxis" label="Nombre d'activités" />
-            </yAxis>
-        </BarChart>
         <Label fx:id="averageDurationLabel" style="-fx-font-size: 14;" />
     </VBox>
 </VBox>
