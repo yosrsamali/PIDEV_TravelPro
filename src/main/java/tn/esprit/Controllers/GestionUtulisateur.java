@@ -3,7 +3,10 @@ package tn.esprit.Controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import tn.esprit.interfaces.IService;
 import tn.esprit.models.Utilisateur;
 import tn.esprit.services.ServiceUtilisateur;
@@ -28,7 +31,7 @@ public class GestionUtulisateur {
     private TextField tfMail;
 
     @FXML
-    private TextField tfPassword;
+    private PasswordField tfPassword;
 
     @FXML
     private Label lblNomError;
@@ -41,6 +44,34 @@ public class GestionUtulisateur {
 
     @FXML
     private Label lblPasswordError;
+
+    @FXML
+    private ImageView eyeIcon;
+
+    private boolean isPasswordVisible = false;
+
+    // Champ pour afficher le mot de passe en texte clair
+    @FXML
+    private TextField tfPasswordPlain;
+
+    // Méthode pour basculer la visibilité du mot de passe
+    @FXML
+    private void togglePasswordVisibility() {
+        if (isPasswordVisible) {
+            // Masquer le mot de passe et afficher le champ masqué
+            tfPassword.setText(tfPasswordPlain.getText());
+            tfPassword.setVisible(true);
+            tfPasswordPlain.setVisible(false);
+            eyeIcon.setImage(new Image("images/22249-200.png")); // Icône de l'œil fermé
+        } else {
+            // Afficher le mot de passe en texte clair
+            tfPasswordPlain.setText(tfPassword.getText());
+            tfPassword.setVisible(false);
+            tfPasswordPlain.setVisible(true);
+            eyeIcon.setImage(new Image("images/eye_icon.png")); // Icône de l'œil ouvert
+        }
+        isPasswordVisible = !isPasswordVisible;
+    }
 
     IService<Utilisateur> su = new ServiceUtilisateur();
 

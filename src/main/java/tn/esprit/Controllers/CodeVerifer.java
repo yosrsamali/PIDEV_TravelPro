@@ -90,4 +90,17 @@ public class CodeVerifer {
             e.printStackTrace();
         }
     }
+
+
+    @FXML
+    private void VerUser(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/user.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Utilisateur");
+        stage.show();
+    }
+
 }

@@ -15,7 +15,7 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 5);
 }
 
-/* ---- Champs de texte ---- */
+/* ---- Champs de texte (TextField) ---- */
 .text-field {
     -fx-background-color: #ffffff;
     -fx-border-color: #37B7C3;
@@ -26,6 +26,21 @@
 }
 
 .text-field:focused {
+    -fx-border-color: #088395;
+    -fx-background-color: #FFFFFF;
+}
+
+/* ---- Champs de mot de passe (PasswordField) ---- */
+.password-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #37B7C3;
+    -fx-border-radius: 20px;
+    -fx-padding: 12px;
+    -fx-text-fill: #071952;
+    -fx-font-size: 14px;
+}
+
+.password-field:focused {
     -fx-border-color: #088395;
     -fx-background-color: #FFFFFF;
 }

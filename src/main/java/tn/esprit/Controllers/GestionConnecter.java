@@ -6,9 +6,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 import tn.esprit.models.Admin;
 import tn.esprit.models.Client;
 import tn.esprit.models.Utilisateur;
@@ -24,11 +28,37 @@ public class GestionConnecter {
     @FXML
     private TextField tfMail;
     @FXML
-    private TextField tfPassword;
+    private PasswordField tfPassword;
+    @FXML
+    private TextField tfPasswordPlain;
+    @FXML
+    private ImageView eyeIcon;
+    @FXML
+    private Label lblPasswordError;
 
     private ServiceUtilisateur su = new ServiceUtilisateur();
     private ServiceAdmin sa = new ServiceAdmin();
     private ServiceClient sc = new ServiceClient();
+
+    private boolean isPasswordVisible = false;
+
+    @FXML
+    private void togglePasswordVisibility() {
+        if (isPasswordVisible) {
+            // Masquer le mot de passe et afficher le champ masqué
+            tfPassword.setText(tfPasswordPlain.getText());
+            tfPassword.setVisible(true);
+            tfPasswordPlain.setVisible(false);
+            eyeIcon.setImage(new Image("images/22249-200.png")); // Icône de l'œil fermé
+        } else {
+            // Afficher le mot de passe en texte clair
+            tfPasswordPlain.setText(tfPassword.getText());
+            tfPassword.setVisible(false);
+            tfPasswordPlain.setVisible(true);
+            eyeIcon.setImage(new Image("images/eye_icon.png")); // Icône de l'œil ouvert
+        }
+        isPasswordVisible = !isPasswordVisible;
+    }
 
     @FXML
     private void getuser(ActionEvent event) throws IOException {
@@ -67,7 +97,7 @@ public class GestionConnecter {
 
                 // Passer les données au contrôleur
                 GereAdmin adminController = loader.getController();
-               // adminController.ajouterdonner(adminDetails, utilisateur);
+                // adminController.ajouterdonner(adminDetails, utilisateur);
             } else {
                 // Récupérer les détails du Client
                 Client clientDetails = sc.getClientParIdUtilisateur(utilisateur.getId());
@@ -85,7 +115,7 @@ public class GestionConnecter {
 
                 // Passer les données au contrôleur
                 Gereclient clientController = loader.getController();
-               // clientController.ajouterdonner(clientDetails, utilisateur);
+                // clientController.ajouterdonner(clientDetails, utilisateur);
             }
 
             // Changer de scène
@@ -94,6 +124,7 @@ public class GestionConnecter {
             stage.show();
         } else {
             afficherAlerte("Échec de connexion", "Email ou mot de passe incorrect !");
+            lblPasswordError.setText("Mot de passe incorrect");
         }
     }
 
