@@ -24,9 +24,6 @@ public class RevenueController {
     private ComboBox<String> cbTypeRevenue;  // ComboBox pour sélectionner le type de revenue
 
     @FXML
-    private TextField tfReferenceId;         // TextField pour entrer l'ID de référence
-
-    @FXML
     private TextField tfMontantTotal;        // TextField pour entrer le montant total
 
     @FXML
@@ -45,19 +42,18 @@ public class RevenueController {
     public void ajouterRevenue() {
         // Récupération des données saisies par l'utilisateur
         String typeRevenue = cbTypeRevenue.getValue();
-        String referenceId = tfReferenceId.getText();
         double montantTotal = Double.parseDouble(tfMontantTotal.getText());
         double commission = Double.parseDouble(tfCommission.getText());
         LocalDate dateRevenue = dpDateRevenue.getValue();
 
         // Vérification si les champs sont valides
-        if (typeRevenue == null || referenceId.isEmpty() || montantTotal <= 0 || commission < 0 || dateRevenue == null) {
+        if (typeRevenue == null || montantTotal <= 0 || commission < 0 || dateRevenue == null) {
             System.out.println("⚠️ Veuillez remplir tous les champs correctement !");
             return;
         }
 
         // Création d'une instance Revenue avec les données récupérées
-        Revenue revenue = new Revenue(0, typeRevenue, referenceId, dateRevenue, montantTotal, commission);
+        Revenue revenue = new Revenue(0, typeRevenue, dateRevenue, montantTotal, commission);
 
         // Ajout de la revenue via le service
         revenueService.add(revenue);
@@ -99,7 +95,6 @@ public class RevenueController {
 
     private void resetFields() {
         cbTypeRevenue.getSelectionModel().clearSelection();
-        tfReferenceId.clear();
         tfMontantTotal.clear();
         tfCommission.clear();
         dpDateRevenue.setValue(null);

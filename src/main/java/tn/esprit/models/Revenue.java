@@ -5,7 +5,6 @@ public class Revenue {
 
     private int id_revenue;  // identifiant unique
     private String type_revenue;  // type de revenue (vente_produit, reservation_hotel, ...)
-    private String reference_id;  // référence de la transaction (id_produit, id_hotel, ...)
     private LocalDate date_revenue;  // date de la transaction
     private double montant_total;  // montant total de la revenue
     private double commission;  // commission générée
@@ -14,10 +13,9 @@ public class Revenue {
     public Revenue() {}
 
     // Constructeur avec tous les attributs
-    public Revenue(int id_revenue, String type_revenue, String reference_id, LocalDate date_revenue, double montant_total, double commission) {
+    public Revenue(int id_revenue, String type_revenue, LocalDate date_revenue, double montant_total, double commission) {
         this.id_revenue = id_revenue;
         this.type_revenue = type_revenue;
-        this.reference_id = reference_id;
         this.date_revenue = date_revenue;
         this.montant_total = montant_total;
         this.commission = commission;
@@ -38,14 +36,6 @@ public class Revenue {
 
     public void setTypeRevenue(String type_revenue) {
         this.type_revenue = type_revenue;
-    }
-
-    public String getReferenceId() {
-        return reference_id;
-    }
-
-    public void setReferenceId(String reference_id) {
-        this.reference_id = reference_id;
     }
 
     public LocalDate getDateRevenue() {
@@ -74,7 +64,7 @@ public class Revenue {
 
     @Override
     public String toString() {
-        return "Revenue{idRevenue=" + id_revenue + ", typeRevenue='" + type_revenue + "', referenceId='" + reference_id +
+        return "Revenue{idRevenue=" + id_revenue + ", typeRevenue='" + type_revenue +
                 "', dateRevenue=" + date_revenue + ", montantTotal=" + montant_total + ", commission=" + commission + "}";
     }
 }

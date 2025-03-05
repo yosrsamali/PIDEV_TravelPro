@@ -19,16 +19,15 @@ public class RevenueService implements IService<Revenue> {
     }
 
     public void add(Revenue revenue) {
-        String qry = "INSERT INTO `Revenue`(`type_revenue`, `reference_id`, `date_revenue`, `montant_total`, `commission`) VALUES (?, ?, ?, ?, ?)";
+        String qry = "INSERT INTO `Revenue`(`type_revenue`, `date_revenue`, `montant_total`, `commission`) VALUES (?, ?, ?, ?)";
         try {
             PreparedStatement pstm = cnx.prepareStatement(qry);
             pstm.setString(1, revenue.getTypeRevenue());
-            pstm.setString(2, revenue.getReferenceId());
 
             // Utilisez l'instance revenue pour appeler getDateRevenue()
-            pstm.setDate(3, Date.valueOf(revenue.getDateRevenue())); // Utilisation de l'objet revenue
-            pstm.setDouble(4, revenue.getMontantTotal());
-            pstm.setDouble(5, revenue.getCommission());
+            pstm.setDate(2, Date.valueOf(revenue.getDateRevenue())); // Utilisation de l'objet revenue
+            pstm.setDouble(3, revenue.getMontantTotal());
+            pstm.setDouble(4, revenue.getCommission());
 
             int rowsAffected = pstm.executeUpdate();
             if (rowsAffected > 0) {
@@ -57,7 +56,6 @@ public class RevenueService implements IService<Revenue> {
                 Revenue revenue = new Revenue(
                         rs.getInt("id_revenue"),
                         rs.getString("type_revenue"),
-                        rs.getString("reference_id"),
                         rs.getDate("date_revenue").toLocalDate(),  // Conversion de Date SQL à LocalDate
                         rs.getDouble("montant_total"),
                         rs.getDouble("commission")
@@ -73,14 +71,13 @@ public class RevenueService implements IService<Revenue> {
 
     @Override
     public void update(Revenue revenue) {
-        String qry = "UPDATE `Revenue` SET `type_revenue`=?, `reference_id`=?, `date_revenue`=?, `montant_total`=?, `commission`=? WHERE `id_revenue`=?";
+        String qry = "UPDATE `Revenue` SET `type_revenue`=?, `date_revenue`=?, `montant_total`=?, `commission`=? WHERE `id_revenue`=?";
         try (PreparedStatement pstm = cnx.prepareStatement(qry)) {
             pstm.setString(1, revenue.getTypeRevenue());
-            pstm.setString(2, revenue.getReferenceId());
-            pstm.setDate(3, Date.valueOf(revenue.getDateRevenue())); // Utilisation de l'objet revenue
-            pstm.setDouble(4, revenue.getMontantTotal());
-            pstm.setDouble(5, revenue.getCommission());
-            pstm.setInt(6, revenue.getIdRevenue());
+            pstm.setDate(2, Date.valueOf(revenue.getDateRevenue())); // Utilisation de l'objet revenue
+            pstm.setDouble(3, revenue.getMontantTotal());
+            pstm.setDouble(4, revenue.getCommission());
+            pstm.setInt(5, revenue.getIdRevenue());
 
             pstm.executeUpdate();
         } catch (SQLException e) {

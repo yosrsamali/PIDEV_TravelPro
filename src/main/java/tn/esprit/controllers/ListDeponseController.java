@@ -1,15 +1,21 @@
 package tn.esprit.controllers;
 
+import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
+import com.itextpdf.kernel.pdf.canvas.draw.SolidLine;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.LineSeparator;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyEvent;
@@ -324,39 +330,26 @@ public class ListDeponseController implements Initializable {
             PdfDocument pdfDoc = new PdfDocument(writer);
             Document document = new Document(pdfDoc);
 
-            // Ajouter des informations sur l'agence avec un style similaire
-            document.add(new Paragraph("Agence de Voyage TravelPro") // Remplacer par votre nom d'agence
+            // Ajouter le titre de l'agence
+            document.add(new Paragraph("Agence de Voyage TravelPro")
                     .setFontSize(16)
                     .setTextAlignment(TextAlignment.CENTER)
                     .setBold());
-            document.add(new Paragraph("\n"));
-            document.add(new Paragraph("\n"));
-            document.add(new Paragraph("Adresse : 25 Residance Amal Petite Ariana Ariana")
-                    .setFontSize(12)
-                    .setTextAlignment(TextAlignment.CENTER));
-            document.add(new Paragraph("Téléphone : +216 78603603")
-                    .setFontSize(12)
-                    .setTextAlignment(TextAlignment.CENTER));
-            document.add(new Paragraph("Email : TravelPro@agency.tn")
-                    .setFontSize(12)
-                    .setTextAlignment(TextAlignment.CENTER));
 
-            // Espacement sous le titre de l'agence
             document.add(new Paragraph("\n"));
 
-            // Ajouter un titre similaire à celui de l'interface
+            // Ajouter le titre "Dépense Détail"
             document.add(new Paragraph("Dépense Détail")
                     .setBold()
                     .setFontSize(20)
                     .setTextAlignment(TextAlignment.CENTER));
 
-            // Espacement avant le tableau
             document.add(new Paragraph("\n"));
 
-            // Ajouter le tableau des dépenses
-            Table table = new Table(2);
+            // Créer le tableau et le centrer
+            Table table = new Table(UnitValue.createPercentArray(2)).useAllAvailableWidth();
+            table.setHorizontalAlignment(HorizontalAlignment.CENTER);
 
-            // Définir l'alignement des cellules (centré)
             table.addCell(new Cell().add(new Paragraph("Produit")).setTextAlignment(TextAlignment.CENTER));
             table.addCell(new Cell().add(new Paragraph(nomProduit)).setTextAlignment(TextAlignment.CENTER));
 
@@ -369,32 +362,69 @@ public class ListDeponseController implements Initializable {
             table.addCell(new Cell().add(new Paragraph("Total")).setTextAlignment(TextAlignment.CENTER));
             table.addCell(new Cell().add(new Paragraph(total + " TND")).setTextAlignment(TextAlignment.CENTER));
 
-            // Ajouter le tableau au document
             document.add(table);
-
-            // Espacement avant la bordure
             document.add(new Paragraph("\n"));
 
-            // Dessiner une bordure autour de la page (style aligné avec les éléments de l'interface)
-            float left = 36; // Distance du bord gauche
-            float right = 559; // Distance du bord droit
-            float top = pdfDoc.getPage(1).getPageSize().getTop() - 50; // Ajuste la position du haut de la page
-            float bottom = 36; // Distance du bord inférieur
+            // Ajouter les coordonnées de l'agence
+            document.add(new Paragraph("Adresse : 25 Résidence Amal Petite Ariana Ariana")
+                    .setFontSize(12)
+                    .setTextAlignment(TextAlignment.CENTER));
+            document.add(new Paragraph("Téléphone : +216 78603603")
+                    .setFontSize(12)
+                    .setTextAlignment(TextAlignment.CENTER));
+            document.add(new Paragraph("Email : TravelPro@agency.tn")
+                    .setFontSize(12)
+                    .setTextAlignment(TextAlignment.CENTER));
 
-            // Dessiner un rectangle pour créer la bordure
+            // Définir la bordure en utilisant des avions ✈️
             PdfCanvas canvas = new PdfCanvas(pdfDoc.getFirstPage());
-            canvas.setLineWidth(1)
-                    .setStrokeColor(com.itextpdf.kernel.colors.DeviceGray.BLACK) // Utiliser DeviceGray pour la couleur noire
-                    .rectangle(left, bottom, right - left, top - bottom)
-                    .stroke();
+            canvas.beginText()
+                    .setFontAndSize(PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD), 12)
+                    .moveText(36, pdfDoc.getDefaultPageSize().getTop() - 36);
 
-            // Fermer le document PDF
+            // Dessiner les avions en haut
+            for (int i = 0; i < 12; i++) {
+                canvas.showText(" ✈️ ");
+                canvas.moveText(45, 0);
+            }
+
+            canvas.endText();
+
+            // Dessiner les avions sur les côtés et en bas
+            for (int i = 0; i < 15; i++) {
+                float y = pdfDoc.getDefaultPageSize().getTop() - 50 - (i * 30);
+
+                // Côté gauche
+                canvas.beginText()
+                        .moveText(36, y)
+                        .showText("✈️")
+                        .endText();
+
+                // Côté droit
+                canvas.beginText()
+                        .moveText(pdfDoc.getDefaultPageSize().getWidth() - 50, y)
+                        .showText("✈️")
+                        .endText();
+            }
+
+            // Dessiner les avions en bas
+            canvas.beginText()
+                    .moveText(36, 36);
+
+            for (int i = 0; i < 12; i++) {
+                canvas.showText(" ✈️ ");
+                canvas.moveText(45, 0);
+            }
+
+            canvas.endText();
+
+            // Fermer le document
             document.close();
 
             System.out.println("PDF généré avec succès : " + file.getAbsolutePath());
             openGeneratedPDF(file.getAbsolutePath());
 
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

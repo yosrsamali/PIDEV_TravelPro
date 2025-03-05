@@ -37,7 +37,6 @@ public class ListRevenueController implements Initializable {
             while (rs.next()) {
                 int idRevenue = rs.getInt("id_revenue");
                 String typeRevenue = rs.getString("type_revenue");
-                String referenceId = rs.getString("reference_id");
                 Date dateRevenue = rs.getDate("date_revenue");
                 double montantTotal = rs.getDouble("montant_total");
                 double commission = rs.getDouble("commission");
@@ -46,7 +45,7 @@ public class ListRevenueController implements Initializable {
                 double benefice = (montantTotal * commission) / 100;
 
                 // Création et ajout de la carte dans le conteneur VBox
-                vboxContainer.getChildren().add(creerCarteRevenue(idRevenue, typeRevenue, referenceId, dateRevenue.toLocalDate(), montantTotal, commission, benefice));
+                vboxContainer.getChildren().add(creerCarteRevenue(idRevenue, typeRevenue, dateRevenue.toLocalDate(), montantTotal, commission, benefice));
             }
 
         } catch (SQLException e) {
@@ -54,7 +53,7 @@ public class ListRevenueController implements Initializable {
         }
     }
 
-    private BorderPane creerCarteRevenue(int id, String typeRevenue, String referenceId, LocalDate dateRevenue, double montantTotal, double commission, double benefice) {
+    private BorderPane creerCarteRevenue(int id, String typeRevenue, LocalDate dateRevenue, double montantTotal, double commission, double benefice) {
         // Conteneur principal de la carte
         BorderPane card = new BorderPane();
         card.getStyleClass().add("card");  // Style de la carte depuis CSS
@@ -71,8 +70,6 @@ public class ListRevenueController implements Initializable {
         content.getStyleClass().add("card-content");
 
         // Ajout des labels pour chaque information
-        Label lblReferenceId = new Label("Ref_ID : " + referenceId);
-        lblReferenceId.getStyleClass().add("card-text");
 
         Label lblDateRevenue = new Label("Date : " + dateRevenue);
         lblDateRevenue.getStyleClass().add("card-text");
@@ -88,7 +85,7 @@ public class ListRevenueController implements Initializable {
         lblBenefice.getStyleClass().add("card-benefice");
 
         // Ajout des labels au HBox
-        content.getChildren().addAll(lblReferenceId, lblDateRevenue, lblMontantTotal, lblCommission, lblBenefice);
+        content.getChildren().addAll( lblDateRevenue, lblMontantTotal, lblCommission, lblBenefice);
 
         // Affectation du contenu à la carte
         card.setCenter(content);

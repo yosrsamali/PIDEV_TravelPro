@@ -1,51 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.image.Image?>
-<?import java.net.URL?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.DatePicker?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.DeponseController">
-
-    <stylesheets>
-        <URL value="@css/style.css"/>
-    </stylesheets>
-
+<AnchorPane prefHeight="640.0" prefWidth="1024.0" stylesheets="@css/style2.css"
+            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="tn.esprit.controllers.DeponseController">
     <children>
-        <!-- Titre centré en haut -->
-        <Label layoutX="400.0" layoutY="30.0" text="Ajouter Une Dépense" styleClass="title-label"/>
+        <!-- Image d’arrière-plan -->
+        <ImageView fitHeight="640.0" fitWidth="512.0">
+            <image>
+                <Image url="@images/motive.png" />
+            </image>
+        </ImageView>
 
-        <!-- Formulaire bien aligné avec labels -->
-        <VBox layoutX="100.0" layoutY="150.0" spacing="15">
+        <!-- Carte de saisie de la dépense -->
+        <StackPane layoutX="554.0" layoutY="128.0" prefHeight="320.0" prefWidth="393.0">
+            <VBox alignment="CENTER" spacing="20">
+                <Label style="-fx-text-fill: #37B7C3; -fx-font-size: 24px;" text="Saisir une dépense" />
 
-            <!-- Sélection du produit -->
-            <Label text="Nom du Produit :" styleClass="form-label"/>
-            <ComboBox fx:id="cbNomProduit" promptText="Sélectionnez un produit"/>
+                <!-- Sélection du produit -->
+                <ComboBox fx:id="cbNomProduit" minWidth="385" maxWidth="250" promptText="Sélectionner un produit" />
 
-            <Label text="Quantité produit :" styleClass="form-label"/>
-            <TextField fx:id="tfQuantiteProduit" promptText="Entrez la quantité" />
+                <!-- Champ pour la quantité -->
+                <TextField fx:id="tfQuantiteProduit" minWidth="385" promptText="Quantité du produit" maxWidth="250"/>
 
-            <Label text="Prix d'achat :" styleClass="form-label"/>
-            <TextField fx:id="tfPrixAchat" promptText="Entrez le prix d'achat" />
+                <!-- Champ pour le prix d'achat -->
+                <TextField fx:id="tfPrixAchat" minWidth="385" promptText="Prix d'achat" maxWidth="250"/>
 
-            <Label text="Date d'achat :" styleClass="form-label"/>
-            <DatePicker fx:id="dpDateAchat"/>
+                <!-- Sélecteur de date d'achat -->
+                <DatePicker fx:id="dpDateAchat" minWidth="385" promptText="Date d'achat" maxWidth="250"/>
 
-            <Button mnemonicParsing="false" onAction="#ajouterDeponse" text="Ajouter" styleClass="form-button"/>
-        </VBox>
+                <Label fx:id="lblError" style="-fx-text-fill: red; -fx-font-size: 12px;" />
 
-        <!-- Image alignée à droite -->
-        <StackPane layoutX="700.0" layoutY="200.0" prefWidth="300" prefHeight="300" styleClass="image-card">
-            <ImageView fitWidth="280" fitHeight="280">
-                <Image url="@images/1.PNG"/>
-            </ImageView>
+                <HBox alignment="CENTER" spacing="12">
+                    <Button fx:id="btnAjouter" onAction="#ajouterDeponse" text="Ajouter la dépense" minWidth="250" />
+                </HBox>
+
+
+                <Label text="Entrez les informations relatives à la dépense" style="-fx-text-fill: #686D76; -fx-font-size: 12px;"/>
+
+            </VBox>
         </StackPane>
     </children>
 </AnchorPane>
