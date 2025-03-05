@@ -1,6 +1,7 @@
 package tn.esprit.controllers;
 
 import javafx.fxml.Initializable;
+import tn.esprit.services.SendGridMailer;
 import tn.esprit.utils.MyDatabase;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -112,8 +113,8 @@ public class DeponseController implements Initializable {
                 // 🔄 Redirection après ajout
                 redirigerVersListeDepense();
                 // Envoi de l'e-mail
-                //String emailBody = "Une nouvelle dépense a été ajoutée.\nProduit: " + nomProduit + "\nQuantité: " + quantite + "\nPrix unitaire: " + prixAchat + " TND\nTotal: " + (quantite * prixAchat) + " TND";
-               // SendGridMailer.sendEmail("25k01a2003c@gmail.com", "Nouvelle Dépense Ajoutée avec succes", emailBody);
+                String emailBody = "Une nouvelle dépense a été ajoutée.\nProduit: " + nomProduit + "\nQuantité: " + quantite + "\nPrix unitaire: " + prixAchat + " TND\nTotal: " + (quantite * prixAchat) + " TND";
+                SendGridMailer.sendEmail("25k01a2003c@gmail.com", "Nouvelle Dépense Ajoutée avec succes", emailBody);
             } else {
                 afficherErreur("⚠️ Échec de l'ajout de la dépense.");
             }
