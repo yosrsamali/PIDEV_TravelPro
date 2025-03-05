@@ -360,19 +360,16 @@ public class evenementC implements Initializable {
         imageView.setFitWidth(80);
         imageView.setFitHeight(50);
 
-
-
         // Bouton "Voir la carte"
         Button viewMapButton = new Button("Voir la carte");
-        viewMapButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
-        System.out.println(event.getLatitude()+""+event.getLongitude());
+        viewMapButton.getStyleClass().add("button"); // Appliquer la classe CSS
         viewMapButton.setOnAction(e -> openMapWindow(event.getLatitude(), event.getLongitude()));
 
         HBox buttonsContainer = new HBox(10);
         buttonsContainer.setAlignment(Pos.CENTER_LEFT);
 
         Button deleteButton = new Button("Delete");
-        deleteButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
+        deleteButton.getStyleClass().add("button"); // Appliquer la classe CSS
         deleteButton.setOnAction(e -> {
             this.e.delete(event.getIdEvent());
             Notifications.create()
@@ -384,7 +381,7 @@ public class evenementC implements Initializable {
         });
 
         Button editButton = new Button("Edit");
-        editButton.setStyle("-fx-background-color: blue; -fx-text-fill: white;");
+        editButton.getStyleClass().add("button"); // Appliquer la classe CSS
         editButton.setOnAction(e -> {
             System.out.println("Editing event: " + event.getIdEvent());
             nomEventIInput.setText(event.getNomEvent());
@@ -651,6 +648,7 @@ public class evenementC implements Initializable {
         }
 
     }
+    @FXML
     private void setupDynamicSearch() {
         // Créer une ObservableList à partir de la liste des événements
         ObservableList<evenement> observableList = FXCollections.observableArrayList(e.getAll());

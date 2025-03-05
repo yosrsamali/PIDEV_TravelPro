@@ -22,7 +22,7 @@
          <children>
              <HBox spacing="10">
                  <TextField fx:id="searchInput" promptText="Rechercher par nom ou ID" />
-
+                 <Button onAction="#setupDynamicSearch" text="Rechercher" />
                  <Button onAction="#refreshEvenements" text="Rafraîchir" />
              </HBox>
 
@@ -80,7 +80,7 @@
                   <HBox prefHeight="39.0" prefWidth="444.0" spacing="10" styleClass="input-field">
                      <children>
                         <Label prefHeight="22.0" prefWidth="101.0" text="Nom : " />
-                        <TextField fx:id="nomEventIInput" prefHeight="39.0" prefWidth="378.0" promptText="Tapez le nom .." />
+                        <TextField fx:id="nomEventIInput" prefHeight="42.0" prefWidth="211.0" promptText="Tapez le nom .." />
                      </children>
                   </HBox>
                    <HBox spacing="10" styleClass="input-field">
@@ -112,7 +112,7 @@
                    <HBox spacing="10" styleClass="input-field">
                        <children>
                            <Label prefHeight="22.0" prefWidth="111.0" text="Image        " />
-                           <TextField fx:id="ImageEventInput" promptText="Inserez votre image" />
+                           <TextField fx:id="ImageEventInput" prefHeight="42.0" prefWidth="226.0" promptText="Inserez votre image" />
                            <Button fx:id="AddImageBtn" onAction="#choisirImage1" prefHeight="21.0" prefWidth="31.0" text="+" />
                        </children>
                    </HBox>
