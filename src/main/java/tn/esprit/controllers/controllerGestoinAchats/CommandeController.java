@@ -8,9 +8,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import tn.esprit.models.Commande;
 import tn.esprit.services.ServiceCommande;
@@ -20,36 +20,16 @@ import java.util.List;
 
 public class CommandeController {
 
-
     @FXML
     private Button btnGoToAdminMainInterface;
     @FXML
-    private TableView<Commande> commandTable;
-    @FXML
-    private TableColumn<Commande, Integer> idColumn;
-    @FXML
-    private TableColumn<Commande, Integer> clientIdColumn;
-    @FXML
-    private TableColumn<Commande,String > dateColumn;
-    @FXML
-    private TableColumn<Commande, Double> totalColumn;
-    @FXML
-    private TableColumn<Commande, String> statusColum;
-
+    private FlowPane commandCards;  // FlowPane to display the cards
 
     private final ServiceCommande serviceCommand = new ServiceCommande();
-
 
     @FXML
     public void initialize() {
         btnGoToAdminMainInterface.setOnAction(event -> switchScene("Admin_Main_Interface.fxml"));
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("idCommande"));
-        clientIdColumn.setCellValueFactory(new PropertyValueFactory<>("idClient"));
-        dateColumn.setCellValueFactory(new PropertyValueFactory<>("montantTotal"));
-        totalColumn.setCellValueFactory(new PropertyValueFactory<>("dateCommande"));
-        statusColum.setCellValueFactory(new PropertyValueFactory<>("status"));
-
-
         loadCommands(); // Call the method correctly
     }
 
@@ -66,7 +46,22 @@ public class CommandeController {
 
     private void loadCommands() {
         List<Commande> commands = serviceCommand.getAll(); // ✅ No static call
-        ObservableList<Commande> commandList = FXCollections.observableArrayList(commands);
-        commandTable.setItems(commandList);
+        for (Commande command : commands) {
+            HBox card = createCard(command);
+            commandCards.getChildren().add(card);
+        }
+    }
+
+    private HBox createCard(Commande command) {
+        HBox card = new HBox(20);
+        card.setStyle("-fx-border-color: #ccc; -fx-border-radius: 5; -fx-padding: 10; -fx-background-color: #f9f9f9;");
+
+        Label clientIdLabel = new Label("Client ID: " + command.getIdClient());
+        Label totalLabel = new Label("Montant Total: " + command.getMontantTotal());
+        Label dateLabel = new Label("Date: " + command.getDateCommande());
+        Label statusLabel = new Label("Statut: " + command.getStatus());
+
+        card.getChildren().addAll(clientIdLabel, totalLabel, dateLabel, statusLabel);
+        return card;
     }
 }

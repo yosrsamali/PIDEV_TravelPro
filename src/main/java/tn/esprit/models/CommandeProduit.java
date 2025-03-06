@@ -5,6 +5,9 @@ public class CommandeProduit {
     private int idProduit;
     private int quantite;
     private double prixVente;
+    public CommandeProduit() {
+        // This constructor does nothing.
+    }
 
     public CommandeProduit(int idCommande, int idProduit, int quantite, double prixVente) {
         this.idCommande = idCommande;

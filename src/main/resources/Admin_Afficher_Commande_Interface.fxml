@@ -3,12 +3,11 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="720" prefWidth="1280" styleClass="root" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.controllerGestoinAchats.CommandeController">
+<AnchorPane prefHeight="720" prefWidth="1280" style="-fx-background-color: #088395;" styleClass="root" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.controllerGestoinAchats.CommandeController">
 
     <children>
 
@@ -24,16 +23,8 @@
             <!-- Title -->
             <Label styleClass="title-label" text="Gestion des Commandes" />
 
-            <!-- Command Table -->
-            <TableView fx:id="commandTable" prefHeight="550" prefWidth="860" styleClass="table">
-                <columns>
-                    <TableColumn fx:id="idColumn" prefWidth="150" text="Command ID" />
-                    <TableColumn fx:id="clientIdColumn" prefWidth="200" text="Client ID" />
-                    <TableColumn fx:id="dateColumn" prefWidth="250" text="Date" />
-                    <TableColumn fx:id="totalColumn" prefWidth="200" text="Montant Total" />
-                    <TableColumn fx:id="statusColum" prefWidth="150" text="Statut" />
-                </columns>
-            </TableView>
+            <!-- Command Cards -->
+            <FlowPane fx:id="commandCards" hgap="20" prefWidth="860" vgap="20" />
 
         </VBox>
 
