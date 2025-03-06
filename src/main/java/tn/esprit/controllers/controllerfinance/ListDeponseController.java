@@ -1,16 +1,12 @@
-package tn.esprit.controllers;
+package tn.esprit.controllers.controllerfinance;
 
 import com.itextpdf.io.font.constants.StandardFonts;
-import com.itextpdf.io.image.ImageData;
-import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
-import com.itextpdf.kernel.pdf.canvas.draw.SolidLine;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.LineSeparator;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.HorizontalAlignment;
@@ -29,7 +25,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.Button;
 import javafx.scene.text.Font;
-import javafx.scene.paint.Color;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -37,9 +32,7 @@ import javafx.fxml.FXMLLoader;
 
 import java.awt.*;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.*;
 import java.io.IOException;
@@ -141,7 +134,7 @@ public class ListDeponseController implements Initializable {
     public void handleRevenue() {
         try {
             // Charger revenue.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/revenue.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/viewfinance/revenue.fxml"));
             Parent root = loader.load();
 
             // Créer une nouvelle scène
@@ -451,7 +444,7 @@ public class ListDeponseController implements Initializable {
     private void retourHomeFinance(ActionEvent event) {
         try {
             // Charger la vue homefinance.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Homefinance.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/viewfinance/Homefinance.fxml"));
             Parent root = loader.load();
 
             // Obtenir la scène actuelle

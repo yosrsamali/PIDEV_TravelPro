@@ -10,7 +10,7 @@
 <?import javafx.scene.chart.XYChart?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
-<AnchorPane fx:id="mainContent" prefHeight="640.0" prefWidth="1024.0" stylesheets="@css/style2.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.HomefinanceController">
+<AnchorPane fx:id="mainContent" prefHeight="640.0" prefWidth="1024.0" stylesheets="@../css/style2.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.controllerfinance.HomefinanceController">
 <BorderPane>
 
     <!-- TITRE AU CENTRE -->

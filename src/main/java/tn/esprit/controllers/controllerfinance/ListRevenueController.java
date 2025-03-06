@@ -1,6 +1,5 @@
-package tn.esprit.controllers;
+package tn.esprit.controllers.controllerfinance;
 
-import javafx.scene.Parent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -9,11 +8,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import tn.esprit.utils.MyDatabase;
-import tn.esprit.models.Revenue;
 
 import java.net.URL;
 import java.sql.*;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 

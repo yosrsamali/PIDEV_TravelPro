@@ -1,13 +1,10 @@
-package tn.esprit.controllers;
+package tn.esprit.controllers.controllerfinance;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.XYChart;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
+
 import java.io.IOException;
-import java.util.Collections;
 
 public class HomefinanceController {
 
@@ -19,22 +16,22 @@ public class HomefinanceController {
 
     @FXML
     private void showAddDepense() {
-        loadView("depense.fxml");
+        loadView("viewfinance/depense.fxml");
     }
 
     @FXML
     private void showListDepense() {
-        loadView("listdepense.fxml");
+        loadView("viewfinance/listdepense.fxml");
     }
 
     @FXML
     private void showAddRevenue() {
-        loadView("revenue.fxml");
+        loadView("viewfinance/revenue.fxml");
     }
 
     @FXML
     private void showListRevenue() {
-        loadView("listrevenue.fxml");
+        loadView("viewfinance/listrevenue.fxml");
     }
 
     private void loadView(String fxmlFile) {

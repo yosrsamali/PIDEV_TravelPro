@@ -1,4 +1,4 @@
-package tn.esprit.controllers;
+package tn.esprit.controllers.controllerfinance;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -140,7 +140,7 @@ public class DeponseController implements Initializable {
 
     private void redirigerVersListeDepense() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/listdepense.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/viewfinance/listdepense.fxml"));
             AnchorPane root = loader.load();
 
             // Obtenir la scène actuelle et la remplacer
@@ -172,7 +172,7 @@ public class DeponseController implements Initializable {
     private void retourHomeFinance(ActionEvent event) {
         try {
             // Charger la vue homefinance.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Homefinance.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/viewfinance/Homefinance.fxml"));
             Parent root = loader.load();
 
             // Obtenir la scène actuelle

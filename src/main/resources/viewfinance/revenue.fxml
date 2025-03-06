@@ -15,14 +15,14 @@
 <?import javafx.collections.FXCollections?>
 
 <?import java.lang.String?>
-<AnchorPane prefHeight="720.0" prefWidth="1080.0" stylesheets="@css/style2.css"
+<AnchorPane prefHeight="720.0" prefWidth="1080.0" stylesheets="@../css/style2.css"
             xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="tn.esprit.controllers.RevenueController">
+            fx:controller="tn.esprit.controllers.controllerfinance.RevenueController">
     <children>
         <!-- Image d’arrière-plan -->
         <ImageView fitHeight="640.0" fitWidth="512.0">
             <image>
-                <Image url="@images/motive.png" />
+                <Image url="@../images/motive.png" />
             </image>
         </ImageView>
 

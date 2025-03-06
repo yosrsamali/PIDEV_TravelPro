@@ -1,4 +1,4 @@
-package tn.esprit.controllers;
+package tn.esprit.controllers.controllerfinance;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -11,7 +11,6 @@ import tn.esprit.models.Revenue;
 import tn.esprit.services.RevenueService;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -79,7 +78,7 @@ public class RevenueController {
     private void redirigerVersListRevenue() {
         try {
             // Charger le fichier FXML de ListRevenue
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/listRevenue.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/viewfinance/listrevenue.fxml"));
             Parent root = loader.load();
 
             // Créer une nouvelle scène pour ListRevenue
