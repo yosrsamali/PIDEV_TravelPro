@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.chart.XYChart?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<AnchorPane fx:id="mainContent" prefHeight="640.0" prefWidth="1024.0" stylesheets="@../css/style2.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.controllerfinance.HomefinanceController">
+<BorderPane>
+
+    <!-- TITRE AU CENTRE -->
+    <top>
+        <HBox alignment="CENTER" style="-fx-background-color: #37B7C3; -fx-padding: 20;">
+            <Label prefHeight="27.0" prefWidth="993.0" style="-fx-font-size: 24px; -fx-text-fill: white;" text="Bienvenue dans l’espace service financier" />
+        </HBox>
+    </top>
+
+    <!-- SIDEBAR -->
+    <left>
+        <VBox spacing="20" style="-fx-background-color: #F4F4F4; -fx-padding: 20; -fx-pref-width: 200;">
+            <Button fx:id="btnAjouterDeponse" minWidth="180" onAction="#showAddDepense" text="Ajouter Dépense" />
+            <Button fx:id="btnListeDeponses" minWidth="180" onAction="#showListDepense" text="Liste des Dépenses" />
+            <Button fx:id="btnAjouterRevenue" minWidth="180" onAction="#showAddRevenue" text="Ajouter Revenue" />
+            <Button fx:id="btnListeRevenues" minWidth="180" onAction="#showListRevenue" text="Liste des Revenues" />
+        </VBox>
+    </left>
+    <!-- CONTENU PRINCIPAL -->
+    <center>
+        <VBox alignment="CENTER" spacing="30" style="-fx-padding: 30;">
+
+        </VBox>
+    </center>
+
+
+
+</BorderPane>
+</AnchorPane>

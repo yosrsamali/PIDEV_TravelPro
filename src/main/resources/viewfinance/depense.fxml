@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.DatePicker?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1080.0" stylesheets="@../css/style2.css"
+            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="tn.esprit.controllers.controllerfinance.DeponseController">
+    <children>
+        <!-- Image d’arrière-plan -->
+        <ImageView fitHeight="640.0" fitWidth="512.0">
+            <image>
+                <Image url="@../images/motive.png" />
+            </image>
+        </ImageView>
+
+        <!-- Carte de saisie de la dépense -->
+        <StackPane layoutX="554.0" layoutY="128.0" prefHeight="320.0" prefWidth="393.0">
+            <VBox alignment="CENTER" spacing="20">
+                <Label style="-fx-text-fill: #37B7C3; -fx-font-size: 24px;" text="Saisir une dépense" />
+
+                <!-- Sélection du produit -->
+                <ComboBox fx:id="cbNomProduit" minWidth="385" maxWidth="250" promptText="Sélectionner un produit" />
+
+                <!-- Champ pour la quantité -->
+                <TextField fx:id="tfQuantiteProduit" minWidth="385" promptText="Quantité du produit" maxWidth="250"/>
+
+                <!-- Champ pour le prix d'achat -->
+                <TextField fx:id="tfPrixAchat" minWidth="385" promptText="Prix d'achat" maxWidth="250"/>
+
+                <!-- Sélecteur de date d'achat -->
+                <DatePicker fx:id="dpDateAchat" minWidth="385" promptText="Date d'achat" maxWidth="250"/>
+
+                <Label fx:id="lblError" style="-fx-text-fill: red; -fx-font-size: 12px;" />
+
+                <HBox alignment="CENTER" spacing="12">
+                    <Button fx:id="btnAjouter" onAction="#ajouterDeponse" text="Ajouter la dépense" minWidth="250" />
+                    <Button fx:id="btnRetour" onAction="#retourHomeFinance" text="Retour" minWidth="250" />
+                </HBox>
+
+
+                <Label text="Entrez les informations relatives à la dépense" style="-fx-text-fill: #686D76; -fx-font-size: 12px;"/>
+
+            </VBox>
+        </StackPane>
+    </children>
+</AnchorPane>

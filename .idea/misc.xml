@@ -8,7 +8,18 @@
       </list>
     </option>
   </component>
+<<<<<<< HEAD
   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="17" project-jdk-type="JavaSDK">
+=======
+<<<<<<< HEAD
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_23" default="true" project-jdk-name="openjdk-23" project-jdk-type="JavaSDK">
+=======
+  <component name="ProjectResources">
+    <resource url="http://javafx.com/javafx/23.0.1" location="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="corretto-17" project-jdk-type="JavaSDK">
+>>>>>>> service_financier
+>>>>>>> d3a237b0cedf5db29bbc82b99157c53cf558ac15
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>
