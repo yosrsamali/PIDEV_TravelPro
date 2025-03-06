@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import tn.esprit.models.Admin;
 import tn.esprit.models.Utilisateur;
@@ -25,10 +26,8 @@ public class GereAdmin {
     private Label lblNom;
     @FXML
     private Label lblPrenom;
-    @FXML
-    private Label lblMail;
-    @FXML
-    private Label lblRole;
+
+
 
     private final ServiceAdmin serviceAdmin = new ServiceAdmin();
     private final ServiceUtilisateur serviceUtilisateur = new ServiceUtilisateur();
@@ -47,20 +46,16 @@ public class GereAdmin {
         if (utilisateur instanceof Admin) {
             Admin admin = (Admin) utilisateur;
 
-            lblNom.setText("Nom : " + admin.getNom());
-            lblPrenom.setText("Prénom : " + admin.getPrenom());
-            lblMail.setText("Email : " + admin.getMail());
-            lblRole.setText("Rôle : " + admin.getRole());
+            lblNom.setText( admin.getNom().toUpperCase());
+            lblPrenom.setText( admin.getPrenom());
         } else {
             lblNom.setText("Nom : Inconnu");
             lblPrenom.setText("Prénom : Inconnu");
-            lblMail.setText("Email : Inconnu");
-            lblRole.setText("Rôle : Inconnu");
         }
     }
 
     @FXML
-    private void handleModifier(ActionEvent event) {
+    private void handleModifier(MouseEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/modifieradmin.fxml"));
             Parent root = loader.load();
@@ -83,7 +78,7 @@ public class GereAdmin {
     }
 
     @FXML
-    private void handleSupprimer(ActionEvent event) {
+    private void handleSupprimer(MouseEvent event) {
         // Récupérer l'utilisateur depuis la session
         Utilisateur utilisateur = SessionManager.getInstance().getUtilisateurConnecte();
 
@@ -116,7 +111,7 @@ public class GereAdmin {
         }
     }
 
-    private void retourAccueil(ActionEvent event) {
+    private void retourAccueil(MouseEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/admin.fxml"));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -152,6 +147,21 @@ public class GereAdmin {
             stage.show();
         } catch (IOException e) {
             showAlert("Erreur", "Impossible de charger la liste des demandes.");
+        }
+    }
+    @FXML
+    private void Deconnection(MouseEvent event) {
+        SessionManager.getInstance().logout();
+
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/user.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Page de connexion");
+            stage.show();
+        } catch (IOException e) {
+            showAlert("Erreur", "Impossible de retourner à l'écran de connexion.");
+            e.printStackTrace();
         }
     }
 

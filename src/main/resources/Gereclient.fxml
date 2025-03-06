@@ -2,24 +2,86 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Hyperlink?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.Controllers.Gereclient">
-   <children>
-      <Label layoutX="259.0" layoutY="48.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Espace Client" />
-      <Label fx:id="lblNom" layoutX="85.0" layoutY="108.0" text="Nom : " />
-      <Label fx:id="lblPrenom" layoutX="84.0" layoutY="154.0" text="Prénom : " />
-      <Label fx:id="lblMail" layoutX="84.0" layoutY="191.0" text="Email : " />
-      <Label fx:id="lblNumTel" layoutX="84.0" layoutY="256.0" text="Téléphone : " />
-      <Label fx:id="lblAdresse" layoutX="84.0" layoutY="223.0" text="Adresse : " />
-      <Button layoutX="91.0" layoutY="313.0" mnemonicParsing="false" onAction="#handleModifier" text="Modifier" />
-      <Button layoutX="238.0" layoutY="313.0" mnemonicParsing="false" onAction="#handleSupprimer" text="Supprimer" />
-      <Button fx:id="btnAjouter2" layoutX="382.0" layoutY="313.0" onAction="#EnvoyerDemende" text="Envoyer demende de Admin" />
+<BorderPane prefHeight="640.0" prefWidth="1024.0" stylesheets="@style2.css"
+            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="tn.esprit.Controllers.Gereclient">
+
+   <!-- Header Section -->
+   <top>
+      <ScrollPane fitToWidth="true" fitToHeight="true" prefViewportHeight="100" prefWidth="1024.0">
+         <VBox  style="    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 5);-fx-background-color:linear-gradient(to bottom, #ffffff, #ffffff); -fx-padding: 10;">
+            <HBox spacing="50"  >
+               <HBox spacing="600" >
+               <HBox alignment="TOP_LEFT" spacing="10">
+                  <ImageView fx:id="profileImageView" fitHeight="60.0" fitWidth="60.0">
+                     <clip>
+                        <Circle centerX="30.0" centerY="30.0" radius="30.0" />
+                     </clip>
+                  </ImageView>
+
+                  <VBox alignment="CENTER_LEFT" spacing="5">
+                     <HBox spacing="5">
+                        <Label fx:id="lblNom" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #000000;" text="AYOUB" />
+                        <Label fx:id="lblPrenom" style="-fx-font-size: 20px; -fx-font-weight: bold;-fx-text-fill: #000000;" text="Belgacem" />
+                     </HBox>
+
+                        <Hyperlink  onAction="#EnvoyerDemende" text="Envoyer demende " style="-fx-font-size: 16px;"/>
 
 
+                  </VBox>
+               </HBox>
 
+              <HBox alignment="CENTER_RIGHT" spacing="10">
+                 <ImageView fitHeight="40.0" fitWidth="40.0" onMouseClicked="#Deconnection">
+                    <image>
+                       <Image url="@images/arrow_entrance_exit_internet_log_out_security_icon_127059.png" />
+                    </image>
+                 </ImageView>
+               <ImageView fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleModifier">
+                  <image>
+                     <Image url="@images/1486564394-edit_81508.png" />
+                  </image>
+               </ImageView>
 
+               <ImageView fitHeight="40.0" fitWidth="40.0" onMouseClicked="#handleSupprimer">
+                  <image>
+                     <Image url="@images/1491313938-close_82982.png" />
+                  </image>
+               </ImageView>
+            </HBox>
+               </HBox>
 
+            </HBox>
 
-   </children>
-</AnchorPane>
+              <!-- Section avec les nouveaux boutons sous la première VBox -->
+              <HBox alignment="TOP_CENTER" spacing="10">
+               <Button mnemonicParsing="false" onAction="#Veruser" text="Supprimer2" />
+               <Button fx:id="btnAjouter3" onAction="#Verclient" text="Demande Admin2" />
+               <Button mnemonicParsing="false" onAction="#handleModifier" text="Modifier2" />
+            </HBox>
+         </VBox>
+      </ScrollPane>
+   </top>
+
+   <left>
+      <AnchorPane BorderPane.alignment="CENTER" />
+   </left>
+
+   <center>
+      <ScrollPane fitToWidth="true" fitToHeight="true" prefViewportHeight="200" prefWidth="1024.0">
+
+      <fx:include source="ListeDemande.fxml"/>
+      </ScrollPane>
+   </center>
+
+</BorderPane>
