@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="10" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controller.controllerevenement.StatsController">
+    <Label text="Statistiques des Activités" style="-fx-font-size: 16; -fx-font-weight: bold;" />
+
+    <!-- Histogramme (BarChart) des activités par mois -->
+    <BarChart fx:id="activiteBarChart">
+        <xAxis>
+            <CategoryAxis fx:id="xAxis" label="Mois" />
+        </xAxis>
+        <yAxis>
+            <NumberAxis fx:id="yAxis" label="Nombre d'activités" />
+        </yAxis>
+    </BarChart>
+
+    <!-- Camembert (PieChart) pour la répartition des activités par catégorie -->
+    <PieChart fx:id="activitePieChart" />
+
+    <!-- Labels pour les statistiques avancées -->
+    <Label fx:id="mostActiveMonthLabel" style="-fx-font-size: 14;" />
+    <Label fx:id="averageDurationLabel" style="-fx-font-size: 14;" />
+</VBox>

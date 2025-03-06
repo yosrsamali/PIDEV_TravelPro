@@ -17,12 +17,12 @@ public class MainFX extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        FXMLLoader loader =new FXMLLoader(getClass().getResource("/InterfacesGestionAchat/Client_Manages_Panier_Interface.fxml"));
+        FXMLLoader loader =new FXMLLoader(getClass().getResource("/viewfinance/Homefinance.fxml"));
         try {
             Parent root = loader.load();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
-            primaryStage.setTitle("---- Gestion Produit -----");
+            primaryStage.setTitle("---- Home Finance -----");
             primaryStage.show();
 
         } catch (IOException e) {
