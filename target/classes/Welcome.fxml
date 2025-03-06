@@ -15,14 +15,14 @@
     </stylesheets>
 
     <!-- Titre de la page -->
-    <Text layoutX="400.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bienvenue" textAlignment="CENTER" wrappingWidth="281.33673095703125">
+    <Text layoutX="678.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bienvenue" textAlignment="CENTER" wrappingWidth="281.33673095703125">
         <font>
             <Font name="Arial Bold" size="40.0" />
         </font>
     </Text>
 
     <!-- Conteneur pour les boutons -->
-    <VBox layoutX="450.0" layoutY="200.0" spacing="20">
+    <VBox layoutX="728.0" layoutY="228.0" spacing="20">
         <!-- Bouton pour Gestion des Hôtels -->
         <Button mnemonicParsing="false" onAction="#naviguerVersGestionHotel" prefHeight="50.0" prefWidth="200.0" text="Hotel">
             <font>
@@ -58,10 +58,15 @@
             </font>
         </Button>
     </VBox>
-
-    <ImageView fitHeight="111.0" fitWidth="122.0" layoutX="14.0" layoutY="16.0">
+    <ImageView fitHeight="720.0" fitWidth="512.0">
         <image>
-            <Image url="@images/logo.png" />
+            <Image url="@images/motive.png" />
+        </image>
+    </ImageView>
+
+    <ImageView fitHeight="111.0" fitWidth="122.0" layoutX="37.0" layoutY="30.0">
+        <image>
+            <Image url="@images/482272486_1622949075008428_7716813429910422087_n.png" />
         </image>
     </ImageView>
 </AnchorPane>

@@ -102,4 +102,6 @@ public class Hotel {
     public String toString() {
         return getNom() + " - " + getVille() + " (" + getNombreEtoile() + " étoiles) - " + getPrixParNuit() + " €/nuit";
     }
+
+
 }

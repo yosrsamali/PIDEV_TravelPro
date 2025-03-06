@@ -27,18 +27,14 @@ public class ReservationController {
     @FXML private DatePicker travelDatePicker;
     @FXML private DatePicker returnDatePicker;
     @FXML private ComboBox<String> classComboBox;
-    @FXML private ListView<BilletAvion> billetListView;
+    @FXML private ComboBox<BilletAvion> billetComboBox;
 
     // Champs pour les voitures
-    @FXML private ListView<Voiture> voitureListView;
+    @FXML private ComboBox<Voiture> voitureComboBox;
 
     // Champs pour les hôtels
     @FXML private ComboBox<String> typeChambreComboBox;
-    @FXML private ListView<Hotel> hotelListView;
-
-    // Boutons
-    @FXML private Button addHotelButton;
-    @FXML private Button addCarButton;
+    @FXML private ComboBox<Hotel> hotelComboBox;
 
     // Services
     private final ServiceBilletAvion serviceBilletAvion = new ServiceBilletAvion();
@@ -59,23 +55,41 @@ public class ReservationController {
         // Initialiser les options du ComboBox pour le type de chambre
         typeChambreComboBox.getItems().addAll("Single", "Double");
 
+        // Ajouter des écouteurs pour détecter les changements dans les champs
+        departureField.textProperty().addListener((obs, oldValue, newValue) -> updateBillets());
+        arrivalField.textProperty().addListener((obs, oldValue, newValue) -> updateBillets());
+        travelDatePicker.valueProperty().addListener((obs, oldValue, newValue) -> updateBillets());
+        returnDatePicker.valueProperty().addListener((obs, oldValue, newValue) -> updateBillets());
+        classComboBox.valueProperty().addListener((obs, oldValue, newValue) -> updateBillets());
+
+        travelDatePicker.valueProperty().addListener((obs, oldValue, newValue) -> updateVoitures());
+        returnDatePicker.valueProperty().addListener((obs, oldValue, newValue) -> updateVoitures());
+
+        arrivalField.textProperty().addListener((obs, oldValue, newValue) -> updateHotels());
+        travelDatePicker.valueProperty().addListener((obs, oldValue, newValue) -> updateHotels());
+        returnDatePicker.valueProperty().addListener((obs, oldValue, newValue) -> updateHotels());
+        typeChambreComboBox.valueProperty().addListener((obs, oldValue, newValue) -> updateHotels());
+
         // Ajouter des écouteurs pour capturer les sélections
-        billetListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+        billetComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             selectedBillet = newSelection;
         });
 
-        voitureListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+        voitureComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             selectedVoiture = newSelection;
         });
 
-        hotelListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+        hotelComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             selectedHotel = newSelection;
         });
     }
 
-    // Méthode pour rechercher les billets d'avion disponibles
-    @FXML
-    public void handleSearchBillets() {
+    // Méthode pour mettre à jour les billets disponibles
+    private void updateBillets() {
+        if (departureField.getText().isEmpty() || arrivalField.getText().isEmpty() || travelDatePicker.getValue() == null || returnDatePicker.getValue() == null || classComboBox.getValue() == null) {
+            return;
+        }
+
         try {
             String villeDepart = departureField.getText();
             String villeArrivee = arrivalField.getText();
@@ -85,8 +99,8 @@ public class ReservationController {
 
             List<BilletAvion> availableBillets = serviceBilletAvion.getAvailableBillets(villeDepart, villeArrivee, dateDepart, dateRetour, classBillet);
 
-            billetListView.getItems().clear();
-            billetListView.getItems().addAll(availableBillets);
+            billetComboBox.getItems().clear();
+            billetComboBox.getItems().addAll(availableBillets);
 
             System.out.println("Nombre de billets trouvés : " + availableBillets.size());
         } catch (Exception e) {
@@ -94,17 +108,20 @@ public class ReservationController {
         }
     }
 
-    // Méthode pour rechercher les voitures disponibles
-    @FXML
-    public void handleSearchVoiture() {
+    // Méthode pour mettre à jour les voitures disponibles
+    private void updateVoitures() {
+        if (travelDatePicker.getValue() == null || returnDatePicker.getValue() == null) {
+            return;
+        }
+
         try {
             Date dateDeLocation = Date.valueOf(travelDatePicker.getValue());
             Date dateDeRemise = Date.valueOf(returnDatePicker.getValue());
 
             List<Voiture> availableVoitures = serviceVoiture.getAvailableVoitures(dateDeLocation, dateDeRemise);
 
-            voitureListView.getItems().clear();
-            voitureListView.getItems().addAll(availableVoitures);
+            voitureComboBox.getItems().clear();
+            voitureComboBox.getItems().addAll(availableVoitures);
 
             System.out.println("Nombre de voitures trouvées : " + availableVoitures.size());
         } catch (Exception e) {
@@ -112,9 +129,12 @@ public class ReservationController {
         }
     }
 
-    // Méthode pour rechercher les hôtels disponibles
-    @FXML
-    public void handleSearchHotel() {
+    // Méthode pour mettre à jour les hôtels disponibles
+    private void updateHotels() {
+        if (arrivalField.getText().isEmpty() || travelDatePicker.getValue() == null || returnDatePicker.getValue() == null || typeChambreComboBox.getValue() == null) {
+            return;
+        }
+
         try {
             String villeArrivee = arrivalField.getText();
             Date dateCheckIn = Date.valueOf(travelDatePicker.getValue());
@@ -123,8 +143,8 @@ public class ReservationController {
 
             List<Hotel> availableHotels = serviceHotel.getAvailableHotels(villeArrivee, dateCheckIn, dateCheckOut, typeDeChambre);
 
-            hotelListView.getItems().clear();
-            hotelListView.getItems().addAll(availableHotels);
+            hotelComboBox.getItems().clear();
+            hotelComboBox.getItems().addAll(availableHotels);
 
             System.out.println("Nombre d'hôtels trouvés : " + availableHotels.size());
         } catch (Exception e) {
@@ -135,11 +155,30 @@ public class ReservationController {
     // Méthode pour valider la réservation
     @FXML
     public void handleSubmitReservation() {
+        // Contrôle de saisie pour les dates
+        if (travelDatePicker.getValue() == null || returnDatePicker.getValue() == null) {
+            showAlert("Erreur", "Veuillez sélectionner une date de départ et une date de retour.", Alert.AlertType.WARNING);
+            return;
+        }
+
+        if (travelDatePicker.getValue().isAfter(returnDatePicker.getValue())) {
+            showAlert("Erreur", "La date de départ doit être antérieure à la date de retour.", Alert.AlertType.WARNING);
+            return;
+        }
+
+        // Contrôle de saisie pour les lieux de départ et d'arrivée
+        if (!isValidLocation(departureField.getText()) || !isValidLocation(arrivalField.getText())) {
+            showAlert("Erreur", "Le lieu de départ et d'arrivée ne doivent pas contenir de chiffres ou de caractères spéciaux.", Alert.AlertType.WARNING);
+            return;
+        }
+
+        // Vérification des sélections
         if (selectedBillet == null || selectedVoiture == null || selectedHotel == null) {
             showAlert("Erreur", "Veuillez sélectionner un billet, une voiture et un hôtel.", Alert.AlertType.WARNING);
             return;
         }
 
+        // Confirmation de la réservation
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
         confirmationAlert.setTitle("Confirmation de réservation");
         confirmationAlert.setHeaderText("Confirmer la réservation");
@@ -148,6 +187,7 @@ public class ReservationController {
         ButtonType result = confirmationAlert.showAndWait().orElse(ButtonType.CANCEL);
 
         if (result == ButtonType.OK) {
+            // Créer la réservation
             Reservation reservation = new Reservation(
                     selectedVoiture.getId(),
                     selectedBillet.getId(),
@@ -158,29 +198,82 @@ public class ReservationController {
 
             serviceReservation.add(reservation);
 
-            // Envoyer un e-mail avec les informations de la réservation
-            String clientEmail = "oussemaxxj@gmail.com"; // Remplacez par l'e-mail du client
-            String subject = "Confirmation de votre réservation";
-            String content = "Votre réservation a été créée avec succès.\n\n" +
-                    "Détails de la réservation :\n" +
-                    "Billet : " + selectedBillet.getCompagnie() + " - " + selectedBillet.getPrix() + " €\n" +
-                    "Voiture : " + selectedVoiture.getMarque() + " " + selectedVoiture.getModele() + "\n" +
-                    "Hôtel : " + selectedHotel.getNom() + " - " + selectedHotel.getVille() + "\n";
+            // Envoyer l'e-mail de confirmation
+            String clientEmail = "yassin.abida@esprit.tn"; // E-mail du client
+            String subject = "Creation de réservation";
+
+            String htmlContent = "<!DOCTYPE html>\n" +
+                    "<html lang=\"fr\">\n" +
+                    "<head>\n" +
+                    "    <meta charset=\"UTF-8\">\n" +
+                    "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                    "    <title>Creation de réservation</title>\n" +
+                    "    <style>\n" +
+                    "        body { font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333; margin: 0; padding: 0; }\n" +
+                    "        .container { max-width: 600px; margin: 20px auto; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }\n" +
+                    "        h1 { color: #007BFF; text-align: center; }\n" +
+                    "        .welcome-message { font-size: 18px; margin-bottom: 20px; }\n" +
+                    "        .details { margin-bottom: 20px; }\n" +
+                    "        .details h2 { color: #007BFF; margin-bottom: 10px; }\n" +
+                    "        .details p { margin: 5px 0; }\n" +
+                    "        .footer { text-align: center; margin-top: 20px; font-size: 14px; color: #777; }\n" +
+                    "    </style>\n" +
+                    "</head>\n" +
+                    "<body>\n" +
+                    "    <div class=\"container\">\n" +
+                    "        <h1>Creation de réservation</h1>\n" +
+                    "        <div class=\"welcome-message\">\n" +
+                    "            Bonjour <strong>" + clientEmail + "</strong>,<br>\n" +
+                    "            Merci d'avoir choisi nos services. Voici les détails de votre réservation :\n" +
+                    "        </div>\n" +
+                    "        <div class=\"details\">\n" +
+                    "            <h2>Détails du billet d'avion</h2>\n" +
+                    "            <p><strong>Compagnie :</strong> " + selectedBillet.getCompagnie() + "</p>\n" +
+                    "            <p><strong>Prix :</strong> " + selectedBillet.getPrix() + " euro</p>\n" +
+                    "            <p><strong>Date de départ :</strong> " + travelDatePicker.getValue() + "</p>\n" +
+                    "            <p><strong>Date de retour :</strong> " + returnDatePicker.getValue() + "</p>\n" +
+                    "        </div>\n" +
+                    "        <div class=\"details\">\n" +
+                    "            <h2>Détails de la voiture</h2>\n" +
+                    "            <p><strong>Marque :</strong> " + selectedVoiture.getMarque() + "</p>\n" +
+                    "            <p><strong>Modèle :</strong> " + selectedVoiture.getModele() + "</p>\n" +
+                    "            <p><strong>Année :</strong> " + selectedVoiture.getAnnee() + "</p>\n" +
+                    "            <p><strong>Prix :</strong> " + selectedVoiture.getPrixParJour() + " euro</p>\n" +
+                    "        </div>\n" +
+                    "        <div class=\"details\">\n" +
+                    "            <h2>Détails de l'hôtel</h2>\n" +
+                    "            <p><strong>Nom :</strong> " + selectedHotel.getNom() + "</p>\n" +
+                    "            <p><strong>Ville :</strong> " + selectedHotel.getVille() + "</p>\n" +
+                    "            <p><strong>Type de chambre :</strong> " + typeChambreComboBox.getValue() + "</p>\n" +
+                    "            <p><strong>Prix :</strong> " + selectedHotel.getPrixParNuit() + " euro</p>\n" +
+                    "        </div>\n" +
+                    "        <div class=\"footer\">\n" +
+                    "            <p>Merci de nous faire confiance. Pour toute question, contactez-nous à <a href=\"mailto:support@travelpro.com\">support@travelpro.com</a>.</p>\n" +
+                    "        </div>\n" +
+                    "    </div>\n" +
+                    "</body>\n" +
+                    "</html>";
 
             EmailService emailService = new EmailService("yassin.abida00@gmail.com", "kbng hjxw ijwr zfhr");
-            emailService.sendEmail(clientEmail, subject, content);
+            emailService.sendEmail(clientEmail, subject, htmlContent);
 
-            System.out.println("Réservation créée avec succès !");
-            System.out.println("Billet : " + selectedBillet.getCompagnie() + " - " + selectedBillet.getPrix() + " €");
-            System.out.println("Voiture : " + selectedVoiture.getMarque() + " " + selectedVoiture.getModele());
-            System.out.println("Hôtel : " + selectedHotel.getNom() + " - " + selectedHotel.getVille());
+            // Afficher un message de confirmation
+            showAlert("Succès", "Réservation validée et e-mail envoyé avec succès !", Alert.AlertType.INFORMATION);
 
-            showAlert("Succès", "La réservation a été créée avec succès !", Alert.AlertType.INFORMATION);
+            // Actualiser le formulaire
             clearForm();
         } else {
             System.out.println("Création de la réservation annulée.");
         }
     }
+
+    // Méthode pour vérifier si un lieu est valide
+    private boolean isValidLocation(String location) {
+        // Expression régulière pour vérifier que le lieu ne contient pas de chiffres ou de caractères spéciaux
+        String regex = "^[a-zA-Z\\s]+$";
+        return location.matches(regex);
+    }
+
     // Méthode pour vider le formulaire
     private void clearForm() {
         departureField.clear();
@@ -189,9 +282,9 @@ public class ReservationController {
         returnDatePicker.setValue(null);
         classComboBox.getSelectionModel().clearSelection();
         typeChambreComboBox.getSelectionModel().clearSelection();
-        billetListView.getItems().clear();
-        voitureListView.getItems().clear();
-        hotelListView.getItems().clear();
+        billetComboBox.getItems().clear();
+        voitureComboBox.getItems().clear();
+        hotelComboBox.getItems().clear();
         selectedBillet = null;
         selectedVoiture = null;
         selectedHotel = null;

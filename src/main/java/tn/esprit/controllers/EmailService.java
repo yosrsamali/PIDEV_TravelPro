@@ -15,11 +15,11 @@ public class EmailService {
         this.password = password;
     }
 
-    public void sendEmail(String to, String subject, String content) {
+    public void sendEmail(String to, String subject, String htmlContent) {
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com"); // Utilisez le serveur SMTP de votre fournisseur
+        props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
 
         Session session = Session.getInstance(props, new Authenticator() {
@@ -34,12 +34,13 @@ public class EmailService {
             message.setFrom(new InternetAddress(username));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
             message.setSubject(subject);
-            message.setText(content);
+            message.setContent(htmlContent, "text/html");
 
+            System.out.println("Envoi de l'e-mail à : " + to);
             Transport.send(message);
-
             System.out.println("E-mail envoyé avec succès à " + to);
         } catch (MessagingException e) {
+            e.printStackTrace();
             throw new RuntimeException("Erreur lors de l'envoi de l'e-mail", e);
         }
     }

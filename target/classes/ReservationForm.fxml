@@ -5,7 +5,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -14,52 +13,64 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.ReservationController">
     <stylesheets>
         <URL value="@css/style.css" />
     </stylesheets>
-    <Label layoutX="436.0" layoutY="28.0" text="Formulaire de Réservation">
-        <font>
-            <Font name="System Bold" size="18.0" />
-        </font>
-    </Label>
 
-    <GridPane hgap="10" layoutX="229.0" layoutY="82.0" prefHeight="180.0" prefWidth="459.0" vgap="10">
+    <Text layoutX="706.0" layoutY="56.0" text="Formulaire de Réservation" textAlignment="CENTER">
+        <font>
+            <Font name="Arial Bold" size="25.0" />
+        </font>
+    </Text>
+
+    <GridPane hgap="10" layoutX="554.0" layoutY="94.0" prefHeight="180.0" prefWidth="459.0" vgap="10">
         <Label prefWidth="167.0" text="Lieu de Départ:" GridPane.columnIndex="0" GridPane.rowIndex="0">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="departureField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-
+        <TextField fx:id="departureField" promptText="Tunis" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+   
         <Label text="Lieu d'Arrivée:" GridPane.rowIndex="1">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="arrivalField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
+        <TextField fx:id="arrivalField" promptText="Paris" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+   
         <Label text="Date de Départ:" GridPane.rowIndex="2">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-        <DatePicker fx:id="travelDatePicker" prefHeight="26.0" prefWidth="295.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-
+        <DatePicker fx:id="travelDatePicker" prefHeight="26.0" prefWidth="295.0" promptText="12-12-2025" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+   
         <Label text="Date de Retour:" GridPane.rowIndex="3">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-        <DatePicker fx:id="returnDatePicker" prefHeight="26.0" prefWidth="295.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-
+        <DatePicker fx:id="returnDatePicker" prefHeight="26.0" prefWidth="295.0" promptText="22-12-2025" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+   
         <Label text="Classe du Billet:" GridPane.rowIndex="4">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Label>
         <ComboBox fx:id="classComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+   
+          <!-- Label pour le type de chambre -->
+       <Label text="Type de chambre:" GridPane.rowIndex="5">
+           <font>
+               <Font name="System Bold" size="14.0" />
+           </font>
+       </Label>
+   
+             <!-- ComboBox pour le type de chambre -->
+       <ComboBox fx:id="typeChambreComboBox" prefHeight="26.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
         <columnConstraints>
             <ColumnConstraints />
@@ -71,42 +82,39 @@
             <RowConstraints />
             <RowConstraints />
             <RowConstraints />
+         <RowConstraints />
         </rowConstraints>
     </GridPane>
 
     <!-- Bouton pour lancer la recherche des billets disponibles -->
-    <Button layoutX="81.0" layoutY="372.0" onAction="#handleSearchBillets" text="Rechercher Billet Avion" />
-
-    <!-- ListView pour afficher les résultats des billets -->
-    <ListView fx:id="billetListView" layoutX="46.0" layoutY="444.0" prefHeight="91.0" prefWidth="262.0" />
-
-    <!-- Bouton pour lancer la recherche des voitures disponibles -->
-    <Button layoutX="461.0" layoutY="373.0" onAction="#handleSearchVoiture" text="Rechercher Voiture" />
-
-    <!-- Label pour le type de chambre -->
-    <Label layoutX="216.0" layoutY="294.0" text="Type de chambre:">
-        <font>
-            <Font name="System Bold" size="14.0" />
-        </font>
-    </Label>
-
-    <!-- ComboBox pour le type de chambre -->
-    <ComboBox fx:id="typeChambreComboBox" layoutX="398.0" layoutY="291.0" prefHeight="26.0" prefWidth="150.0" />
-
-    <!-- Bouton pour lancer la recherche des hôtels disponibles -->
-    <Button fx:id="addCarButton" layoutX="821.0" layoutY="373.0" onAction="#handleSearchHotel" text="Rechercher Hôtel" />
-
+    <ComboBox fx:id="billetComboBox" layoutX="733.0" layoutY="400.0" prefHeight="26.0" prefWidth="262.0" />
+    <ComboBox fx:id="voitureComboBox" layoutX="733.0" layoutY="478.0" prefHeight="26.0" prefWidth="262.0" />
+    <ComboBox fx:id="hotelComboBox" layoutX="733.0" layoutY="553.0" prefHeight="26.0" prefWidth="262.0" />
     <!-- Bouton Valider la Réservation -->
-    <Button layoutX="455.0" layoutY="609.0" onAction="#handleSubmitReservation" text="Valider la Réservation" />
+    <Button layoutX="776.0" layoutY="594.0" onAction="#handleSubmitReservation" text="Valider la Réservation" />
 
     <!-- ListView pour afficher les résultats des voitures -->
-    <ListView fx:id="voitureListView" layoutX="420.0" layoutY="444.0" prefHeight="91.0" prefWidth="262.0" />
 
-    <!-- ListView pour afficher les résultats des hôtels -->
-    <ListView fx:id="hotelListView" layoutX="766.0" layoutY="444.0" prefHeight="91.0" prefWidth="262.0" />
     <!-- Bouton pour afficher les réservations -->
-    <Button layoutX="463.0" layoutY="700.0" onAction="#handleShowReservations" text="Afficher les réservations" />
-    <ImageView fitHeight="136.0" fitWidth="150.0" layoutX="10.0" layoutY="10.0">
-        <Image url="@images/logo.png"/>
+    <Button layoutX="767.0" layoutY="643.0" onAction="#handleShowReservations" text="Afficher les réservations" />
+   <Label layoutX="756.0" layoutY="381.0" text="liste des billets d'avion disponibles ">
+      <font>
+         <Font name="System Bold" size="14.0" />
+      </font>
+   </Label>
+   <Label layoutX="773.0" layoutY="459.0" text="liste des voitures disponibles ">
+      <font>
+         <Font name="System Bold" size="14.0" />
+      </font>
+   </Label>
+   <Label layoutX="778.0" layoutY="535.0" text="liste des hotels disponibles ">
+      <font>
+         <Font name="System Bold" size="14.0" />
+      </font>
+   </Label>
+    <ImageView fitHeight="720.0" fitWidth="512.0">
+        <image>
+            <Image url="@images/motive.png" />
+        </image>
     </ImageView>
 </AnchorPane>
