@@ -22,7 +22,7 @@
 
         <!-- Barre de recherche en haut à droite -->
         <TextField fx:id="searchField" layoutX="760.0" layoutY="20.0" onKeyReleased="#filtrageDepenses" promptText="Rechercher produit..." />
-        <Button layoutX="911.0" layoutY="11.0" onAction="#handleSearch" prefHeight="17.0" prefWidth="119.0" text="Rechercher" />
+        <Button layoutX="919.0" layoutY="11.0" onAction="#handleSearch" prefHeight="17.0" prefWidth="119.0" text="Rechercher" />
 
         <!-- ScrollPane pour afficher la liste des dépenses sous forme de CardView -->
         <ScrollPane fitToWidth="true" layoutX="50.0" layoutY="50.0" prefHeight="600.0" prefWidth="700.0">
@@ -37,7 +37,7 @@
         </ImageView>
 
         <Button layoutX="50.0" layoutY="656.0" onAction="#handleRevenue" text="Gérer Revenues" />
-
+        <Button fx:id="btnRetour" layoutX="237.0" layoutY="656.0" onAction="#retourHomeFinance" text="Retour" />
     </children>
 
 </AnchorPane>

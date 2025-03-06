@@ -1,6 +1,8 @@
 package tn.esprit.controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import tn.esprit.services.SendGridMailer;
 import tn.esprit.utils.MyDatabase;
 import javafx.fxml.FXML;
@@ -165,6 +167,24 @@ public class DeponseController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+    @FXML
+    private void retourHomeFinance(ActionEvent event) {
+        try {
+            // Charger la vue homefinance.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Homefinance.fxml"));
+            Parent root = loader.load();
+
+            // Obtenir la scène actuelle
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+
+            // Changer la scène avec celle de homefinance
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
