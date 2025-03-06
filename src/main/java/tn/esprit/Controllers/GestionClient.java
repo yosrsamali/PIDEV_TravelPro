@@ -198,6 +198,18 @@ public class GestionClient {
         // **Redirection vers `CodeVerifer.fxml` pour vérification**
         redirectToCodeVerifier(event);
     }
+    @FXML
+    private void handleRetour(MouseEvent event) throws IOException {
+        System.out.println("🔙 Retour vers user.fxml");
+
+        // Charger user.fxml
+        Parent root = FXMLLoader.load(getClass().getResource("/user.fxml"));
+
+        // Changer la scène vers user.fxml
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
 
     private void redirectToCodeVerifier(ActionEvent event) {
         try {
@@ -215,18 +227,7 @@ public class GestionClient {
         }
     }
 
-    @FXML
-    private void handleRetour(MouseEvent event) throws IOException {
-        System.out.println("🔙 Retour vers user.fxml");
 
-        // Charger user.fxml
-        Parent root = FXMLLoader.load(getClass().getResource("/user.fxml"));
-
-        // Changer la scène vers user.fxml
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
-    }
 
     private void afficherAlerte(String titre, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

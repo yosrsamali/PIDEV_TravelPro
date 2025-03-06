@@ -1,4 +1,4 @@
-package tn.esprit.Controllers;
+package tn.esprit.Controllers.contolleruser;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,6 +7,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import tn.esprit.Controllers.GestionClient;
 import tn.esprit.interfaces.IService;
 import tn.esprit.models.Utilisateur;
 import tn.esprit.services.ServiceUtilisateur;

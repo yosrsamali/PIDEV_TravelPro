@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="640.0" prefWidth="1024.0" stylesheets="@style2.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.Controllers.GestionUtulisateur">
+<AnchorPane prefHeight="640.0" prefWidth="1024.0" stylesheets="@style2.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.Controllers.contolleruser.GestionUtulisateur">
    <children>
       <!-- Image d’arrière-plan -->
       <ImageView fitHeight="640.0" fitWidth="512.0">

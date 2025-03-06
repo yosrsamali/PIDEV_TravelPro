@@ -8,6 +8,16 @@ public class DemandeValidation {
     private String statut;
     private LocalDateTime dateDemande;
     private String nomClient;
+    static String password=null;
+
+    public String getpassword() {
+        return password;
+    }
+
+    public void setpassword(String password) {
+        this.password = password;
+    }
+
 
     public String getNomClient() {
         return nomClient;
