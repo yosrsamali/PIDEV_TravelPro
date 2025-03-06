@@ -1,4 +1,4 @@
-package tn.esprit.controllers;
+package tn.esprit.controllers.controllerGestoinAchats;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.AjouterProduit">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.controllerGestoinAchats.AjouterProduit">
    <children>
       <TextField fx:id="tfNomProduit" layoutX="205.0" layoutY="102.0" />
       <TextField fx:id="tfPrixProduit" layoutX="205.0" layoutY="161.0" />

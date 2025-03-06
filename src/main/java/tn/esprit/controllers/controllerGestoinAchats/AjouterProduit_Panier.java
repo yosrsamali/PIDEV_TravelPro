@@ -1,4 +1,4 @@
-package tn.esprit.controllers;
+package tn.esprit.controllers.controllerGestoinAchats;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

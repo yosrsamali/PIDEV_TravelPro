@@ -1,4 +1,4 @@
-package tn.esprit.controllers;
+package tn.esprit.controllers.controllerGestoinAchats;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

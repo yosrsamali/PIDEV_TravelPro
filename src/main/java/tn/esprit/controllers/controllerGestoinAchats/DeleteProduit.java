@@ -1,4 +1,4 @@
-package tn.esprit.controllers;
+package tn.esprit.controllers.controllerGestoinAchats;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

@@ -175,4 +175,17 @@ public class ServicePanier implements IService<Panier> {
         }
     }
 
+    // Method to clear all items from the cart
+    public void clearCart(int panierId) {
+        try {
+            String query = "DELETE FROM panier_produit WHERE id_panier = ?";
+            PreparedStatement stmt = cnx.prepareStatement(query);
+            stmt.setInt(1, panierId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

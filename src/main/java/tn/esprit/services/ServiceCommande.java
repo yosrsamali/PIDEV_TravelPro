@@ -15,8 +15,9 @@ public class ServiceCommande implements IService<Commande> {
     public ServiceCommande() {
         cnx = MyDatabase.getInstance().getCnx();
     }
-    // Add a new order
 
+
+    // Add a new order
     public void add(Commande commande) {
         try {
             String query = "INSERT INTO commande (id_client, montant_total, date_commande, status) VALUES (?, ?, NOW(), ?)";
@@ -30,22 +31,24 @@ public class ServiceCommande implements IService<Commande> {
             if (generatedKeys.next()) {
                 int idCommande = generatedKeys.getInt(1);
                 commande.setIdCommande(idCommande);
-                for (CommandeProduit cp : commande.getProduits()) {
-                    addCommandeProduit(idCommande, cp);
-                }
             }
+
+            // After adding the order, add products to the order
+            for (CommandeProduit commandeProduit : commande.getProduits()) {
+                addCommandeProduit(commandeProduit, commande.getIdCommande());
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    // Add products to the order
-    private void addCommandeProduit(int idCommande, CommandeProduit cp) {
+    // Add products to the order (CommandeProduit)
+    public void addCommandeProduit(CommandeProduit cp, int idCommande) {
         try {
             String query = "INSERT INTO commande_produit (id_commande, id_produit, quantite, prix_vente) VALUES (?, ?, ?, ?)";
-
             PreparedStatement stmt = cnx.prepareStatement(query);
-            stmt.setInt(1, idCommande);
+            stmt.setInt(1, idCommande);  // Use the idCommande of the current order
             stmt.setInt(2, cp.getIdProduit());
             stmt.setInt(3, cp.getQuantite());
             stmt.setDouble(4, cp.getPrixVente());
@@ -82,12 +85,12 @@ public class ServiceCommande implements IService<Commande> {
 
     @Override
     public void update(Commande commande) {
-
+        // Implement the update functionality if needed
     }
 
     @Override
     public void delete(Commande commande) {
-
+        // Implement the delete functionality if needed
     }
 
     // Get products for a specific order
