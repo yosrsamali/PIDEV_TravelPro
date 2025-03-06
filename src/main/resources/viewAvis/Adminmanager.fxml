@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.controllerAvis.Adminmanager">
+    <children>
+        <!-- Button to show non-accepted reviews -->
+        <Button fx:id="btnAfficherAvisNonAcceptes" layoutX="232.0" layoutY="187.0" onAction="#afficherAvisNonAcceptes" text="Afficher Avis Non Acceptés" />
+
+        <!-- Button to navigate to the "Ajouter Avis" page -->
+        <Button fx:id="btnAjouterAvis" layoutX="272.0" layoutY="122.0" mnemonicParsing="false" onAction="#goToAjouterAvis" text="Ajouter Avis" />
+
+        <!-- Button to show accepted reviews -->
+        <Button fx:id="btnAfficherAvisAcceptes" layoutX="219.0" layoutY="248.0" mnemonicParsing="false" onAction="#afficherAvisAcceptes" text="Afficher la liste des Avis Acceptés" />
+
+        <!-- VBox container for adding review cards dynamically -->
+        <VBox fx:id="avisContainer" spacing="10" layoutX="20.0" layoutY="300.0" prefWidth="560.0">
+            <!-- The review cards will be added here dynamically -->
+        </VBox>
+
+    </children>
+</AnchorPane>

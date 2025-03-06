@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@style.css" fx:controller="tn.esprit.controllers.AvisController">
+<StackPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@style.css" fx:controller="tn.esprit.controllers.controllerAvis.AvisController">
    <!-- Conteneur principal centré -->
    <VBox alignment="CENTER" spacing="10" style="-fx-padding: 20;">
       <!-- Titre -->

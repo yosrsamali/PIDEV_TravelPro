@@ -1,4 +1,4 @@
-package tn.esprit.controllers;
+package tn.esprit.controllers.controllerAvis;
 
 import tn.esprit.models.Avis;
 import tn.esprit.models.Reponse;
