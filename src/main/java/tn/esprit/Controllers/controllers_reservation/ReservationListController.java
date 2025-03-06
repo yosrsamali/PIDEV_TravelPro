@@ -4,8 +4,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
+import tn.esprit.models.Client;
 import tn.esprit.models.Reservation;
+import tn.esprit.models.Utilisateur;
 import tn.esprit.services.ServiceReservation;
+import tn.esprit.utils.SessionManager;
 
 import java.util.List;
 
@@ -13,9 +16,17 @@ public class ReservationListController {
 
     @FXML
     private ListView<Reservation> reservationListView;
-
+    private int getClientId() {
+        Utilisateur utilisateur = SessionManager.getInstance().getUtilisateurConnecte();
+        System.out.println("utilisateur====" );
+        System.out.println( utilisateur );
+        if (utilisateur instanceof Client) {
+            return ((Client) utilisateur).getIdClient();
+        }
+        return -1; // Retourne -1 si l'utilisateur n'est pas un client
+    }
     private ServiceReservation serviceReservation = new ServiceReservation();
-    private int clientId = 45; // Remplacez par l'ID du client connecté
+    private int clientId = getClientId(); // Remplacez par l'ID du client connecté
 
     @FXML
     public void initialize() {

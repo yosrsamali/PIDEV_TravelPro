@@ -10,14 +10,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import tn.esprit.models.Reservation;
-import tn.esprit.models.Voiture;
-import tn.esprit.models.BilletAvion;
-import tn.esprit.models.Hotel;
-import tn.esprit.services.ServiceReservation;
-import tn.esprit.services.ServiceVoiture;
-import tn.esprit.services.ServiceBilletAvion;
-import tn.esprit.services.ServiceHotel;
+import tn.esprit.models.*;
+import tn.esprit.services.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -47,7 +41,8 @@ public class GestionReservation {
             reservationContainer.getChildren().add(card);
         }
     }
-
+    private final ServiceUtilisateur serviceUtilisateur = new ServiceUtilisateur();
+    private final ServiceClient serviceClient = new ServiceClient();
     private VBox creerCarteReservation(Reservation reservation) {
         VBox card = new VBox(10);
         card.setStyle("-fx-border-color: black; -fx-border-radius: 10; -fx-padding: 10; -fx-background-color: #f4f4f4;");
@@ -82,8 +77,20 @@ public class GestionReservation {
         }
         hotelLabel.setFont(new Font(14));
 
-        // Détails du client (on garde l'ID pour l'instant)
-        Label clientLabel = new Label("Client: ID " + reservation.getId_client());
+        // Détails du client (nom au lieu de l'ID)
+        Label clientLabel;
+        Client client = serviceClient.getById(reservation.getId_client());
+        if (client != null) {
+            // Récupérer l'utilisateur associé au client
+            Utilisateur utilisateur = serviceUtilisateur.getById(client.getId());
+            if (utilisateur != null) {
+                clientLabel = new Label("Client: " + utilisateur.getNom() + " " + utilisateur.getPrenom());
+            } else {
+                clientLabel = new Label("Client: Inconnu");
+            }
+        } else {
+            clientLabel = new Label("Client: Inconnu");
+        }
         clientLabel.setFont(new Font(14));
 
         // Statut

@@ -134,16 +134,16 @@ public class ModifierReservationController {
                 "</head>\n" +
                 "<body>\n" +
                 "    <div class=\"container\">\n" +
-                "        <h1>Confirmation de réservation</h1>\n" +
+                "        <h1>Confirmation de reservation</h1>\n" +
                 "        <div class=\"welcome-message\">\n" +
                 "            Bonjour,<br>\n" +
-                "            Votre réservation a été confirmée avec succès. Voici les détails :\n" +
+                "            Votre reservation a ete confirmee avec succes. Voici les details :\n" +
                 "        </div>\n" +
                 "        <div class=\"details\">\n" +
-                "            <h2>Détails de la réservation</h2>\n" +
+                "            <h2>Details de la reservation</h2>\n" +
                 "            <p><strong>Voiture :</strong> " + lblIdVoiture.getText() + "</p>\n" +
                 "            <p><strong>Billet d'avion :</strong> " + lblIdBilletAvion.getText() + "</p>\n" +
-                "            <p><strong>Hôtel :</strong> " + lblIdHotel.getText() + "</p>\n" +
+                "            <p><strong>Hotel :</strong> " + lblIdHotel.getText() + "</p>\n" +
                 "        </div>\n" +
                 "        <div class=\"footer\">\n" +
                 "            <p>Merci de nous faire confiance. Pour toute question, contactez-nous à <a href=\"mailto:support@travelpro.com\">support@travelpro.com</a>.</p>\n" +
@@ -173,16 +173,16 @@ public class ModifierReservationController {
                 "</head>\n" +
                 "<body>\n" +
                 "    <div class=\"container\">\n" +
-                "        <h1>Annulation de réservation</h1>\n" +
+                "        <h1>Annulation de reservation</h1>\n" +
                 "        <div class=\"welcome-message\">\n" +
                 "            Bonjour,<br>\n" +
-                "            Nous vous informons que votre réservation a été annulée. Voici les détails :\n" +
+                "            Nous vous informons que votre réservation a ete annulee. Voici les détails :\n" +
                 "        </div>\n" +
                 "        <div class=\"details\">\n" +
-                "            <h2>Détails de la réservation</h2>\n" +
+                "            <h2>Details de la reservation</h2>\n" +
                 "            <p><strong>Voiture :</strong> " + lblIdVoiture.getText() + "</p>\n" +
                 "            <p><strong>Billet d'avion :</strong> " + lblIdBilletAvion.getText() + "</p>\n" +
-                "            <p><strong>Hôtel :</strong> " + lblIdHotel.getText() + "</p>\n" +
+                "            <p><strong>Hotel :</strong> " + lblIdHotel.getText() + "</p>\n" +
                 "        </div>\n" +
                 "        <div class=\"footer\">\n" +
                 "            <p>Pour toute question, contactez-nous à <a href=\"mailto:support@travelpro.com\">support@travelpro.com</a>.</p>\n" +

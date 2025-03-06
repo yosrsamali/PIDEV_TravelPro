@@ -14,6 +14,9 @@ import tn.esprit.services.ServiceBilletAvion;
 import tn.esprit.services.ServiceHotel;
 import tn.esprit.services.ServiceReservation;
 import tn.esprit.services.ServiceVoiture;
+import tn.esprit.utils.SessionManager;
+import tn.esprit.models.Utilisateur;
+import tn.esprit.models.Client;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -178,6 +181,17 @@ public class ReservationController {
             return;
         }
 
+        // Récupérer l'ID du client connecté
+        int clientId = getClientId();
+        if (clientId == -1) {
+            showAlert("Erreur", "Aucun client connecté.", Alert.AlertType.WARNING);
+            return;
+        }
+        System.out.println("id clientId" );
+        System.out.println( clientId );
+
+
+
         // Confirmation de la réservation
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
         confirmationAlert.setTitle("Confirmation de réservation");
@@ -187,12 +201,12 @@ public class ReservationController {
         ButtonType result = confirmationAlert.showAndWait().orElse(ButtonType.CANCEL);
 
         if (result == ButtonType.OK) {
-            // Créer la réservation
+            // Créer la réservation avec l'ID du client connecté
             Reservation reservation = new Reservation(
                     selectedVoiture.getId(),
                     selectedBillet.getId(),
                     selectedHotel.getId(),
-                    45,  // id_client (à remplacer par l'ID du client connecté)
+                    clientId,  // Utilisation de l'ID du client connecté
                     "En attente"
             );
 
@@ -221,27 +235,27 @@ public class ReservationController {
                     "</head>\n" +
                     "<body>\n" +
                     "    <div class=\"container\">\n" +
-                    "        <h1>Creation de réservation</h1>\n" +
+                    "        <h1>Creation de reservation</h1>\n" +
                     "        <div class=\"welcome-message\">\n" +
                     "            Bonjour <strong>" + clientEmail + "</strong>,<br>\n" +
-                    "            Merci d'avoir choisi nos services. Voici les détails de votre réservation :\n" +
+                    "            Merci d'avoir choisi nos services. Voici les details de votre reservation :\n" +
                     "        </div>\n" +
                     "        <div class=\"details\">\n" +
-                    "            <h2>Détails du billet d'avion</h2>\n" +
+                    "            <h2>Details du billet d'avion</h2>\n" +
                     "            <p><strong>Compagnie :</strong> " + selectedBillet.getCompagnie() + "</p>\n" +
                     "            <p><strong>Prix :</strong> " + selectedBillet.getPrix() + " euro</p>\n" +
-                    "            <p><strong>Date de départ :</strong> " + travelDatePicker.getValue() + "</p>\n" +
+                    "            <p><strong>Date de depart :</strong> " + travelDatePicker.getValue() + "</p>\n" +
                     "            <p><strong>Date de retour :</strong> " + returnDatePicker.getValue() + "</p>\n" +
                     "        </div>\n" +
                     "        <div class=\"details\">\n" +
-                    "            <h2>Détails de la voiture</h2>\n" +
+                    "            <h2>Details de la voiture</h2>\n" +
                     "            <p><strong>Marque :</strong> " + selectedVoiture.getMarque() + "</p>\n" +
-                    "            <p><strong>Modèle :</strong> " + selectedVoiture.getModele() + "</p>\n" +
-                    "            <p><strong>Année :</strong> " + selectedVoiture.getAnnee() + "</p>\n" +
+                    "            <p><strong>Modele :</strong> " + selectedVoiture.getModele() + "</p>\n" +
+                    "            <p><strong>Annee :</strong> " + selectedVoiture.getAnnee() + "</p>\n" +
                     "            <p><strong>Prix :</strong> " + selectedVoiture.getPrixParJour() + " euro</p>\n" +
                     "        </div>\n" +
                     "        <div class=\"details\">\n" +
-                    "            <h2>Détails de l'hôtel</h2>\n" +
+                    "            <h2>Details de l'hotel</h2>\n" +
                     "            <p><strong>Nom :</strong> " + selectedHotel.getNom() + "</p>\n" +
                     "            <p><strong>Ville :</strong> " + selectedHotel.getVille() + "</p>\n" +
                     "            <p><strong>Type de chambre :</strong> " + typeChambreComboBox.getValue() + "</p>\n" +
@@ -265,6 +279,17 @@ public class ReservationController {
         } else {
             System.out.println("Création de la réservation annulée.");
         }
+    }
+
+    // Méthode pour récupérer l'ID du client connecté
+    private int getClientId() {
+        Utilisateur utilisateur = SessionManager.getInstance().getUtilisateurConnecte();
+        System.out.println("utilisateur====" );
+        System.out.println( utilisateur );
+        if (utilisateur instanceof Client) {
+            return ((Client) utilisateur).getIdClient();
+        }
+        return -1; // Retourne -1 si l'utilisateur n'est pas un client
     }
 
     // Méthode pour vérifier si un lieu est valide

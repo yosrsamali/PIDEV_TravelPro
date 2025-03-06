@@ -100,14 +100,14 @@ public class ServiceVoiture implements IService<Voiture> {
 
             if (rs.next()) {
                 return new Voiture(
-                        rs.getInt("id"),
+                        rs.getInt("id_voiture"),  // Assurez-vous que c'est le bon nom de colonne
                         rs.getString("marque"),
                         rs.getString("modele"),
                         rs.getInt("annee"),
                         rs.getDouble("prixParJour"),
                         rs.getBoolean("disponible"),
-                        rs.getDate("dateDeLocation"), // Nouvelle colonne
-                        rs.getDate("dateDeRemise")    // Nouvelle colonne
+                        rs.getDate("dateDeLocation"),
+                        rs.getDate("dateDeRemise")
                 );
             }
         } catch (SQLException e) {

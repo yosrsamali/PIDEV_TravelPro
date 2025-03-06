@@ -93,7 +93,7 @@ public class ServiceBilletAvion implements IService<BilletAvion> {
 
             if (rs.next()) {
                 return new BilletAvion(
-                        rs.getInt("id"),
+                        rs.getInt("id_billetavion"),  // Assurez-vous que c'est le bon nom de colonne
                         rs.getString("compagnie"),
                         rs.getString("class_Billet"),
                         rs.getString("villeDepart"),

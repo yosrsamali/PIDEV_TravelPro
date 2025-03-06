@@ -65,7 +65,7 @@
 
               <!-- Section avec les nouveaux boutons sous la première VBox -->
               <HBox alignment="TOP_CENTER" spacing="10">
-               <Button mnemonicParsing="false" onAction="#Veruser" text="Supprimer2" />
+               <Button mnemonicParsing="false" onAction="#Veruser" text="Reservation" />
                <Button fx:id="btnAjouter3" onAction="#Verclient" text="Demande Admin2" />
                <Button mnemonicParsing="false" onAction="#handleModifier" text="Modifier2" />
             </HBox>
