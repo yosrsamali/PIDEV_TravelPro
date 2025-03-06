@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.ReponseController">
+    <children>
+        <!-- Barre supérieure avec titre et bouton de filtrage -->
+        <HBox layoutX="50.0" layoutY="28.0" prefWidth="700.0" spacing="10">
+            <!-- Bouton Filtrage aligné à droite -->
+            <AnchorPane>
+                <Button fx:id="btnFiltrage" layoutX="600.0" layoutY="5.0" text="Filtrage" onAction="#filterByNote" />
+            </AnchorPane>
+        </HBox>
+
+        <!-- ScrollPane contenant une VBox pour les cartes -->
+        <ScrollPane layoutX="50.0" layoutY="80.0" prefHeight="400.0" prefWidth="700.0">
+            <content>
+                <VBox fx:id="cardList" spacing="10.0">
+                    <!-- Les cartes des avis acceptés seront ajoutées ici -->
+                </VBox>
+            </content>
+        </ScrollPane>
+
+        <!-- Titre Avis -->
+        <Label layoutX="349.0" layoutY="18.0" text="Avis">
+            <font>
+                <Font size="37.0" />
+            </font>
+        </Label>
+    </children>
+</AnchorPane>
