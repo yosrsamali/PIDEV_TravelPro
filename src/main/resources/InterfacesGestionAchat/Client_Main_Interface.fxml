@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="720" prefWidth="1280" style="-fx-background-color: #088395;" styleClass="root" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.controllerGestoinAchats.ClientMainInterface">
+<AnchorPane prefHeight="720" prefWidth="1280" style="-fx-background-color: #088395;" styleClass="root" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.controllerGestoinAchats.ClientMainInterface">
 <children>
     <!-- Go Back Button -->
     <Button fx:id="btngoback2" layoutX="14.0" layoutY="31.0" prefHeight="30.0" prefWidth="126.0" styleClass="button" text="← Back " />
@@ -33,7 +33,7 @@
     </VBox>
       <ImageView fitHeight="259.0" fitWidth="295.0" layoutX="540.0" layoutY="76.0">
          <image>
-            <Image url="@images/logo.png" />
+            <Image url="@../images/logo.png" />
          </image>
       </ImageView>
 </children>

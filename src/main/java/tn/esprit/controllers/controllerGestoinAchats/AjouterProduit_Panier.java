@@ -1,7 +1,5 @@
 package tn.esprit.controllers.controllerGestoinAchats;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -115,7 +113,7 @@ public class AjouterProduit_Panier {
 
     private void goBackToMain() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Client_Main_Interface.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/InterfacesGestionAchat/Client_Main_Interface.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) btnBack.getScene().getWindow();
             stage.setScene(new Scene(root));

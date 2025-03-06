@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
-import java.io.IOException;
 
 public class ClientMainInterface {
 
@@ -19,9 +18,9 @@ public class ClientMainInterface {
 
     @FXML
     public void initialize() {
-        btnManageCart.setOnAction(event -> switchScene("Client_Manages_Panier_Interface.fxml"));
-        btnViewStore.setOnAction(event -> switchScene("Client_Afficher_Boutique_Interface.fxml"));
-        btngoback2.setOnAction(event -> switchScene("Main_Interface.fxml"));
+        btnManageCart.setOnAction(event -> switchScene("InterfacesGestionAchat/Client_Manages_Panier_Interface.fxml"));
+        btnViewStore.setOnAction(event -> switchScene("InterfacesGestionAchat/Client_Afficher_Boutique_Interface.fxml"));
+        btngoback2.setOnAction(event -> switchScene("InterfacesGestionAchat/Main_Interface.fxml"));
     }
 
     private void switchScene(String fxmlFile) {

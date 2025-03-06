@@ -1,9 +1,7 @@
 package tn.esprit.controllers.controllerGestoinAchats;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,8 +17,8 @@ public class MainInterface {
 
     @FXML
     public void initialize() {
-        btnAdminInterface.setOnAction(event -> switchScene("Admin_Main_Interface.fxml"));
-        btnClientInterface.setOnAction(event -> switchScene("Client_Main_Interface.fxml"));
+        btnAdminInterface.setOnAction(event -> switchScene("InterfacesGestionAchat/Admin_Main_Interface.fxml"));
+        btnClientInterface.setOnAction(event -> switchScene("InterfacesGestionAchat/Client_Main_Interface.fxml"));
     }
 
     private void switchScene(String fxmlFile) {

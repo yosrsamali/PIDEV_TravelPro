@@ -4,8 +4,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.io.File;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +16,6 @@ import javafx.stage.Stage;
 import tn.esprit.models.Produit;
 import tn.esprit.services.ServiceProduit;
 
-import java.io.File;
 import java.io.IOException;
 
 public class AdminManagesProduit {
@@ -45,7 +42,7 @@ public class AdminManagesProduit {
 
     @FXML
     public void initialize() {
-        btnGoToAdminMainInterface.setOnAction(event -> switchScene("Admin_Main_Interface.fxml"));
+        btnGoToAdminMainInterface.setOnAction(event -> switchScene("InterfacesGestionAchat/Admin_Main_Interface.fxml"));
         loadProductCards();
 
         // Ensure only numbers (with decimals) for Prix Achat
@@ -82,7 +79,7 @@ public class AdminManagesProduit {
 
     @FXML
     public void goBack(ActionEvent event) {
-        switchScene("Admin_Main_Interface.fxml");
+        switchScene("InterfacesGestionAchat/Admin_Main_Interface.fxml");
     }
 
     @FXML

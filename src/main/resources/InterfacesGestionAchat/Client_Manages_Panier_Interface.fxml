@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="720" prefWidth="1280" style="-fx-background-color: #088395;" styleClass="root" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.controllerGestoinAchats.ModifierPanier">
+<AnchorPane prefHeight="720" prefWidth="1280" style="-fx-background-color: #088395;" styleClass="root" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.controllerGestoinAchats.ModifierPanier">
 
     <!-- Main Card Container -->
     <VBox alignment="CENTER" layoutX="246.0" layoutY="77.0" prefHeight="583.0" prefWidth="946.0" spacing="30" styleClass="card">

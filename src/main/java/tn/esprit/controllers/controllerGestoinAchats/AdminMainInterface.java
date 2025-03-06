@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
-import java.io.IOException;
 
 public class AdminMainInterface {
 
@@ -21,9 +20,9 @@ public class AdminMainInterface {
 
     @FXML
     public void initialize() {
-        btnManageProducts.setOnAction(event -> switchScene("Admin_Manages_Produit_Interface.fxml"));
-        btnViewOrders.setOnAction(event -> switchScene("Admin_Afficher_Commande_Interface.fxml"));
-        btngoback.setOnAction(event -> switchScene("Main_Interface.fxml"));
+        btnManageProducts.setOnAction(event -> switchScene("InterfacesGestionAchat/Admin_Manages_Produit_Interface.fxml"));
+        btnViewOrders.setOnAction(event -> switchScene("InterfacesGestionAchat/Admin_Afficher_Commande_Interface.fxml"));
+        btngoback.setOnAction(event -> switchScene("InterfacesGestionAchat/Main_Interface.fxml"));
     }
 
     private void switchScene(String fxmlFile) {

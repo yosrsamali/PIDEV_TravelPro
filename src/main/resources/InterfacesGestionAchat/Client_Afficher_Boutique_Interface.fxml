@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="720" prefWidth="1280" style="-fx-background-color: #088395;" styleClass="root" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.controllerGestoinAchats.AjouterProduit_Panier">
+<AnchorPane prefHeight="720" prefWidth="1280" style="-fx-background-color: #088395;" styleClass="root" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.controllerGestoinAchats.AjouterProduit_Panier">
 
     <!-- Main Container -->
     <VBox alignment="CENTER" layoutX="173.0" layoutY="23.0" prefHeight="674.0" prefWidth="1078.0" spacing="20" styleClass="card">
@@ -48,7 +48,7 @@
     <!-- Logo -->
     <ImageView fitHeight="107.0" fitWidth="134.0" layoutX="14.0" layoutY="23.0">
         <image>
-            <Image url="@images/logo_with_name.png" />
+            <Image url="@../images/logo_with_name.png" />
         </image>
     </ImageView>
 

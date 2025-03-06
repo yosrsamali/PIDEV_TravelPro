@@ -105,7 +105,7 @@ public class ModifierPanier {
         panierId = 1; // Replace with dynamic value if needed
         loadCart(panierId);
 
-        btnBackToMain.setOnAction(event -> switchScene("Client_Main_Interface.fxml"));
+        btnBackToMain.setOnAction(event -> switchScene("InterfacesGestionAchat/Client_Main_Interface.fxml"));
     }
 
     // Load cart items for the given panier
