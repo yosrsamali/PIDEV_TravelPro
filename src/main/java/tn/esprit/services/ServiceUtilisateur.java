@@ -36,6 +36,7 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
             if (rowsAffected > 0) {
                 ResultSet generatedKeys = pstm.getGeneratedKeys();
                 if (generatedKeys.next()) {
+                    utilisateur.setEtat(false);
                     utilisateur.setId(generatedKeys.getInt(1)); // Récupération de l'ID auto-généré
                 }
             }
@@ -125,6 +126,7 @@ public class ServiceUtilisateur implements IService<Utilisateur> {
                 // Vérification du mot de passe
                 if (BCrypt.checkpw(password, motDePasseHache)) {
                     utilisateur = new Utilisateur();
+                    utilisateur.setEtat(rs.getBoolean("etat"));
                     utilisateur.setId(rs.getInt("id_utilisateur"));
                     utilisateur.setNom(rs.getString("nom_utilisateur"));
                     utilisateur.setPrenom(rs.getString("prenom"));

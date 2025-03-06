@@ -76,12 +76,13 @@ public class GestionConnecter {
 
         if (utilisateur != null) {
             System.out.println("✅ Connexion réussie : " + utilisateur.getNom() + " " + utilisateur.getPrenom());
+            System.out.println("✅ Connexion réussie : " + utilisateur);
 
             FXMLLoader loader;
             Parent root;
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            if ("Admin".equals(utilisateur.getRole())) {
+            if ("Admin".equals(utilisateur.getRole())&&(utilisateur.getEtat())) {
                 // Récupérer les détails de l'Admin
                 Admin adminDetails = sa.getAdminParIdUtilisateur(utilisateur.getId());
                 adminDetails.setMail(utilisateur.getMail());
@@ -98,7 +99,15 @@ public class GestionConnecter {
                 // Passer les données au contrôleur
                 GereAdmin adminController = loader.getController();
                 // adminController.ajouterdonner(adminDetails, utilisateur);
-            } else {
+
+
+                // Changer de scène
+                stage.setScene(new Scene(root));
+                stage.setTitle("Espace " + utilisateur.getRole());
+                stage.show();
+
+
+            } else if (utilisateur.getEtat()) {
                 // Récupérer les détails du Client
                 Client clientDetails = sc.getClientParIdUtilisateur(utilisateur.getId());
 
@@ -116,12 +125,15 @@ public class GestionConnecter {
                 // Passer les données au contrôleur
                 Gereclient clientController = loader.getController();
                 // clientController.ajouterdonner(clientDetails, utilisateur);
+
+
+
+                // Changer de scène
+                stage.setScene(new Scene(root));
+                stage.setTitle("Espace " + utilisateur.getRole());
+                stage.show();
             }
 
-            // Changer de scène
-            stage.setScene(new Scene(root));
-            stage.setTitle("Espace " + utilisateur.getRole());
-            stage.show();
         } else {
             afficherAlerte("Échec de connexion", "Email ou mot de passe incorrect !");
             lblPasswordError.setText("Mot de passe incorrect");
