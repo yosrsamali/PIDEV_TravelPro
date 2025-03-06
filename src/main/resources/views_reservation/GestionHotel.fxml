@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.Controllers.controllers_reservation.GestionHotel">
+   <stylesheets>
+      <URL value="@../css/style.css" />
+   </stylesheets>
+   <children>
+      <!-- Labels et champs pour les informations de l'hôtel -->
+      <Label layoutX="629.0" layoutY="157.0" prefHeight="30.0" prefWidth="81.0" text="Nom:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfNom" layoutX="737.0" layoutY="152.0" promptText="ex: LAYCO" />
+
+      <Label layoutX="628.0" layoutY="203.0" prefHeight="30.0" prefWidth="91.0" text="Ville:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfVille" layoutX="736.0" layoutY="198.0" promptText="ex: TUNIS" />
+
+      <Label layoutX="581.0" layoutY="249.0" prefHeight="30.0" prefWidth="122.0" text="Nombre d'étoiles:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <TextField fx:id="tfNombreEtoile" layoutX="737.0" layoutY="244.0" promptText="ex: 5" />
+
+      <Label layoutX="581.0" layoutY="293.0" prefHeight="30.0" prefWidth="122.0" text="Type de chambre:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <TextField fx:id="tfTypeDeChambre" layoutX="736.0" layoutY="289.0" promptText="ex: single" />
+
+      <Label layoutX="596.0" layoutY="335.0" prefHeight="30.0" prefWidth="91.0" text="Prix par nuit:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <TextField fx:id="tfPrixParNuit" layoutX="737.0" layoutY="334.0" promptText="ex: 150.0" />
+
+      <Label layoutX="603.0" layoutY="384.0" prefHeight="30.0" prefWidth="91.0" text="Disponibilité:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <TextField fx:id="tfDisponible" layoutX="737.0" layoutY="379.0" promptText="Oui/Non" />
+
+      <!-- Nouveaux champs pour Date Check-In et Check-Out -->
+      <Label layoutX="587.0" layoutY="429.0" prefHeight="30.0" prefWidth="150.0" text="Date Check-In:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <DatePicker fx:id="dpDateCheckIn" layoutX="737.0" layoutY="425.0" prefHeight="42.0" prefWidth="181.0" promptText="Date Check-In" />
+
+      <Label layoutX="586.0" layoutY="470.0" prefHeight="30.0" prefWidth="150.0" text="Date Check-Out:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <DatePicker fx:id="dpDateCheckOut" layoutX="737.0" layoutY="471.0" prefHeight="42.0" prefWidth="181.0" promptText="Date Check-Out" />
+
+      <!-- Titre -->
+      <Text layoutX="736.0" layoutY="124.0" text="Ajout d'un Hôtel" textAlignment="CENTER">
+         <font>
+            <Font name="Arial Bold" size="25.0" />
+         </font>
+      </Text>
+
+      <!-- Boutons -->
+      <Button layoutX="719.0" layoutY="545.0" onAction="#ajouterHotel" prefHeight="30.0" prefWidth="111.0" text="Ajouter" />
+      <Button layoutX="870.0" layoutY="544.0" onAction="#handleNaviguerAffichage" prefHeight="30.0" prefWidth="111.0" text="Afficher" />
+      <ImageView fitHeight="720.0" fitWidth="512.0">
+         <image>
+            <Image url="@../images/motive.png" />
+         </image>
+      </ImageView>
+
+
+
+   </children>
+   
+</AnchorPane>
