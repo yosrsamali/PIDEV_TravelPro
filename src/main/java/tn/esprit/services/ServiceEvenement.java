@@ -18,39 +18,9 @@ public class ServiceEvenement implements IService {
 
 
 
-    /*public void add(evenement event) {
-        if (event.getDateDebutE() == null || event.getDateFinE() == null) {
-            System.out.println("❌ Erreur : Les dates ne doivent pas être null !");
-            return;
-        }
-
-        System.out.println("Ajout de la réservation avec : " +
-                "Date de début = " + event.getDateDebutE() +
-                ", Date de fin = " + event.getDateFinE());
-
-        String qry = "INSERT INTO `evenement`( `nomEvent`, `lieu`,`dateDebutE`, `dateFinE`, `type`, `idReservation`) VALUES (?, ?, ?, ? ,?,?)";
-        try {
-            PreparedStatement pstm = cnx.prepareStatement(qry);
-            pstm.setString(1, event.getNomEvent());
-////            pstm.setString(2, event.getLieu());
-////            pstm.setDate(3, new java.sql.Date(event.getDateDebutE().getTime()));
-////            pstm.setDate(4, new java.sql.Date(event.getDateFinE().getTime()));
-////            pstm.setString(5, event.getType());
-////            pstm.setInt(6, event.getIdReservation());
-
-
-            pstm.executeUpdate();
-
-
-            System.out.println("✅ evenement ajoutée avec succès !");
-        } catch (SQLException e) {
-            System.out.println("❌ Erreur lors de l'ajout de la evenement : " + e.getMessage());
-        }
-    }
-
-   */ @Override
+    @Override
     public void add(evenement e) {
-        String req = "INSERT INTO `evenement`( `nomEvent`, `lieu`,`dateDebutE`, `dateFinE`, `type`, `image`,`idReservation`,`latitude`,`longitude`) VALUES (?, ?, ?, ? ,?,?,?,?,?)";
+        String req = "INSERT INTO `evenement`( `nomEvent`, `lieu`,`dateDebutE`, `dateFinE`, `type`, `image`,`latitude`,`longitude`) VALUES (?, ?, ?, ? ,?,?,?,?,?)";
         try {
             pste = cnx.prepareStatement(req);
             pste.setString(1, e.getNomEvent());
@@ -175,11 +145,7 @@ public class ServiceEvenement implements IService {
 
 }
 
-   /* @Override
-    public List getAll() {
-        return List.of();
-    }
-}*/
+
 
 
 

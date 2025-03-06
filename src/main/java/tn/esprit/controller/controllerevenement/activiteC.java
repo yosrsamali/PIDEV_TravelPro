@@ -1,4 +1,4 @@
-package tn.esprit.controller;
+package tn.esprit.controller.controllerevenement;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,24 +13,20 @@ import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import tn.esprit.models.Activite;
-import tn.esprit.models.evenement;
 import tn.esprit.services.ServiceActivite;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 public class activiteC implements Initializable {
 
@@ -226,7 +222,7 @@ public class activiteC implements Initializable {
     @FXML
     void retourner(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/tools1.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/viewevenement/tools1.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage = (Stage) activiteGridPane.getScene().getWindow();
             stage.setScene(new Scene(root));
@@ -270,7 +266,7 @@ public class activiteC implements Initializable {
     @FXML
     void ouvrirStatistiques(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/statistiques.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/viewevenement/statistiques.fxml"));
             Parent root = fxmlLoader.load();
 
             Stage stage = new Stage();

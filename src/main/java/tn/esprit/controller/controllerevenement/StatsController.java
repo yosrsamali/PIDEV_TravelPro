@@ -1,6 +1,5 @@
-package tn.esprit.controller;
+package tn.esprit.controller.controllerevenement;
 
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;

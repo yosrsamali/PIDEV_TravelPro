@@ -1,4 +1,4 @@
-package tn.esprit.controller;
+package tn.esprit.controller.controllerevenement;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,15 +13,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -41,14 +37,11 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import org.controlsfx.control.Notifications;
 import javafx.scene.layout.StackPane;
-import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 
@@ -56,161 +49,52 @@ public class evenementC implements Initializable {
 
     @FXML
     private VBox ParticipantsPage;
-
     @FXML
     private Pane AddEventPage;
     @FXML
     private VBox eventInterfaces;
-
     @FXML
     private Button UpdateEvent;
-
     @FXML
     private Pane UpdateEventPage;
-
-    @FXML
-    private Button AddProductBtn;
-
     @FXML
     private VBox AvisPage;
-
-    @FXML
-    private TableView<?> AvisTableView;
-
     @FXML
     private VBox EventsInterface;
-
-    @FXML
-    private Pane ListContainer;
-
-    @FXML
-    private Pane ListContainer1;
-
-    @FXML
-    private Pane ListContainer11;
-
-
-    @FXML
-    private Pane UpperSection;
-
-    @FXML
-    private Pane UpperSection1;
-
-    @FXML
-    private Pane UpperSection11;
-
-    @FXML
-    private TableColumn<?, ?> actionsColumnA;
-
-    @FXML
-    private TableColumn<?, ?> dateColumnP;
-
     @FXML
     private DatePicker dateEvent;
-
     @FXML
     private DatePicker dateEventInput;
-
-
-
-    @FXML
-    private TextArea desEvent1;
-
-
-    // table view Evennement
-    @FXML
-    TableView<evenement>evennementTableView;
-    @FXML
-    TableColumn<evenement, Integer> idColumn;
-    @FXML
-    TableColumn<evenement, String> nomColumn;
-    @FXML
-    TableColumn<evenement, String> lieuColumn;
-    @FXML
-    TableColumn<evenement, Date> dateDColumn;
-    @FXML
-    TableColumn<evenement, Date> dateFColumn;
-    @FXML
-    TableColumn<evenement, String> typeColumn;
-    @FXML
-    TableColumn<evenement, String> imageColumn;
-    @FXML
-    TableColumn<evenement,Void> actionsColumn;
-
-    @FXML
-    private TableColumn<?, ?> idAvisColumn;
-
-    @FXML
-    private TableColumn<?, ?> idColumnParticipants;
-
-    @FXML
-    private TableColumn<?, ?> idcommentaireColumn;
-
-    @FXML
-    private TableColumn<?, ?> ideventcolumnn;
-
-    @FXML
-    private TableColumn<?, ?> ideventcolumnnA;
-
-    @FXML
-    private TableColumn<?, ?> iduserrColumn;
-
-    @FXML
-    private TableColumn<?, ?> iduserrColumnA;
-    @FXML
-    private Button AddImageBtn;
-    @FXML
-    private TextField imageEvent1;
-    @FXML
-    private TextField imageEvent;
     @FXML
     private TextField LieuIEventnput;
     @FXML
     private TextField ImageEventInput;
-
     @FXML
     private TextField nomEventIInput;
-
     @FXML
     private TextField TypeEventInput;
     @FXML
     private TextField nomEventIInput2;
-    @FXML
-    private DatePicker dateEvent2;
-    @FXML
-    private DatePicker dateEventInput2;
-
     @FXML
     private TextField      TypeEventInput2;
     @FXML
     private TextField  LieuIEventnput2;
     @FXML
     private TextField      ImageEventInput2;
-    //@FXML
-    //private TableView<?> participantsTableView;
-
-
     @FXML
     private VBox eventsVBox;
     @FXML
     private VBox eventsVBox2;
-
     @FXML
     private TextField searchInput;
-
-
-
     @FXML
     private TextField filterInput;
-
     @FXML
     private TextField locationField;
     @FXML
     private TextField latitudeField;
     @FXML
     private TextField longitudeField;
-
-
     @FXML
     private TextField typeEvent1;
     ServiceEvenement e=new ServiceEvenement();
@@ -265,26 +149,6 @@ public class evenementC implements Initializable {
         eventInterfaces.setVisible(true);
     }
 
-    /*public void data()
-    {
-        //intialisation table view evennement
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("idEvent"));
-        nomColumn.setCellValueFactory(new PropertyValueFactory<>("nomEvent"));
-        lieuColumn.setCellValueFactory(new PropertyValueFactory<>("lieu"));
-        dateDColumn.setCellValueFactory(new PropertyValueFactory<>("dateDebutE"));
-        dateFColumn.setCellValueFactory(new PropertyValueFactory<>("dateFinE"));
-        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-        imageColumn.setCellValueFactory(new PropertyValueFactory<>("image"));
-
-        actionsColumn.setCellFactory(createButtonCellFactory());
-        ListContainer.setItems(FXCollections.observableArrayList( e.getAll()));
-        ObservableList<evenement> oList = FXCollections.observableArrayList(e.getAll());
-        FilteredList<evenement> filteredData = new FilteredList<evenement>(oList, b -> true);
-
-        SortedList<evenement> sortedList = new SortedList <evenement>(filteredData);
-        sortedList.comparatorProperty().bind(evennementTableView.comparatorProperty())    ;
-        evennementTableView.setItems(sortedList);
-    }*/
     public void data() {
         eventsVBox.getChildren().clear(); // Clear previous items
 
@@ -438,33 +302,7 @@ public class evenementC implements Initializable {
 
                         });
 
-                      /*  editButton.setOnAction(event -> {
-                            evenement evennement = getTableView().getItems().get(getIndex());
-                            System.out.println("Edit: " + evennement.getIdEvent());
-                            EventsInterface.setVisible(false);
-                            EventsInterface.setManaged(false);
-                            AddEventPage.setVisible(false);
-                            AddEventPage.setManaged(false);
-                            ParticipantsPage.setVisible(false);
-                            ParticipantsPage.setManaged(false);
-                            AvisPage.setVisible(false);
-                            AvisPage.setManaged(false);
 
-
-                            UpdateEventPage.setVisible(true);
-                            UpdateEventPage.setManaged(true);
-                            i=evennement.getIdEvent();
-
-                            nomEvent1.setText(evennement.getNomEvent());
-                            typeEvent1.setText(evennement.getType());
-                            desEvent1.setText(evennement.getDescription());
-                            LocalDate date=evennement.getDate().toLocalDate();
-                            dateEvent1.setValue(date);
-                            imageEvent1.setText(evennement.getImage());
-                            prix1.setText(String.valueOf(evennement.getPrix()));
-                            localisation1.setText(evennement.getLocalisation());
-
-                        });*/
 
 
                     }
@@ -638,7 +476,7 @@ public class evenementC implements Initializable {
 
     public void gotoactivitie(ActionEvent actionEvent) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/tools.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/viewevenement/tools.fxml"));
             Parent root = loader.load();
 
             // Obtenir la scène actuelle et remplacer le contenu
@@ -689,34 +527,7 @@ public class evenementC implements Initializable {
             eventsVBox.getChildren().add(eventCard);
         }
     }
-    /*
-    @FXML
-    void sortById(ActionEvent event) {
-        List<evenement> sortedList = e.getAll().stream()
-                .sorted(Comparator.comparingInt(evenement::getIdEvent))
-                .collect(Collectors.toList());
 
-        // Mettre à jour eventsVBox avec les événements triés
-        eventsVBox.getChildren().clear();
-        for (evenement evt : sortedList) {
-            VBox eventCard = createEventCard(evt);
-            eventsVBox.getChildren().add(eventCard);
-        }
-    }
-    @FXML
-    void sortByName(ActionEvent event) {
-        List<evenement> sortedList = e.getAll().stream()
-                .sorted(Comparator.comparing(evenement::getNomEvent))
-                .collect(Collectors.toList());
-
-        // Mettre à jour eventsVBox avec les événements triés
-        eventsVBox.getChildren().clear();
-        for (evenement evt : sortedList) {
-            VBox eventCard = createEventCard(evt);
-            eventsVBox.getChildren().add(eventCard);
-        }
-    }
-    */
     @FXML
     void refreshEvenements(ActionEvent event) {
         searchInput.clear(); // Vider le champ de recherche
@@ -794,9 +605,8 @@ public class evenementC implements Initializable {
     @FXML
     void ouvrirStatistiques(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/statistiquesEvenement.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/viewevenement/statistiquesEvenement.fxml"));
             Parent root = fxmlLoader.load();
-
             Stage stage = new Stage();
             stage.setTitle("Statistiques des Événements");
             stage.setScene(new Scene(root));

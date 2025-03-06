@@ -42,7 +42,7 @@ public class Mainfx extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/tools1.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/viewevenement/tools1.fxml"));
         Parent root = loader.load();
 
         // Set scene size
