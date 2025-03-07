@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="640.0" prefWidth="1024.0" stylesheets="@style2.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.Controllers.contolleruser.ModifierClientController">
+    <children>
+
+        <!-- Image de fond -->
+        <ImageView fitHeight="640.0" fitWidth="512.0">
+            <image>
+                <Image url="@images/motive.png" />
+            </image>
+        </ImageView>
+        <!-- Bouton Retour -->
+        <ImageView fx:id="imgRetour" fitHeight="20.0" fitWidth="20.0" layoutX="38.0" layoutY="35.0" onMouseClicked="#handleRetour">
+            <image>
+                <Image url="@images/back_arrow.png" />
+            </image>
+        </ImageView>
+
+        <StackPane prefHeight="500.0" prefWidth="420.0" />
+        <VBox alignment="CENTER" layoutX="562.0" layoutY="11.0" prefHeight="618.0" prefWidth="410.0" spacing="14">
+            <Label style="-fx-text-fill: #37B7C3; -fx-font-size: 24px;" text="Modifier compte" />
+
+            <!-- Sélection et affichage de l'image -->
+            <Button fx:id="btnSelectImage" onAction="#handleSelectImage" text="Choisir une image" />
+            <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="150.0" />
+
+            <!-- Champs de saisie -->
+            <HBox prefHeight="42.0" prefWidth="441.0" spacing="6">
+                <VBox prefHeight="42.0" prefWidth="441.0" spacing="6">
+                <TextField fx:id="tfNom" prefHeight="42.0" prefWidth="209.0" promptText="Nom" />
+                <Label fx:id="lblNomError" style="-fx-text-fill: red; -fx-font-size: 12px;" />
+                </VBox>
+                <VBox prefHeight="42.0" prefWidth="441.0" spacing="6">
+
+                <TextField fx:id="tfPrenome" prefHeight="42.0" prefWidth="205.0" promptText="Prénom" />
+                <Label fx:id="lblPrenomError" style="-fx-text-fill: red; -fx-font-size: 12px;" />
+                </VBox>
+            </HBox>
+
+            <HBox spacing="6" >
+                <VBox prefHeight="42.0" prefWidth="441.0" spacing="6">
+
+                <TextField fx:id="tfNum" prefHeight="42.0" prefWidth="228.0" promptText="N°tel" />
+                <Label fx:id="lblNumError" style="-fx-text-fill: red; -fx-font-size: 12px;" />
+                </VBox>
+                <VBox prefHeight="42.0" prefWidth="441.0" spacing="6">
+
+                <TextField fx:id="tfLieux" prefHeight="42.0" prefWidth="226.0" promptText="Adresse" />
+                <Label fx:id="lblLieuxError" style="-fx-text-fill: red; -fx-font-size: 12px;" />
+                </VBox>
+            </HBox>
+
+            <TextField fx:id="tfMail" promptText="Mail" />
+            <Label fx:id="lblMailError" style="-fx-text-fill: red; -fx-font-size: 12px;" />
+
+
+            <!-- Boutons d'action -->
+            <HBox alignment="CENTER" spacing="12">
+                <Button fx:id="btnModifier" onAction="#handleModifier" text="Modifier" />
+            </HBox>
+        </VBox>
+    </children>
+</AnchorPane>

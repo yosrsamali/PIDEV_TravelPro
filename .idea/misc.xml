@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+>>>>>>> user
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="MavenProjectsManager">
@@ -7,6 +11,7 @@
       </list>
     </option>
   </component>
+<<<<<<< HEAD
   <component name="ProjectResources">
     <resource url="http://javafx.com/fxml/1" location="$PROJECT_DIR$" />
     <resource url="http://javafx.com/javafx/22.0.2" location="$PROJECT_DIR$" />
@@ -24,6 +29,9 @@
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="corretto-17" project-jdk-type="JavaSDK">
 
+=======
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
+>>>>>>> user
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

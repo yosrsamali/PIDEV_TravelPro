@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> user
 /* ---- Fond général ---- */
 .root {
     -fx-background-color: linear-gradient(to bottom, #ffffff, #ffffff);
@@ -84,6 +87,7 @@
 
 /* ---- Image de fond ---- */
 .image-view {
+<<<<<<< HEAD
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0), 10, 0, 0, 5);
 }
 /* ----- Background en dégradé bleu-blanc avec un effet de transition pour un aspect fluide ----- */
@@ -234,3 +238,7 @@ TextField:focused {
     -fx-background-color: #2980b9;
 }
 
+=======
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 10, 0, 0, 5);
+}
+>>>>>>> user

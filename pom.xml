@@ -5,15 +5,25 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>tn.esprit</groupId>
+
     <artifactId>TravelPro</artifactId>
+
+
     <version>1.0-SNAPSHOT</version>
+    <!-- ✅ Déplacement correct de <repositories> ici -->
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-<<<<<<< HEAD
+    <repositories>
+        <repository>
+            <id>cloudinary</id>
+            <url>https://maven.cloudinary.com/repository/maven-cloudinary/</url>
+        </repository>
+    </repositories>
+
 <dependencies>
     <dependency>
         <groupId>org.json</groupId>
@@ -52,28 +62,22 @@
     </dependency>
 
 
-</dependencies>
 
-<build>
-<plugins>
-    <plugin>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-maven-plugin</artifactId>
-        <version>0.0.8</version>
-        <configuration>
-            <mainClass>tn.esprit.test.Mainfx</mainClass>
 
-        </configuration>
 
-    </plugin>
-</plugins>
-</build>
 
-=======
 
-    <dependencies>
+
 
         <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+
+
+
+
+
+
+        <!-- MySQL Connector -->
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -81,17 +85,23 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-controls -->
+
+        <!-- JavaFX -->
+
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>22.0.2</version>
         </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-fxml -->
+
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>22.0.2</version>
         </dependency>
+
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>kernel</artifactId>
@@ -103,6 +113,10 @@
             <artifactId>layout</artifactId>
             <version>7.2.5</version>
         </dependency>
+
+
+        <!-- JavaMail API -->
+
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>javax.mail-api</artifactId>
@@ -111,6 +125,7 @@
         <dependency>
             <groupId>com.sun.mail</groupId>
             <artifactId>javax.mail</artifactId>
+
             <version>1.6.2</version> <!-- Vous pouvez ajuster la version selon vos besoins -->
         </dependency>
         <dependency>
@@ -147,11 +162,72 @@
             <groupId>com.paypal.sdk</groupId>
             <artifactId>rest-api-sdk</artifactId>
             <version>1.14.0</version>
+
+
+        </dependency>
+        <dependency>
+            <groupId>org.controlsfx</groupId>
+            <artifactId>controlsfx</artifactId>
+            <version>11.1.0</version>
+        </dependency>
+
+        <!-- Twilio API -->
+        <dependency>
+            <groupId>com.twilio.sdk</groupId>
+            <artifactId>twilio</artifactId>
+            <version>9.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.cloudinary</groupId>
+            <artifactId>cloudinary-http44</artifactId>
+            <version>1.37.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.32</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
+        </dependency>
+
+
+        <!-- Firebase Admin SDK -->
+        <dependency>
+            <groupId>com.google.firebase</groupId>
+            <artifactId>firebase-admin</artifactId>
+            <version>9.2.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.asynchttpclient</groupId>
+            <artifactId>async-http-client</artifactId>
+            <version>2.12.3</version>
+
         </dependency>
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
+
             <version>20231013</version>
+        </dependency>
+
+
+
+    <dependency>
+        <groupId>org.json</groupId>
+        <artifactId>json</artifactId>
+        <version>20210307</version>
+    </dependency>
+
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>21-ea+24</version>
         </dependency>
 
 
@@ -164,13 +240,16 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
+
                     <mainClass>
                         tn.esprit.test.MainFX
                     </mainClass>
+
+                    <mainClass>tn.esprit.test.MainFX</mainClass>
                 </configuration>
             </plugin>
         </plugins>
     </build>
->>>>>>> d3a237b0cedf5db29bbc82b99157c53cf558ac15
 
 </project>
+

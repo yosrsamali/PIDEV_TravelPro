@@ -12,6 +12,16 @@ target/
 *.iml
 *.ipr
 
+<<<<<<< HEAD
+=======
+
+
+# Fichiers sensibles
+src/main/resources/serviceAccountKey.json
+src/main/java/tn/esprit/utils/SmsService.java
+src/main/java/tn/esprit/utils/MailService.java
+
+>>>>>>> user
 ### Eclipse ###
 .apt_generated
 .classpath

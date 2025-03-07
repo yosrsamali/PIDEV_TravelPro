@@ -17,7 +17,7 @@ public class MainFX extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        FXMLLoader loader =new FXMLLoader(getClass().getResource("/viewfinance/Homefinance.fxml"));
+        FXMLLoader loader =new FXMLLoader(getClass().getResource("/user.fxml));
         try {
             Parent root = loader.load();
             Scene scene = new Scene(root);
@@ -27,6 +27,18 @@ public class MainFX extends Application {
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
+        }
+    }
+}
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/user.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("Gestion Utilisateur");
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();  // Better debugging
         }
     }
 }
